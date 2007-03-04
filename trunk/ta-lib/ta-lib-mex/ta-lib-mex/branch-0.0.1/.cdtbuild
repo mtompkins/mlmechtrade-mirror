@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="ta-lib-mex.cdt.managedbuild.target.gnu.cygwin.so.633504615" name="Shared Library (Gnu on Windows)" projectType="cdt.managedbuild.target.gnu.cygwin.so">
+<configuration artifactExtension="dll" artifactName="ta-lib-mex" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.so.debug.1946433279" name="Debug" parent="cdt.managedbuild.config.gnu.cygwin.so.debug">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.so.debug.1231446980" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.so.debug">
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.so.debug.232778308" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.so.debug.160298782" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.so.debug">
+<option id="gnu.c.compiler.option.misc.other.301680839" superClass="gnu.c.compiler.option.misc.other" value="-pipe -Wall -W -fno-strict-aliasing -DTA_SINGLE_THREAD" valueType="string"/>
+<option id="gnu.c.compiler.option.include.paths.567196880" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_common&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract\tables&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract\frames&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\include&quot;"/>
+</option>
+<option id="gnu.c.compiler.option.preprocessor.def.symbols.53060696" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lcc\mexFunction.def&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lcc\mexLibrary.def&quot;"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.so.debug.1205720283" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.so.debug">
+<option id="gnu.c.link.option.paths.1821579871" superClass="gnu.c.link.option.paths" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_common_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_func_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_libc_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\ibeng.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libfixedpoint.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmat.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmex.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmwlapack.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmwservices.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmx.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libut.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclcom.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclcommain.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclmcr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclmcrrt.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclxlmain.lib&quot;"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.so.debug.1811156050" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.so.debug"/>
+<tool command="as" id="cdt.managedbuild.tool.gnu.assembler.cygwin.so.debug.679305044" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.so.debug">
+<option id="gnu.both.asm.option.flags.317800795" superClass="gnu.both.asm.option.flags" value="" valueType="string"/>
+</tool>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="dll" artifactName="ta-lib-mex" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.so.release.1489568404" name="Release" parent="cdt.managedbuild.config.gnu.cygwin.so.release">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.so.release.2121866587" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.so.release">
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.so.release.883399540" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.so.release.581293728" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.so.release">
+<option id="gnu.c.compiler.option.preprocessor.def.symbols.1942931480" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lcc\mexFunction.def&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lcc\mexLibrary.def&quot;"/>
+</option>
+<option id="gnu.c.compiler.option.include.paths.139856115" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_common&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract\tables&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\src\ta_abstract\frames&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\include&quot;"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.so.release.1669668124" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.so.release">
+<option id="gnu.c.link.option.paths.1888807434" superClass="gnu.c.link.option.paths" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_func_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclxlmain.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_libc_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\EtcProgs\ta-lib\c\lib\ta_common_csr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libfixedpoint.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmat.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmex.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\ibeng.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmwlapack.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmwservices.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libmx.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\libut.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclcom.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclcommain.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclmcr.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;C:\Program Files\MATLAB\R2006b\extern\lib\win32\lccl\mclmcrrt.lib&quot;"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.so.release.943352830" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.so.release.1974078886" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.so.release"/>
+<macros/>
+</toolChain>
+</configuration>
+</project>
+</ManagedProjectBuildInfo>
