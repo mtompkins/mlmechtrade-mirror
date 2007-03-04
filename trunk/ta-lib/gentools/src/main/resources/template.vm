@@ -1,0 +1,146 @@
+\#include "ta_libc.h" 
+\#include "mex.h" 
+\#include <string.h>
+
+#set($inArgs = ${FinancialFunction.RequiredInputArguments.RequiredInputArgument})
+#set($optInArgs = ${FinancialFunction.OptionalInputArguments.OptionalInputArgument})	
+#set($outArgs = ${FinancialFunction.OutputArguments.OutputArgument})
+#set($countInputMand = $list.size(${FinancialFunction.RequiredInputArguments.RequiredInputArgument}))
+#set($countInputOpt = $list.size(${FinancialFunction.OptionalInputArguments.OptionalInputArgument}))
+#if(!$countInputOpt) ## Check if missing optional param
+	#set($countInputOpt = 0)
+#end
+#set($countInput = $countInputMand + $countInputOpt)
+#set($coutnOutput = $list.size($outArgs))
+
+/*
+ * TA_${FinancialFunction.Abbreviation} - ${FinancialFunction.ShortDescription}
+ * Input Parameters
+ * -------------------
+#foreach($inArg in $inArgs)
+ * ${inArg.CamelCaseName}
+#end 
+ * 
+ * Optional Parameters
+ * -------------------
+#foreach($optInArg in $optInArgs)
+ * optIn${optInArg.CamelCaseName}:(From ${optInArg.Range.Minimum} to ${optInArg.Range.Maximum}) Description: ${optInArg.ShortDescription}
+#end
+ *
+ * Output
+ * -------------------
+#foreach($outArg in $outArgs)
+ * ${outArg.CamelCaseName}
+#end
+ * 
+ */
+ 
+/* The gateway routine */
+void mexFunction(int nlhs, mxArray *plhs[],
+                 int nrhs, const mxArray *prhs[])
+{
+/* ----------------- Variables ----------------- */
+/* input variables */
+/* mandatory input */
+  int startIdx;
+  int endIdx;
+#foreach($inArg in $inArgs)
+  ${inArg.CMexType} ${inArg.CamelCaseName};
+#end
+/* optional input */
+#foreach($optInArg in $optInArgs)
+  ${optInArg.CMexType} optIn${optInArg.CamelCaseName};
+#end
+/* output variables */ 
+  int outBegIdx;
+  int outNbElement;
+#foreach($outArg in $outArgs)
+  ${outArg.CType} ${outArg.CamelCaseName};
+#end				   
+/* input dimentions */ 
+  int inSeriesRows;
+  int inSeriesCols;
+/* error handling */
+  TA_RetCode retCode;
+
+/* ----------------- input/output count ----------------- */  
+  /*  Check for proper number of arguments. */
+  if (nrhs < $countInputMand || nrhs > $countInput) mexErrMsgTxt("#$countInput inputs possible #$countInputOpt optional.");
+  if (nlhs != $coutnOutput) mexErrMsgTxt("#$coutnOutput output required.");
+/* ----------------- INPUT ----------------- */ 
+#set($i = -1)
+#foreach($inArg in $inArgs)
+  #set($i = $i + 1)	
+  /* Create a pointer to the input matrix ${inArg.CamelCaseName}. */
+  ${inArg.CamelCaseName} = mxGetPr(prhs[$i]);
+  /* Get the dimensions of the matrix input ${inArg.CamelCaseName}. */
+  inSeriesCols = mxGetN(prhs[$i]);
+  if (inSeriesCols != 1) mexErrMsgTxt("${inArg.CamelCaseName} only vector alowed.");
+#end
+  inSeriesRows = mxGetM(prhs[$i]);  
+  endIdx = inSeriesRows - 1;  
+  startIdx = 0;
+
+#set($i = $countInputMand-1)
+ /* Process optional arguments */ 
+#foreach($optInArg in $optInArgs)
+#set($i = $i + 1)
+  if (nrhs >= $i+1) {
+	if (!mxIsDouble(prhs[$i]) || mxIsComplex(prhs[$i]) ||
+      mxGetN(prhs[$i])*mxGetM(prhs[$i]) != 1) 
+    	mexErrMsgTxt("Input optIn${optInArg.CamelCaseName} must be a scalar.");
+   	/* Get the scalar input optInTimePeriod. */
+   	optIn${optInArg.CamelCaseName} = #if(${optInArg.CType} == "int	")(int)#end  mxGetScalar(prhs[$i]);
+  } else {
+  	optIn${optInArg.CamelCaseName} = ${optInArg.DefaultValue};
+  }
+#end
+
+/* ----------------- OUTPUT ----------------- */
+#foreach($outArg in $outArgs)
+#if(${outArg.CType} == "double*	")
+#set($outType = "double")
+#else
+#set($outType = "int")
+#end
+  ${outArg.CamelCaseName} = mxCalloc(inSeriesRows, sizeof($outType));
+#end	
+/* -------------- Invocation ---------------- */
+
+	retCode = TA_${FinancialFunction.abbreviation}(
+                   startIdx, endIdx,
+#foreach($inArg in $inArgs)
+                   ${inArg.CamelCaseName},
+#end
+#foreach($optInArg in $optInArgs)
+                   optIn${optInArg.CamelCaseName},
+#end
+                   &outBegIdx, &outNbElement,
+#foreach($outArg in $outArgs)
+                   ${outArg.CamelCaseName}#if($outArg.notLast),#end
+#end);
+/* -------------- Errors ---------------- */
+   if (retCode) {
+#foreach($outArg in $outArgs)
+   	   mxFree(${outArg.CamelCaseName});
+#end   
+       mexPrintf("%s%i","Return code=",retCode);
+       mexErrMsgTxt(" Error!");
+   }
+  
+   // Populate Output
+#set($i = -1)
+#foreach($outArg in $outArgs)
+#set($i = $i + 1)
+#if(${outArg.CType} == "double*	")
+#set($createMatrix = "mxCreateDoubleMatrix(outBegIdx+outNbElement,1, mxREAL)")
+#set($arrayType = "(double *)")
+#else
+#set($createMatrix = "mxCreateNumericMatrix(outBegIdx+outNbElement,1, mxINT32_CLASS, mxREAL)")
+#set($arrayType = "(int *)")
+#end
+  plhs[$i] = $createMatrix;
+  memcpy(($arrayType mxGetData(plhs[$i]))+outBegIdx, ${outArg.CamelCaseName}, outNbElement*mxGetElementSize(plhs[$i]));
+  mxFree(${outArg.CamelCaseName});  
+#end	
+} /* END mexFunction */
