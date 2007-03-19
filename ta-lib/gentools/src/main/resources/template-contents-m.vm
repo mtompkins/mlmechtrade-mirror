@@ -1,0 +1,6 @@
+## Template to generate Contents.m file.
+% ta-lib - a set of tech-analysis functions.
+%
+#foreach($f in ${FinancialFunctions.financialFunction})
+%	TA_${f.Abbreviation} - ${f.ShortDescription}
+#end 

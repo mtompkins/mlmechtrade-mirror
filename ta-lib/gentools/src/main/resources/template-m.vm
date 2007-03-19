@@ -1,0 +1,62 @@
+## Template to generate help M-files.
+#set($inArgs = ${FinancialFunction.RequiredInputArguments.RequiredInputArgument})
+#set($optInArgs = ${FinancialFunction.OptionalInputArguments.OptionalInputArgument})
+#set($outArgs = ${FinancialFunction.OutputArguments.OutputArgument})
+#set($countInputMand = $list.size(${FinancialFunction.RequiredInputArguments.RequiredInputArgument}))
+#set($countInputOpt = $list.size(${FinancialFunction.OptionalInputArguments.OptionalInputArgument}))
+#set($countInputArgs = $countInputMand + $countInputOpt)
+#set($countOutputArgs = $list.size(${outArgs}))
+#set($functionName = "TA_${FinancialFunction.Abbreviation}")
+## $outArgList - a list of return parameters
+#set($outArgList = "")
+#set($i = 0)
+#foreach($outArg in $outArgs)
+#set($outArgList = "${outArgList}${outArg.CamelCaseName}")
+#set($i = $i + 1)
+#if($i < $countOutputArgs)#set($outArgList = "${outArgList}, ")#end
+#end
+## $inArgList - a list of input parameters
+#set($inArgList = "")
+#set($i = 0)
+#foreach($inArg in $inArgs)
+#set($inArgList = "${inArgList}${inArg.CamelCaseName}")
+#set($i = $i + 1)
+#if($i < $countInputArgs)
+#set($inArgList = "${inArgList}, ")
+#end
+#end
+#foreach($inArg in $optInArgs)
+#set($inArgList = "${inArgList}${inArg.CamelCaseName}")
+#set($i = $i + 1)
+#if($i < $countInputArgs)
+#set($inArgList = "${inArgList}, ")
+#end
+#end
+## Output function signature
+#if($countOutputArgs==0)
+%% function $functionName ( $inArgList )
+#elseif($countOutputArgs==1)
+%% function $outArgList = $functionName ( $inArgList )
+#else
+%% function [$outArgList] = $functionName ( $inArgList )
+#end
+%
+% ${FinancialFunction.ShortDescription}
+## Output function description
+%
+% Required input parameters
+#foreach($inArg in $inArgs)
+%	${inArg.CamelCaseName}
+#end 
+%
+% Optional input parameters
+#foreach($optInArg in $optInArgs)
+%	optIn${optInArg.CamelCaseName}: (Range from ${optInArg.Range.Minimum} to ${optInArg.Range.Maximum}) Description: ${optInArg.ShortDescription}
+#end
+%
+% Output
+#foreach($outArg in $outArgs)
+%	${outArg.CamelCaseName}
+#end
+%
+% See also: ta-lib
