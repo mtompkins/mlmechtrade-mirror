@@ -1,3 +1,4 @@
+## Template to generate C source files.
 \#include "ta_libc.h" 
 \#include "mex.h" 
 \#include <string.h>
