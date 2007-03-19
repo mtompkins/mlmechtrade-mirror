@@ -34,11 +34,11 @@
 #end
 ## Output function signature
 #if($countOutputArgs==0)
-%% function $functionName ( $inArgList )
+function $functionName ( $inArgList )
 #elseif($countOutputArgs==1)
-%% function $outArgList = $functionName ( $inArgList )
+function $outArgList = $functionName ( $inArgList )
 #else
-%% function [$outArgList] = $functionName ( $inArgList )
+function [$outArgList] = $functionName ( $inArgList )
 #end
 %
 % ${FinancialFunction.ShortDescription}
