@@ -17,9 +17,14 @@ import net.sf.mlmechtrade.tafunc.api.FinancialFunctionType.OptionalInputArgument
 import net.sf.mlmechtrade.tafunc.api.FinancialFunctionType.OutputArguments;
 import net.sf.mlmechtrade.tafunc.api.FinancialFunctionType.RequiredInputArguments;
 
-
+/** Main class, invoke as regular java app */
 public class GenerateMexAPI {
 	private static final Properties cTypeMap = new Properties();
+	/** Generate MEX C files? */
+	private static boolean generateMEXC = true;
+	/** M files directory, can be set  */
+	private static String outputDirForMFiles = null;
+	
 	static {
 		cTypeMap.setProperty("Integer", "int	");
 		cTypeMap.setProperty("Double", "double	");
@@ -47,14 +52,22 @@ public class GenerateMexAPI {
 	}
 
 	public static void main(String[] argv) throws Exception {
+		
 		System.out.println("START: generating mex files" + new Date());
 		// Validate args
 		if (argv.length != 1) {
-			System.err.println("Usage GenerateMexAPI outputDir");
-			System.exit(0);
+			if (argv.length == 2 && argv[1].equalsIgnoreCase("-nomexc")) {
+				// more advanced arg not to generate C mex files, for development purposes
+				generateMEXC  = false;
+			}
+			else
+			{
+				System.err.println("Usage GenerateMexAPI outputDir");
+				System.exit(0);
+			}
 		}
 		String outDir = argv[0];
-
+		
 		// Init JAXB context
 		JAXBContext jaxbContext = JAXBContext
 				.newInstance("net.sf.mlmechtrade.tafunc.api");
@@ -65,16 +78,24 @@ public class GenerateMexAPI {
 		// Unmarchal
 		FinancialFunctions root = (FinancialFunctions) unmarshaller
 				.unmarshal(is);
-		// Generate
+		
+		// Transform
 		for (FinancialFunctionType function : root.getFinancialFunction()) {
-			// Transform
 			transform(function);
-			generateMEX(function, outDir);
-			generateM(function, outDir);
 		}
 		
-		generateContents(root, outDir);
+		// Generate: for all functions
+		generateContents(root, outDir); // contents.m file - in matlab one can type 'help ta-lib'
 
+		// Generate: for each function
+		for (FinancialFunctionType function : root.getFinancialFunction()) {
+			// Generate MEX C file
+			if (generateMEXC) {
+				generateMEX(function, outDir); // .C source
+			}
+			generateM(function, outDir); // .M - help file
+		}
+		
 		System.out.println("END: generating mexx files" + new Date());
 	}
 
