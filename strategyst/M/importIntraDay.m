@@ -15,12 +15,14 @@ data.marketData = struct();
 %% List files in current directory
 files = ls('*.csv');
 for j = 1:size(files,1),
+j
     % Import the file
     fileToRead = files(j,1:end);
     data.marketData(j).symbol = symbolFromFileName(fileToRead);
     fileData = importdata(fileToRead);
     data.marketData(j).fields = removeTxtSeps(fileData.textdata(1,3:end));
     data.marketData(j).time = asciiToTimeStamp(fileData);
+    data.marketData(j).seriesLen = length(data.marketData(j).time);
     data.marketData(j).data = fileData.data;
     if (compressEnabled),
         data = compress(data, j);
