@@ -30,7 +30,7 @@ chunkNumber = length(originalData.compressedData)+1;
 marketTimeSeries = NaN(len,length(originalData.marketData(1).fields)+1);
 for i = range
     % copy time and delete original
-    seriesLen = length(originalData.marketData(i).time);
+    seriesLen = originalData.marketData(i).seriesLen;
     marketTimeSeries(lastSeriesIdx:lastSeriesIdx+seriesLen-1,1) = originalData.marketData(i).time;
     originalData.marketData(i).time = [];
     % copy data dand delete original

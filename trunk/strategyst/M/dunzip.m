@@ -15,7 +15,6 @@ function M = dunzip(Z)
 %        (3) See DZIP for other notes.
 %        (4) Carefully tested, but no warranty; use at your own risk.
 %        (5) Michael Kleder, Nov 2005
-
 import com.mathworks.mlwidgets.io.InterruptibleStreamCopier
 a=java.io.ByteArrayInputStream(Z);
 b=java.util.zip.InflaterInputStream(a);
