@@ -15,7 +15,6 @@ data.marketData = struct();
 %% List files in current directory
 files = ls('*.csv');
 for j = 1:size(files,1),
-j
     % Import the file
     fileToRead = files(j,1:end);
     data.marketData(j).symbol = symbolFromFileName(fileToRead);
@@ -35,7 +34,6 @@ function symbol = symbolFromFileName(fileName)
 expr = '(?<symbol>^.*)_(?<suffix>.*)';
 names = regexp(fileName, expr, 'names');
 symbol = names.symbol;
-
 
 function mlDateNum = asciiToTimeStamp(data)
 % Function to convert date from ISO yyyyMMdd to MatLab datenum
