@@ -12,9 +12,11 @@ for i = 1:size(data.marketData,2)
     clear randInterval;
     trainSetIdx = NaN(length(s1)*continuesTicks,1);
     testSetIdx = NaN(length(s2)*continuesTicks,1);
-    for j = 1:continuesTicks
-        trainSetIdx(j:continuesTicks:(length(s1)*continuesTicks+j-1),1) = s1*(continuesTicks-1) + j;
-        testSetIdx(j:continuesTicks:(length(s2)*continuesTicks+j-1),1) = s2*(continuesTicks-1) + j;
+    for j = 1:size(s1,1)
+        trainSetIdx(1+(j-1)*continuesTicks:j*continuesTicks,1) = s1(j)-continuesTicks+1:s1(j);
+    end
+    for j = 1:size(s2,1)
+        testSetIdx(1+(j-1)*continuesTicks:j*continuesTicks,1) = s2(j)-continuesTicks+1:s2(j);    
     end
     clear s1 s2 j;
     if (size(trainSetIdx,1) > 0 && size(testSetIdx,1) > 0),    
