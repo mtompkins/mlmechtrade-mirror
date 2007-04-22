@@ -1,5 +1,5 @@
-function open = getTime(data, index)
-% Returns Open series
+function time = getTime(data, index)
+% Returns time series
 
 rez = getSymbolData(data, index);
-open =  rez(:,1);
+time =  rez(:,1);

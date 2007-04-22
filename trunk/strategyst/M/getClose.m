@@ -1,5 +1,8 @@
-function open = getClose(data, index)
-% Returns Open series
+function close = getClose(data, index)
+% Returns Close series
 
 rez = getSymbolData(data, index);
-open =  rez(:,5);
+close =  rez(:,5);
+if (data.filter == 1)
+    close(2:end) = close(2:end) + close(1);
+end
