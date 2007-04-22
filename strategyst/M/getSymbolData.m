@@ -4,29 +4,17 @@ if (data.compressionMap.containsKey(index)),
     chunk = compressedSymbols(1);
     compressedSymbols(1) = [];
     createGlobalCashe();
-    rez = lookupFromCache(i);
+    rez = lookupFromCache(index);
     if (isempty(rez)),
         comressed = data.compressedData{chunk};
-%        try
-            uncompressed = dunzip(comressed);
-%         catch
-%             casheManager = evalin('base', 'TS_CASHE_MANAGER');
-%             cache = casheManager.getCache('finTmSer');
-%             cache.dispose();
-%             uncompressed = dunzip(comressed);
-%         end
+        uncompressed = dunzip(comressed);
         startIdx = 1;
         for key = compressedSymbols,
             len = data.marketData(key).seriesLen;
             value = uncompressed(startIdx:len,:);
-%             element = net.sf.ehcache.Element(key,value);
-%             casheManager = evalin('base', 'TS_CASHE_MANAGER');
-%             cache = casheManager.getCache('finTmSer');
-%             cache.put(element);
             if (key == index),
                 rez = value;
-                    casheManager.index = i;
-                    casheManager.data = value;
+                addToCache(key, value);
             end % if
             clear uncompressed;
         end % for

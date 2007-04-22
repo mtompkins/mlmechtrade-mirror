@@ -1,10 +1,16 @@
 %% Main cycle reding data from files
-function data = importIntraDay()
+function data = importIntraDay(compressEnabled)
 %ImportIntraDay
-% Imports data from *.csv in Trader Station format
+% Imports data from *.csv in Trader Station format. File name formats
+% <SYMBOL>_<time scale>.csv
 % TODO: CHECK if parameter comress provided and set default to false.
 %
-compressEnabled = true; % Always use compression.
+if nargin < 1
+    compressEnabled = true;
+    data.filter = 1;
+else
+    data.filter = 0;
+end  % Use compression by default
 
 %% Prepare output structure
 import java.util.HashMap;

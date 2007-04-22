@@ -1,4 +1,3 @@
-function addToCache(element)
+function addToCache(key,value)
 casheManager = evalin('base', 'TS_CASHE_MANAGER');
-cache = casheManager.getCache('finTmSer');
-cache.put(element);
+casheManager.put(key,value);

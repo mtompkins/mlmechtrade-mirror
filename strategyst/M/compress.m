@@ -1,8 +1,8 @@
 function compressedData = compress(originalData,range)
 % originalData financial data structure
 % range indexies to be compressed
-filter = 1; % Always apply filter M = M-Mprev
-
+filter = originalData.filter; % Check if filter to be applied
+    
 import java.util.HashMap
 %% eliminate already comressed symbols
 rangeSize = length(range);
@@ -43,8 +43,10 @@ end
 
 %% Apply filter if needed
 if (filter == 1),
-    marketTimeSeries(2:end,:) = marketTimeSeries(2:end,:) - marketTimeSeries(1:end-1,:);
-end
+    for m = 2:5
+        marketTimeSeries(2:end,m) = marketTimeSeries(2:end,m) - marketTimeSeries(1,m);
+    end
+end;
 
 %% comress
 chunk = dzip(marketTimeSeries);
