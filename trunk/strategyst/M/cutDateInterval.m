@@ -8,7 +8,7 @@ resIdx = 0;
 for i = 1:size(data.marketData,2)
     symbol = data.marketData(i);
     idx = find(symbol.time >= d1 & symbol.time <= d2);
-    if (idx > 0)
+    if (idx)
         resIdx = resIdx + 1;
         result.marketData(i).symbol = symbol.symbol;
         result.marketData(i).seriesLen = length(idx);
