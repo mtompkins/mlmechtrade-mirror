@@ -1,11 +1,10 @@
 function rez = getSymbolData(data, index)
 if (data.compressionMap.containsKey(index)),
-    compressedSymbols = data.compressionMap.get(index);
-    chunk = compressedSymbols(1);
-    compressedSymbols(1) = [];
-    createGlobalCashe();
     rez = lookupFromCache(index);
     if (isempty(rez)),
+        compressedSymbols = data.compressionMap.get(index);
+        chunk = compressedSymbols(1);
+        compressedSymbols(1) = [];
         comressed = data.compressedData{chunk};
         uncompressed = dunzip(comressed);
         startIdx = 1;

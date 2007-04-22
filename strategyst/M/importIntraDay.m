@@ -17,6 +17,7 @@ import java.util.HashMap;
 data.compressionMap = java.util.HashMap();
 data.compressedData = {};
 data.marketData = struct();
+createGlobalCashe();
 
 %% List files in current directory
 files = ls('*.csv');
