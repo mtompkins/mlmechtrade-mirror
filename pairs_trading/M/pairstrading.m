@@ -128,7 +128,7 @@ for k=1:n1-d+1
     
     x2=x(d-window+k-1:d+k-2,:);
     
-    x3=normdata(x2);         % Normalization of x2
+    x3=mapstd(x2')'; % Normalization of x2
 
     % Find/change the Pairs for each k periods based on the quadratic error criteria.
     
