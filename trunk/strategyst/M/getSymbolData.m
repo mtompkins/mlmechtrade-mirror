@@ -19,5 +19,5 @@ if (data.compressionMap.containsKey(index)),
         end % for
     end % isempty
 else % containsKey
-    rez = data.marketData(i);
+    rez = data.marketData(index).data;
 end % containsKey
