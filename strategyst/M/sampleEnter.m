@@ -1,7 +1,7 @@
-function enterSignals = sampleEnter(data, enterTimeShift)
+function enterSignals = sampleEnter(data)
 %% Time shift 
 %% Parameters
-% .....
+reactionTime = 1; % Reaction time
 volumeMin = 500;
 priceMin = 1;
 
@@ -9,21 +9,24 @@ priceMin = 1;
 enterSignals = {};
 
 %% Iterate symbols
-for i = 1:size(data,2)
-    % retrieve symbol
-    symbol = data(i);
+for i = 1:size(data.marketData,2)
     % retrieve close prices
-    close = symbol.data(:,4);
+    close = getClose(data,i);
     % retrieve volumes
-    volume = symbol.data(:,5);
+    volume = getVolume(data,i);
     % Simple Moving Averange of Volume
-    smaVolume = TA_SMA(volume,20);
+    smaVolume = TA_SMA(volume,100);
     % Strategy specific
-    % .....
+    smaLong = TA_SMA(close,200); 
+    smaShort = TA_SMA(close,80);
+    % shift one period before. For stupid cros below aproximation
+    smaShortPrev = smaShort(1:end-reactionTime);
+    smaShortPrev = [zeros(reactionTime,1); smaShortPrev];
     % Enter Rules
     enterSignals{i} = find( ...
         smaVolume > volumeMin & ...
-        close > priceMin % & .
-        % Strategy specific constrains 
-    )+enterTimeShift+1; % Put Orders one bar to future
+        close > priceMin & ...
+        smaShortPrev < smaLong & ...
+        smaShort > smaLong ...
+    )+1; % Put Orders one bar to future
 end
