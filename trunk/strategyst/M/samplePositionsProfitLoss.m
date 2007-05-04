@@ -1,9 +1,9 @@
 function profitLoss = equalPositionsProfitLoss(data, enterSignals, exitSignals, lots, slipage)
 profitLoss = 0;
 % Iterate all symbols
-for i = 1:size(data,2)
+for i = 1:size(data.marketData,2)
     % close data
-    close = data(i).data(:,4);
+    close = getClose(data, 2);
     % number of ticks
     ticksNbr = size(close,1);
     % enter bars
@@ -23,6 +23,5 @@ for i = 1:size(data,2)
     % (incorrect asumption: each enter lot has corresponding exit lot)
     profitLoss = profitLoss +  ...
         sum(close(exitSer(exitIdx))*slipage*lots ...      % gain
-        -sum(close(enterSer(enterIdx))))/slipage*lots ... % expenses
-        -2*lots*size(exitIdx,1); % 2 USD for minimum as commisions for 1 LOT
+        -sum(close(enterSer(enterIdx))))/slipage*lots; % expenses
 end
