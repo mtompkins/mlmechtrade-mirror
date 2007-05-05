@@ -12,11 +12,28 @@ end
 %% Create data structures for storing simulation state
 % The amount for each symbol
 tCurrntEquity = tradingHistory.currentEquity;
+% Data
+data = tradingHistory.marketData;
+% Transform enter signals
+enter = transforSignals(data, lEnterSignals);
+% Transform exit signals
+enter = transforSignals(data, lExitSignals);
 
-%% find max bar number
-%%for symbolNr = 1:size(hist.marketData.marketData,2)
-%%    symbol = hist.marketData.marketData(symbolNr);
-%%end
+%% Result
+history = tradingHistory;
+
+
+function tsignals = transforSignals(data, signals)
+% Calculate dimensins of returning structure
+dim = 0;
+for i = 1:size(signals,2)
+    dim = dim + size(signals{i},1);
+end
+% Allocate memory
+tsignals = zeros(dim, 3);
+for i = 1:size(signals)
+    TODO;
+end
 
 
 
