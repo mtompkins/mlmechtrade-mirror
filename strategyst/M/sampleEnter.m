@@ -29,4 +29,6 @@ for i = 1:size(data.marketData,2)
         smaShortPrev < smaLong & ...
         smaShort > smaLong ...
     )+1; % Put Orders one bar to future
+    % Remove out of range bars
+    enterSignals{i} = find(enterSignals{i} <= size(close,1));
 end
