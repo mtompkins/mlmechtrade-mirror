@@ -13,7 +13,7 @@ function history = tradingHistory(data, openPositions, currentEquity, trades, ma
 if nargin < 1
      error('marketData is mandatory parameter');
 end
-history.marketData = data;
+history.data = data;
 
 %% openPositions
 if nargin < 2

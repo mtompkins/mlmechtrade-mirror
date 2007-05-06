@@ -3,7 +3,7 @@ d1 = datenum(date1,'yyyymmdd');
 d2 = datenum(date2,'yyyymmdd');
 data.compressionMap = java.util.HashMap();
 data.compressedData = {};
-
+result.filter = data.filter;
 resIdx = 0;
 for i = 1:size(data.marketData,2)
     symbol = data.marketData(i);
