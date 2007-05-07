@@ -11,7 +11,7 @@ end
 
 %% Create data structures for storing simulation state
 % The amount for each symbol
-tCurrntEquity = initHistory.currentEquity;
+tCurrentEquity = initHistory.currentEquity;
 % Data
 data = initHistory.data;
 % Transform enter signals
@@ -19,11 +19,16 @@ tSignals = transforSignals(data, lEnterSignals, lExitSignals);
 
 %% Iterate signals
 for i = 1:size(tSignals,1)
-    % TODO Money managment
+    bar = tSignals(i,2);
+    symbolNr = tSignals(i,3);
+    isEnter =  tSignals(i,4);
+    close = getClose(data, symbolNr);
+    tCurrntEquity = tCurrentEquity - sign(isEnter-0.5)*close(bar);
 end
 
 %% Update returning structure
 newHistory.data = initHistory.data;
+newHistory.currntEquity = tCurrntEquity;
 %newHistory.openPositions = tOpenPositions;
  
     
@@ -63,7 +68,7 @@ for i = 1:size(signals1,2)
     tsignals(dim-sigLen+1:dim,1) = time(signalsForSymbol);
     tsignals(dim-sigLen+1:dim,2) = signalsForSymbol;
     tsignals(dim-sigLen+1:dim,3) = i;
-    tsignals(dim-sigLen+1:dim,4) = 1;
+    tsignals(dim-sigLen+1:dim,4) = 0;
     dim = dim-sigLen;
 end
 %% Sort result
