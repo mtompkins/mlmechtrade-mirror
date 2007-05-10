@@ -1,0 +1,8 @@
+com.ib.client - Java TWS Client implementation from IB.
+ibLink - Simple wrapper written around TWS Client to submit orders into TWS. This class you should use from MatLab.
+test - Java test program for ibLink. Start TWS and run this programm. It will submit two orders.
+TestJavaClient - Original IB test programm for TWS client. Look for features or default values, ect...
+
+
+By Andrius Masiulis
+For info contact amasiulis@hotmail.com
