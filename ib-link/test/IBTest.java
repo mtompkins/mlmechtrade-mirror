@@ -16,7 +16,7 @@ public class IBTest {
 		ib.connect("", 7496, 1);
 		
 		
-		//request id
+		//request next unique id
 		ib.reqId();
 		
 		int id = 0;
@@ -47,6 +47,7 @@ public class IBTest {
 		order.m_transmit = true;
 		order.m_origin = 1;
 	
+		//place order. Look at tws for order to appear!
 		ib.placeOrder(id, contract, order);
 		System.out.println("Order id "+id);
 		
@@ -64,7 +65,7 @@ public class IBTest {
 		System.out.println("Order status: "+os.status);
 		
 		
-		
+		//the same with another stock. Please note order type is MKT (market) now.
 		ib.reqId();
 		
 		id = 0;
@@ -94,7 +95,10 @@ public class IBTest {
 		ib.placeOrder(id, contract, order);
 		System.out.println("Order id "+id);
 		
-		//get orders		
+		
+		
+		
+		//Get orders we have just submitted to tws		
 		ib.reqOpenOrders();
 		
 		try {
@@ -110,7 +114,10 @@ public class IBTest {
 					+os.filled + " Remaining "+ os.remaining + " Avg price "+os.avgFillPrice);
 		}
 		
-		//Sleep before closing othewise orders can be lost
+		
+		
+		
+		//Always sleep before closing othewise orders can be lost
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
