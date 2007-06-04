@@ -9,6 +9,7 @@ compressEnabled = false; % Without compression
 %% Prepare output structure
 data.compressionMap = java.util.HashMap();
 data.compressedData = {};
+data.filter = 0;
 
 %% List files in current directory
 files = ls('*.csv');
