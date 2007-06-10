@@ -3,16 +3,24 @@
  *
  */
 
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
 
 public class FinancialAdvisorDlg extends JDialog {
-    private int DIALOG_WIDTH = 500;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8983173521027834556L;
+	private int DIALOG_WIDTH = 500;
     private int EDITOR_HEIGHT = 240;
-    private int BUTTON_PANEL_HEIGHT = 60;
     private JButton 	m_ok = new JButton( "OK");
     private JButton 	m_cancel = new JButton( "Cancel");
     private IBTextPanel groupTextEditor = new IBTextPanel("Groups", true) ;

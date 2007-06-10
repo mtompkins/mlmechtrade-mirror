@@ -2,18 +2,26 @@
  * NewsBulletinDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import com.ib.client.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 public class NewsBulletinDlg extends JDialog {
-    private IBGridBagPanel        m_subscriptionTypePanel = new IBGridBagPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1265728145635887656L;
+	private IBGridBagPanel        m_subscriptionTypePanel = new IBGridBagPanel();
     private IBGridBagPanel        m_mainPanel = new IBGridBagPanel();
 
     private JButton 		m_btnSubscribe = new JButton( "Subscribe");

@@ -2,15 +2,28 @@
  * SharesAllocDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.StringTokenizer;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class SharesAllocDlg extends JDialog {
-    JComboBox 	m_cmbAcctCode = new JComboBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2829750428592687793L;
+	JComboBox 	m_cmbAcctCode = new JComboBox();
     JTextField 	m_txtNumShares = new JTextField(10);
     JTextField 	m_txtSharesAllocation = new JTextField(20);
     JButton 	m_btnAddShareAlloc = new JButton("Add Share Allocation");

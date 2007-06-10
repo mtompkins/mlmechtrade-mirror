@@ -2,7 +2,7 @@
  * SampleFrame.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -25,7 +25,11 @@ import com.ib.client.Order;
 import com.ib.client.TickType;
 
 class SampleFrame extends JFrame implements EWrapper {
-    private static final int NOT_AN_FA_ACCOUNT_ERROR = 321 ;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2675201654661496135L;
+	private static final int NOT_AN_FA_ACCOUNT_ERROR = 321 ;
     private int faErrorCodes[] = { 503, 504, 505, 522, 1100, NOT_AN_FA_ACCOUNT_ERROR } ;
     private boolean faError ;
 
@@ -253,7 +257,8 @@ class SampleFrame extends JFrame implements EWrapper {
         return buttonPanel;
     }
     
-    void onConnect() {
+    @SuppressWarnings("deprecation")
+	void onConnect() {
         m_bIsFAAccount = false;
         // get connection parameters
         ConnectDlg dlg = new ConnectDlg( this);
@@ -337,7 +342,8 @@ class SampleFrame extends JFrame implements EWrapper {
         m_client.reqContractDetails( m_orderDlg.m_contract );
     }
 
-    void onReqMktDepth() {
+    @SuppressWarnings("deprecation")
+	void onReqMktDepth() {
         // run m_orderDlg
         m_orderDlg.show();
         if( !m_orderDlg.m_rc ) {
@@ -411,7 +417,8 @@ class SampleFrame extends JFrame implements EWrapper {
         m_client.cancelOrder( m_orderDlg.m_id );
     }
 
-    void onExtendedOrder() {
+    @SuppressWarnings("deprecation")
+	void onExtendedOrder() {
         //Show the extended order attributes dialog
         m_extOrdDlg.show();
         if( !m_extOrdDlg.m_rc ) {
@@ -422,7 +429,8 @@ class SampleFrame extends JFrame implements EWrapper {
         copyExtendedOrderDetails( m_orderDlg.m_order, m_extOrdDlg.m_order);
     }
 
-    void  onReqAcctData() {
+    @SuppressWarnings("deprecation")
+	void  onReqAcctData() {
         AcctUpdatesDlg dlg = new AcctUpdatesDlg(this);
 
         dlg.show();
@@ -441,7 +449,8 @@ class SampleFrame extends JFrame implements EWrapper {
       m_client.requestFA(EClientSocket.ALIASES) ;
     }
 
-    void  onServerLogging() {
+    @SuppressWarnings("deprecation")
+	void  onServerLogging() {
         // get server logging level
         LogConfigDlg dlg = new LogConfigDlg( this);
         dlg.show();
@@ -480,7 +489,8 @@ class SampleFrame extends JFrame implements EWrapper {
         System.exit(1);
     }
 
-    void onReqExecutions() {
+    @SuppressWarnings("deprecation")
+	void onReqExecutions() {
         ExecFiliterDlg dlg = new ExecFiliterDlg(this);
 
         dlg.show();
@@ -490,7 +500,8 @@ class SampleFrame extends JFrame implements EWrapper {
         }
     }
 
-    void onReqNewsBulletins() {
+    @SuppressWarnings("deprecation")
+	void onReqNewsBulletins() {
         // run m_newsBulletinDlg
         m_newsBulletinDlg.show();
         if( !m_newsBulletinDlg.m_rc ) {
@@ -805,7 +816,8 @@ class SampleFrame extends JFrame implements EWrapper {
         m_TWS.addText(xml);
     }
 
-    public void receiveFA(int faDataType, String xml) {
+    @SuppressWarnings("deprecation")
+	public void receiveFA(int faDataType, String xml) {
         displayXML("FA: " + EClientSocket.faMsgTypeName(faDataType), xml);
       switch (faDataType) {
         case EClientSocket.GROUPS:

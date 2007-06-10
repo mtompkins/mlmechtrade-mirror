@@ -2,15 +2,17 @@
  * Main.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
 import java.awt.Component;
+
 import javax.swing.JOptionPane;
 
 public class Main {
 
     // This method is called to start the application
-    public static void main (String args[]) {
+    @SuppressWarnings("deprecation")
+	public static void main (String args[]) {
         SampleFrame sampleFrame = new SampleFrame();
         sampleFrame.show();
     }

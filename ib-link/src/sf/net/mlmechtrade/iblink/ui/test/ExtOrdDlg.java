@@ -3,15 +3,28 @@
  * ExtOrdDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import com.ib.client.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import com.ib.client.Order;
 
 public class ExtOrdDlg extends JDialog {
-    public Order 		m_order = new Order();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5059270455490172629L;
+	public Order 		m_order = new Order();
     public boolean 		m_rc;
 
     private JTextField 	m_tif = new JTextField( "DAY");

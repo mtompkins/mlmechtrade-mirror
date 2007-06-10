@@ -2,15 +2,30 @@
  * ScannerDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import com.ib.client.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import com.ib.client.ScannerSubscription;
 
 public class ScannerDlg extends JDialog {
-    public static final int NO_SELECTION = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1560339810890207679L;
+	public static final int NO_SELECTION = 0;
     public static final int SUBSCRIBE_SELECTION = 1;
     public static final int CANCEL_SELECTION = 2;
     public static final int REQUEST_PARAMETERS_SELECTION = 3;
@@ -45,8 +60,6 @@ public class ScannerDlg extends JDialog {
     private JButton 	m_requestParameters = new JButton( "Request Parameters");
     private JButton 	m_subscribe = new JButton( "Subscribe");
     private JButton 	m_cancel = new JButton( "Cancel Subscription");
-    private SampleFrame m_parent;
-
     private static final int COL1_WIDTH = 30 ;
     private static final int COL2_WIDTH = 100 - COL1_WIDTH ;
 
@@ -62,12 +75,11 @@ public class ScannerDlg extends JDialog {
     public ScannerDlg( SampleFrame owner) {
         super( owner, true);
 
-        m_parent = owner;
         setTitle( "Sample");
 
         java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints() ;
-        gbc.fill = gbc.BOTH ;
-        gbc.anchor = gbc.CENTER ;
+        gbc.fill = GridBagConstraints.BOTH ;
+        gbc.anchor = GridBagConstraints.CENTER ;
         gbc.weighty = 100 ;
         gbc.fill = GridBagConstraints.BOTH ;
         gbc.gridheight = 1 ;
@@ -159,10 +171,6 @@ public class ScannerDlg extends JDialog {
         pack();
     }
 
-    private static String pad( int val) {
-        return val < 10 ? "0" + val : "" + val;
-    }
-
     private double parseDouble(JTextField textfield) {
         try {
             return Double.parseDouble(textfield.getText().trim());
@@ -230,7 +238,8 @@ public class ScannerDlg extends JDialog {
         setVisible( false);
     }
 
-    public void show() {
+    @SuppressWarnings("deprecation")
+	public void show() {
         m_userSelection = NO_SELECTION;
         super.show();
     }
