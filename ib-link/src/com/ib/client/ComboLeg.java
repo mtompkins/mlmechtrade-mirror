@@ -4,8 +4,6 @@
  */
 package com.ib.client;
 
-import java.util.Vector;
-
 public class ComboLeg {
     public final static int 	SAME = 0; 	// open/close leg value is same as combo
     public final static int 	OPEN = 1;
