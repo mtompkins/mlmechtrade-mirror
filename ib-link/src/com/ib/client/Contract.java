@@ -22,7 +22,7 @@ public class Contract implements Cloneable {
 
     public String m_currency;
     public String m_localSymbol;
-    public Vector m_comboLegs = new Vector();
+    public Vector<ComboLeg> m_comboLegs = new Vector<ComboLeg>();
     public String m_primaryExch;  // pick an actual (ie non-aggregate) exchange that the contract trades on.  DO NOT SET TO SMART.
     public boolean m_includeExpired; // can not be set to true for orders.
 
@@ -47,16 +47,17 @@ public class Contract implements Cloneable {
         m_strike = 0;
     }
 
-    public Object clone() throws CloneNotSupportedException {
+    @SuppressWarnings("unchecked")
+	public Object clone() throws CloneNotSupportedException {
         Contract retval = (Contract)super.clone();
-        retval.m_comboLegs = (Vector)retval.m_comboLegs.clone();
+        retval.m_comboLegs = (Vector<ComboLeg>) retval.m_comboLegs.clone();
         return retval;
     }
 
     public Contract(String p_symbol, String p_secType, String p_expiry,
                     double p_strike, String p_right, String p_multiplier,
                     String p_exchange, String p_currency, String p_localSymbol,
-                    Vector p_comboLegs, String p_primaryExch, boolean p_includeExpired,
+                    Vector<ComboLeg> p_comboLegs, String p_primaryExch, boolean p_includeExpired,
                     String p_cusip, String p_ratings, String p_descAppend,
                     String p_bondType, String p_couponType, boolean p_callable,
                     boolean p_putable, double p_coupon, boolean p_convertible,
