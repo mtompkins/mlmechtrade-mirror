@@ -103,7 +103,8 @@ public class EReader extends Thread {
                 break;
             }
             case TICK_SIZE: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int tickerId = readInt();
                 int tickType = readInt();
                 int size = readInt();
@@ -113,7 +114,8 @@ public class EReader extends Thread {
             }
 
             case TICK_OPTION_COMPUTATION: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int tickerId = readInt();
                 int tickType = readInt();
                 double impliedVol = readDouble();
@@ -136,7 +138,8 @@ public class EReader extends Thread {
             }
             	
             case TICK_GENERIC: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int tickerId = readInt();
                 int tickType = readInt();
                 double value = readDouble();
@@ -146,7 +149,8 @@ public class EReader extends Thread {
             }
 
             case TICK_STRING: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int tickerId = readInt();
                 int tickType = readInt();
                 String value = readStr();
@@ -238,7 +242,8 @@ public class EReader extends Thread {
             }
 
             case ACCT_UPDATE_TIME: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 String timeStamp = readStr();
                 eWrapper().updateAccountTime(timeStamp);
                 break;
@@ -378,7 +383,8 @@ public class EReader extends Thread {
             }
 
             case NEXT_VALID_ID: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int orderId = readInt();
                 eWrapper().nextValidId( orderId);
                 break;
@@ -386,7 +392,8 @@ public class EReader extends Thread {
 
             case SCANNER_DATA: {
                 ContractDetails contract = new ContractDetails();
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int tickerId = readInt();
                 int numberOfElements = readInt();
                 for (int ctr=0; ctr < numberOfElements; ctr++) {
@@ -505,7 +512,8 @@ public class EReader extends Thread {
                 break;
             }
             case MARKET_DEPTH: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int id = readInt();
 
                 int position = readInt();
@@ -519,7 +527,8 @@ public class EReader extends Thread {
                 break;
             }
             case MARKET_DEPTH_L2: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int id = readInt();
 
                 int position = readInt();
@@ -534,7 +543,8 @@ public class EReader extends Thread {
                 break;
             }
             case NEWS_BULLETINS: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 int newsMsgId = readInt();
                 int newsMsgType = readInt();
                 String newsMessage = readStr();
@@ -544,14 +554,16 @@ public class EReader extends Thread {
                 break;
             }
             case MANAGED_ACCTS: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 String accountsList = readStr();
 
                 eWrapper().managedAccounts( accountsList);
                 break;
             }
             case RECEIVE_FA: {
-              int version = readInt();
+              @SuppressWarnings("unused")
+			int version = readInt();
               int faDataType = readInt();
               String xml = readStr();
 
@@ -592,7 +604,8 @@ public class EReader extends Thread {
               break;
             }
             case SCANNER_PARAMETERS: {
-                int version = readInt();
+                @SuppressWarnings("unused")
+				int version = readInt();
                 String xml = readStr();
                 eWrapper().scannerParameters(xml);
                 break;
