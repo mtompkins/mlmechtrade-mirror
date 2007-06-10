@@ -5,128 +5,206 @@
 package com.ib.client;
 
 public class Order {
-    final public static int 	CUSTOMER = 0;
-    final public static int 	FIRM = 1;
-    final public static char    OPT_UNKNOWN='?';
-    final public static char    OPT_BROKER_DEALER='b';
-    final public static char    OPT_CUSTOMER ='c';
-    final public static char    OPT_FIRM='f';
-    final public static char    OPT_ISEMM='m';
-    final public static char    OPT_FARMM='n';
-    final public static char    OPT_SPECIALIST='y';
-    final public static int 	AUCTION_MATCH = 1;
-    final public static int 	AUCTION_IMPROVEMENT = 2;
-    final public static int 	AUCTION_TRANSPARENT = 3;
-    final public static String  EMPTY_STR = "";
+	final public static int CUSTOMER = 0;
 
-    // main order fields
-    public int 		m_orderId;
-    public int 		m_clientId;
-    public int  	m_permId;
-    public String 	m_action;
-    public int 		m_totalQuantity;
-    public String 	m_orderType;
-    public double 	m_lmtPrice;
-    public double 	m_auxPrice;
+	final public static int FIRM = 1;
 
-    // extended order fields
-    public String 	m_tif;  // "Time in Force" - DAY, GTC, etc.
-    public String 	m_ocaGroup; // one cancels all group name
-    public int      m_ocaType;  // 1 = CANCEL_WITH_BLOCK, 2 = REDUCE_WITH_BLOCK, 3 = REDUCE_NON_BLOCK
-    public String 	m_orderRef;
-    public boolean 	m_transmit;	// if false, order will be created but not transmited
-    public int 		m_parentId;	// Parent order Id, to associate Auto STP or TRAIL orders with the original order.
-    public boolean 	m_blockOrder;
-    public boolean	m_sweepToFill;
-    public int 		m_displaySize;
-    public int 		m_triggerMethod; // 0=Default, 1=Double_Bid_Ask, 2=Last, 3=Double_Last, 4=Bid_Ask, 7=Last_or_Bid_Ask, 8=Mid-point
-    public boolean 	m_ignoreRth;
-    public boolean  m_hidden;
-    public String   m_goodAfterTime; // FORMAT: 20060505 08:00:00 {time zone}
-    public String   m_goodTillDate;  // FORMAT: 20060505 08:00:00 {time zone}
-    public boolean  m_rthOnly;
-    public boolean  m_overridePercentageConstraints;
-    public String   m_rule80A;  // Individual = 'I', Agency = 'A', AgentOtherMember = 'W', IndividualPTIA = 'J', AgencyPTIA = 'U', AgentOtherMemberPTIA = 'M', IndividualPT = 'K', AgencyPT = 'Y', AgentOtherMemberPT = 'N'
-    public boolean  m_allOrNone;
-    public int      m_minQty;
-    public double   m_percentOffset; // REL orders only
-    public double   m_trailStopPrice; // for TRAILLIMIT orders only
-    public String	m_sharesAllocation; // deprecated
+	final public static char OPT_UNKNOWN = '?';
 
-    // Financial advisors only 
-    public String   m_faGroup;
-    public String   m_faProfile;
-    public String   m_faMethod;
-    public String   m_faPercentage;
-    
-    // Institutional orders only
-    public String 	m_account;
-    public String   m_settlingFirm;
-    public String 	m_openClose;          // O=Open, C=Close
-    public int 		m_origin;             // 0=Customer, 1=Firm
-    public int      m_shortSaleSlot;      // 1 if you hold the shares, 2 if they will be delivered from elsewhere.  Only for Action="SSHORT
-    public String   m_designatedLocation; // set when slot=2 only.
+	final public static char OPT_BROKER_DEALER = 'b';
 
-    // SMART routing only
-    public double   m_discretionaryAmt;
-    public boolean  m_eTradeOnly;
-    public boolean  m_firmQuoteOnly;
-    public double   m_nbboPriceCap;
+	final public static char OPT_CUSTOMER = 'c';
 
-    // BOX or VOL ORDERS ONLY
-    public int      m_auctionStrategy; // 1=AUCTION_MATCH, 2=AUCTION_IMPROVEMENT, 3=AUCTION_TRANSPARENT
+	final public static char OPT_FIRM = 'f';
 
-    // BOX ORDERS ONLY
-    public double   m_startingPrice;
-    public double   m_stockRefPrice;
-    public double   m_delta;
+	final public static char OPT_ISEMM = 'm';
 
-    // pegged to stock or VOL orders
-    public double   m_stockRangeLower;
-    public double   m_stockRangeUpper;
+	final public static char OPT_FARMM = 'n';
 
-    // VOLATILITY ORDERS ONLY
-    public double   m_volatility;
-    public int      m_volatilityType;     // 1=daily, 2=annual
-    public int      m_continuousUpdate;
-    public int      m_referencePriceType; // 1=Average, 2 = BidOrAsk
-    public String   m_deltaNeutralOrderType;
-    public double   m_deltaNeutralAuxPrice;
+	final public static char OPT_SPECIALIST = 'y';
 
-    public Order() {
-        m_openClose	= "O";
-        m_origin = CUSTOMER;
-        m_transmit = true;
-        m_designatedLocation = EMPTY_STR;
-        m_minQty = Integer.MAX_VALUE;
-        m_percentOffset = Double.MAX_VALUE;
-        m_nbboPriceCap = Double.MAX_VALUE;
-        m_startingPrice = Double.MAX_VALUE;
-        m_stockRefPrice = Double.MAX_VALUE;
-        m_delta = Double.MAX_VALUE;
-        m_stockRangeLower = Double.MAX_VALUE;
-        m_stockRangeUpper = Double.MAX_VALUE;
-        m_volatility = Double.MAX_VALUE;
-        m_volatilityType = Integer.MAX_VALUE;
-        m_deltaNeutralOrderType = EMPTY_STR;
-        m_deltaNeutralAuxPrice = Double.MAX_VALUE;
-        m_referencePriceType = Integer.MAX_VALUE;
-        m_trailStopPrice = Double.MAX_VALUE;
-    }
+	final public static int AUCTION_MATCH = 1;
 
-    public boolean equals(Object p_other) {
-        if ( this == p_other )
-            return true;
-        else if ( p_other == null )
-            return false;
+	final public static int AUCTION_IMPROVEMENT = 2;
 
-        Order l_theOther = (Order)p_other;
+	final public static int AUCTION_TRANSPARENT = 3;
 
-        if ( m_permId == l_theOther.m_permId ) {
-            return true;
-        }
+	final public static String EMPTY_STR = "";
 
-        boolean firstSetEquals = m_orderId == l_theOther.m_orderId
+	// main order fields
+	public int m_orderId;
+
+	public int m_clientId;
+
+	public int m_permId;
+
+	public String m_action;
+
+	public int m_totalQuantity;
+
+	public String m_orderType;
+
+	public double m_lmtPrice;
+
+	public double m_auxPrice;
+
+	// extended order fields
+	public String m_tif; // "Time in Force" - DAY, GTC, etc.
+
+	public String m_ocaGroup; // one cancels all group name
+
+	public int m_ocaType; // 1 = CANCEL_WITH_BLOCK, 2 = REDUCE_WITH_BLOCK, 3 =
+
+	// REDUCE_NON_BLOCK
+
+	public String m_orderRef;
+
+	public boolean m_transmit; // if false, order will be created but not
+
+	// transmited
+
+	public int m_parentId; // Parent order Id, to associate Auto STP or TRAIL
+
+	// orders with the original order.
+
+	public boolean m_blockOrder;
+
+	public boolean m_sweepToFill;
+
+	public int m_displaySize;
+
+	public int m_triggerMethod; // 0=Default, 1=Double_Bid_Ask, 2=Last,
+
+	// 3=Double_Last, 4=Bid_Ask, 7=Last_or_Bid_Ask,
+	// 8=Mid-point
+
+	public boolean m_ignoreRth;
+
+	public boolean m_hidden;
+
+	public String m_goodAfterTime; // FORMAT: 20060505 08:00:00 {time zone}
+
+	public String m_goodTillDate; // FORMAT: 20060505 08:00:00 {time zone}
+
+	public boolean m_rthOnly;
+
+	public boolean m_overridePercentageConstraints;
+
+	public String m_rule80A; // Individual = 'I', Agency = 'A',
+
+	// AgentOtherMember = 'W', IndividualPTIA = 'J',
+	// AgencyPTIA = 'U', AgentOtherMemberPTIA = 'M',
+	// IndividualPT = 'K', AgencyPT = 'Y',
+	// AgentOtherMemberPT = 'N'
+
+	public boolean m_allOrNone;
+
+	public int m_minQty;
+
+	public double m_percentOffset; // REL orders only
+
+	public double m_trailStopPrice; // for TRAILLIMIT orders only
+
+	public String m_sharesAllocation; // deprecated
+
+	// Financial advisors only
+	public String m_faGroup;
+
+	public String m_faProfile;
+
+	public String m_faMethod;
+
+	public String m_faPercentage;
+
+	// Institutional orders only
+	public String m_account;
+
+	public String m_settlingFirm;
+
+	public String m_openClose; // O=Open, C=Close
+
+	public int m_origin; // 0=Customer, 1=Firm
+
+	public int m_shortSaleSlot; // 1 if you hold the shares, 2 if they will be
+
+	// delivered from elsewhere. Only for
+	// Action="SSHORT
+
+	public String m_designatedLocation; // set when slot=2 only.
+
+	// SMART routing only
+	public double m_discretionaryAmt;
+
+	public boolean m_eTradeOnly;
+
+	public boolean m_firmQuoteOnly;
+
+	public double m_nbboPriceCap;
+
+	// BOX or VOL ORDERS ONLY
+	public int m_auctionStrategy; // 1=AUCTION_MATCH, 2=AUCTION_IMPROVEMENT,
+
+	// 3=AUCTION_TRANSPARENT
+
+	// BOX ORDERS ONLY
+	public double m_startingPrice;
+
+	public double m_stockRefPrice;
+
+	public double m_delta;
+
+	// pegged to stock or VOL orders
+	public double m_stockRangeLower;
+
+	public double m_stockRangeUpper;
+
+	// VOLATILITY ORDERS ONLY
+	public double m_volatility;
+
+	public int m_volatilityType; // 1=daily, 2=annual
+
+	public int m_continuousUpdate;
+
+	public int m_referencePriceType; // 1=Average, 2 = BidOrAsk
+
+	public String m_deltaNeutralOrderType;
+
+	public double m_deltaNeutralAuxPrice;
+
+	public Order() {
+		m_openClose = "O";
+		m_origin = CUSTOMER;
+		m_transmit = true;
+		m_designatedLocation = EMPTY_STR;
+		m_minQty = Integer.MAX_VALUE;
+		m_percentOffset = Double.MAX_VALUE;
+		m_nbboPriceCap = Double.MAX_VALUE;
+		m_startingPrice = Double.MAX_VALUE;
+		m_stockRefPrice = Double.MAX_VALUE;
+		m_delta = Double.MAX_VALUE;
+		m_stockRangeLower = Double.MAX_VALUE;
+		m_stockRangeUpper = Double.MAX_VALUE;
+		m_volatility = Double.MAX_VALUE;
+		m_volatilityType = Integer.MAX_VALUE;
+		m_deltaNeutralOrderType = EMPTY_STR;
+		m_deltaNeutralAuxPrice = Double.MAX_VALUE;
+		m_referencePriceType = Integer.MAX_VALUE;
+		m_trailStopPrice = Double.MAX_VALUE;
+	}
+
+	public boolean equals(Object p_other) {
+		if (this == p_other)
+			return true;
+		else if (p_other == null)
+			return false;
+
+		Order l_theOther = (Order) p_other;
+
+		if (m_permId == l_theOther.m_permId) {
+			return true;
+		}
+
+		boolean firstSetEquals = m_orderId == l_theOther.m_orderId
 				&& m_clientId == l_theOther.m_clientId
 				&& m_totalQuantity == l_theOther.m_totalQuantity
 				&& m_lmtPrice == l_theOther.m_lmtPrice
@@ -164,46 +242,64 @@ public class Order {
 				&& m_referencePriceType == l_theOther.m_referencePriceType
 				&& m_trailStopPrice == l_theOther.m_trailStopPrice;
 
-        if (!firstSetEquals) {
-        	return false;
-        } else {
-            String l_thisAction = m_action != null ? m_action : EMPTY_STR;
-            String l_thisOrderType  = m_orderType != null ? m_orderType : EMPTY_STR;
-            String l_thisTif = m_tif != null ? m_tif : EMPTY_STR;
-            String l_thisOcaGroup = m_ocaGroup != null ? m_ocaGroup : EMPTY_STR;
-            String l_thisAccount = m_account != null ? m_account : EMPTY_STR;
-            String l_thisOpenClose = m_openClose != null ? m_openClose : EMPTY_STR;
-            String l_thisOrderRef = m_orderRef != null ? m_orderRef : EMPTY_STR;
-            String l_thisRule80A = m_rule80A != null ? m_rule80A : EMPTY_STR ;
-            String l_thisSettlingFirm = m_settlingFirm != null ? m_settlingFirm : EMPTY_STR;
-            String l_thisDeltaNeutralOrderType = m_deltaNeutralOrderType != null ? m_deltaNeutralOrderType : EMPTY_STR;
-            
-            String l_otherAction = l_theOther.m_action != null ? l_theOther.m_action : EMPTY_STR;
-            String l_otherOrderType  = l_theOther.m_orderType != null ? l_theOther.m_orderType : EMPTY_STR;
-            String l_otherTif = l_theOther.m_tif != null ? l_theOther.m_tif : EMPTY_STR;
-            String l_otherOcaGroup = l_theOther.m_ocaGroup != null ? l_theOther.m_ocaGroup : EMPTY_STR;
-            String l_otherAccount = l_theOther.m_account != null ? l_theOther.m_account : EMPTY_STR;
-            String l_otherOpenClose = l_theOther.m_openClose != null ? l_theOther.m_openClose : EMPTY_STR;
-            String l_otherOrderRef = l_theOther.m_orderRef != null ? l_theOther.m_orderRef : EMPTY_STR;
-            String l_otherOrderGoodAfterTime = l_theOther.m_goodAfterTime != null ? l_theOther.m_goodAfterTime : EMPTY_STR;
-            String l_otherOrderGoodTillDate = l_theOther.m_goodTillDate != null ? l_theOther.m_goodTillDate : EMPTY_STR;
-            String l_otherRule80A = l_theOther.m_rule80A != null? l_theOther.m_rule80A : EMPTY_STR ;
-            String l_otherSettlingFirm = l_theOther.m_settlingFirm != null ? l_theOther.m_settlingFirm : EMPTY_STR;
-            String l_otherDeltaNeutralOrderType = l_theOther.m_deltaNeutralOrderType != null ? l_theOther.m_deltaNeutralOrderType : EMPTY_STR;
-        
-        return  
-        	l_thisAction.equals(l_otherAction)
+		if (!firstSetEquals) {
+			return false;
+		} else {
+			String l_thisAction = m_action != null ? m_action : EMPTY_STR;
+			String l_thisOrderType = m_orderType != null ? m_orderType
+					: EMPTY_STR;
+			String l_thisTif = m_tif != null ? m_tif : EMPTY_STR;
+			String l_thisOcaGroup = m_ocaGroup != null ? m_ocaGroup : EMPTY_STR;
+			String l_thisAccount = m_account != null ? m_account : EMPTY_STR;
+			String l_thisOpenClose = m_openClose != null ? m_openClose
+					: EMPTY_STR;
+			String l_thisOrderRef = m_orderRef != null ? m_orderRef : EMPTY_STR;
+			String l_thisRule80A = m_rule80A != null ? m_rule80A : EMPTY_STR;
+			String l_thisSettlingFirm = m_settlingFirm != null ? m_settlingFirm
+					: EMPTY_STR;
+			String l_thisDeltaNeutralOrderType = m_deltaNeutralOrderType != null ? m_deltaNeutralOrderType
+					: EMPTY_STR;
+
+			String l_otherAction = l_theOther.m_action != null ? l_theOther.m_action
+					: EMPTY_STR;
+			String l_otherOrderType = l_theOther.m_orderType != null ? l_theOther.m_orderType
+					: EMPTY_STR;
+			String l_otherTif = l_theOther.m_tif != null ? l_theOther.m_tif
+					: EMPTY_STR;
+			String l_otherOcaGroup = l_theOther.m_ocaGroup != null ? l_theOther.m_ocaGroup
+					: EMPTY_STR;
+			String l_otherAccount = l_theOther.m_account != null ? l_theOther.m_account
+					: EMPTY_STR;
+			String l_otherOpenClose = l_theOther.m_openClose != null ? l_theOther.m_openClose
+					: EMPTY_STR;
+			String l_otherOrderRef = l_theOther.m_orderRef != null ? l_theOther.m_orderRef
+					: EMPTY_STR;
+			String l_otherOrderGoodAfterTime = l_theOther.m_goodAfterTime != null ? l_theOther.m_goodAfterTime
+					: EMPTY_STR;
+			String l_otherOrderGoodTillDate = l_theOther.m_goodTillDate != null ? l_theOther.m_goodTillDate
+					: EMPTY_STR;
+			String l_otherRule80A = l_theOther.m_rule80A != null ? l_theOther.m_rule80A
+					: EMPTY_STR;
+			String l_otherSettlingFirm = l_theOther.m_settlingFirm != null ? l_theOther.m_settlingFirm
+					: EMPTY_STR;
+			String l_otherDeltaNeutralOrderType = l_theOther.m_deltaNeutralOrderType != null ? l_theOther.m_deltaNeutralOrderType
+					: EMPTY_STR;
+
+			return l_thisAction.equals(l_otherAction)
 					&& l_thisOrderType.equals(l_otherOrderType)
 					&& l_thisTif.equals(l_otherTif)
 					&& l_thisOcaGroup.equals(l_otherOcaGroup)
 					&& l_thisAccount.equals(l_otherAccount)
 					&& l_thisOpenClose.equals(l_otherOpenClose)
 					&& l_thisOrderRef.equals(l_otherOrderRef)
-					&& l_otherOrderGoodAfterTime.equals(l_otherOrderGoodAfterTime)
-					&& l_otherOrderGoodTillDate.equals(l_otherOrderGoodTillDate)
+					&& l_otherOrderGoodAfterTime
+							.equals(l_otherOrderGoodAfterTime)
+					&& l_otherOrderGoodTillDate
+							.equals(l_otherOrderGoodTillDate)
 					&& l_thisRule80A.equals(l_otherRule80A)
 					&& l_thisSettlingFirm.equals(l_otherSettlingFirm)
-					&& l_thisDeltaNeutralOrderType.equals(l_otherDeltaNeutralOrderType);
-        }
-    }
+					&& l_thisDeltaNeutralOrderType
+							.equals(l_otherDeltaNeutralOrderType);
+		}
+	}
 }

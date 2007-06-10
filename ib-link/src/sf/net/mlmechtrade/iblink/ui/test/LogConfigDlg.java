@@ -17,70 +17,79 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LogConfigDlg extends JDialog {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6687298336300462559L;
+
 	public static int SYSTEM_LOG = 1;
-    public static int ERROR_LOG = 2;
-    public static int WARN_LOG = 3;
-    public static int INFO_LOG = 4;
-    public static int DETAIL_LOG = 5;
 
-    JComboBox 	m_cmbServerLogLevels = new JComboBox();
-    JButton 	m_ok = new JButton( "OK");
-    JButton 	m_cancel = new JButton( "Cancel");
-    int 	m_serverLogLevel;
-    boolean 	m_rc;
+	public static int ERROR_LOG = 2;
 
-    public LogConfigDlg( Frame owner) {
-        super( owner, true);
+	public static int WARN_LOG = 3;
 
-        // create button panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add( m_ok);
-        buttonPanel.add( m_cancel);
+	public static int INFO_LOG = 4;
 
-        // create action listeners
-        m_ok.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e) {
-                onOk();
-            }
-        });
-        m_cancel.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e) {
-                onCancel();
-            }
-        });
+	public static int DETAIL_LOG = 5;
 
-        // create mid panel
-        m_cmbServerLogLevels.addItem("System");
-        m_cmbServerLogLevels.addItem("Error");
-        m_cmbServerLogLevels.addItem("Warning");
-        m_cmbServerLogLevels.addItem("Information");
-        m_cmbServerLogLevels.addItem("Detail");
+	JComboBox m_cmbServerLogLevels = new JComboBox();
 
-        JPanel midPanel = new JPanel();
-        midPanel.setLayout( new GridLayout( 0, 2, 5, 5) );
-        midPanel.add( new JLabel( "Log Level :") );
-        midPanel.add( m_cmbServerLogLevels);
+	JButton m_ok = new JButton("OK");
 
-        // create dlg box
-        getContentPane().add( midPanel, BorderLayout.NORTH);
-        getContentPane().add( buttonPanel, BorderLayout.SOUTH);
-        setTitle( "Log Configuration");
-        pack();
-    }
+	JButton m_cancel = new JButton("Cancel");
 
-    void onOk() {
-        // set server log Level
-        m_serverLogLevel = m_cmbServerLogLevels.getSelectedIndex() + 1;
-        m_rc = true;
-        setVisible( false);
-    }
+	int m_serverLogLevel;
 
-    void onCancel() {
-        m_rc = false;
-        setVisible( false);
-    }
+	boolean m_rc;
+
+	public LogConfigDlg(Frame owner) {
+		super(owner, true);
+
+		// create button panel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(m_ok);
+		buttonPanel.add(m_cancel);
+
+		// create action listeners
+		m_ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onOk();
+			}
+		});
+		m_cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onCancel();
+			}
+		});
+
+		// create mid panel
+		m_cmbServerLogLevels.addItem("System");
+		m_cmbServerLogLevels.addItem("Error");
+		m_cmbServerLogLevels.addItem("Warning");
+		m_cmbServerLogLevels.addItem("Information");
+		m_cmbServerLogLevels.addItem("Detail");
+
+		JPanel midPanel = new JPanel();
+		midPanel.setLayout(new GridLayout(0, 2, 5, 5));
+		midPanel.add(new JLabel("Log Level :"));
+		midPanel.add(m_cmbServerLogLevels);
+
+		// create dlg box
+		getContentPane().add(midPanel, BorderLayout.NORTH);
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		setTitle("Log Configuration");
+		pack();
+	}
+
+	void onOk() {
+		// set server log Level
+		m_serverLogLevel = m_cmbServerLogLevels.getSelectedIndex() + 1;
+		m_rc = true;
+		setVisible(false);
+	}
+
+	void onCancel() {
+		m_rc = false;
+		setVisible(false);
+	}
 }
