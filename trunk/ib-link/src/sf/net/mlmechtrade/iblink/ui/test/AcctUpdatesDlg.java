@@ -3,15 +3,26 @@
  * AcctUpdatesDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class AcctUpdatesDlg extends JDialog {
-    JTextField 	m_txtAcctCode = new JTextField(10);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4043112943985136865L;
+	JTextField 	m_txtAcctCode = new JTextField(10);
     JButton 	m_btnSubscribe = new JButton("Subscribe");
     JButton 	m_btnUnSubscribe = new JButton("UnSubscribe");
     JButton 	m_btnClose = new JButton( "Close");
