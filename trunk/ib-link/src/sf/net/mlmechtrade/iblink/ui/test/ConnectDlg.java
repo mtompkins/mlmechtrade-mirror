@@ -17,84 +17,91 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConnectDlg extends JDialog {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4425517190728779893L;
 
 	public static int LAST_CLIENT_ID = 0;
 
-    JTextField 	m_ipAddress = new JTextField();
-    JTextField 	m_port = new JTextField( "7496");
-    JTextField 	m_clientId = new JTextField();
-    JButton 	m_ok = new JButton( "OK");
-    JButton 	m_cancel = new JButton( "Cancel");
-    String 	m_retIpAddress;
-    int 	m_retPort;
-    int 	m_retClientId;
-    boolean 	m_rc;
+	JTextField m_ipAddress = new JTextField();
 
-    public ConnectDlg( Frame owner) {
-        super( owner, true);
+	JTextField m_port = new JTextField("7496");
 
-        // create button panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add( m_ok);
-        buttonPanel.add( m_cancel);
+	JTextField m_clientId = new JTextField();
 
-        // create action listeners
-        m_ok.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e) {
-                onOk();
-            }
-        });
-        m_cancel.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e) {
-                onCancel();
-            }
-        });
+	JButton m_ok = new JButton("OK");
 
-        // create mid panel
-        JPanel midPanel = new JPanel();
-        midPanel.setLayout( new GridLayout( 0, 1, 5, 5) );
-        midPanel.add( new JLabel( "IP Address (leave blank for local host)") );
-        midPanel.add( m_ipAddress);
-        midPanel.add( new JLabel( "Port") );
-        midPanel.add( m_port);
-        midPanel.add( new JLabel( "Client ID") );
-        midPanel.add( m_clientId);
-        m_clientId.setText( Integer.toString(LAST_CLIENT_ID) );
+	JButton m_cancel = new JButton("Cancel");
 
-        // create dlg box
-        getContentPane().add( midPanel, BorderLayout.CENTER);
-        getContentPane().add( buttonPanel, BorderLayout.SOUTH);
-        setTitle( "Connect");
-        pack();
-    }
+	String m_retIpAddress;
 
-    void onOk() {
-        m_rc = false;
+	int m_retPort;
 
-        try {
-            // set id
-            m_retIpAddress = m_ipAddress.getText();
-            m_retPort = Integer.parseInt( m_port.getText() );
-            m_retClientId = Integer.parseInt( m_clientId.getText() );
-            LAST_CLIENT_ID = m_retClientId;
-        }
-        catch( Exception e) {
-            Main.inform( this, "Error - " + e);
-            return;
-        }
+	int m_retClientId;
 
-        m_rc = true;
-        setVisible( false);
-    }
+	boolean m_rc;
 
-    void onCancel() {
-        LAST_CLIENT_ID = Integer.parseInt( m_clientId.getText() );
+	public ConnectDlg(Frame owner) {
+		super(owner, true);
 
-        m_rc = false;
-        setVisible( false);
-    }
+		// create button panel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(m_ok);
+		buttonPanel.add(m_cancel);
+
+		// create action listeners
+		m_ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onOk();
+			}
+		});
+		m_cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onCancel();
+			}
+		});
+
+		// create mid panel
+		JPanel midPanel = new JPanel();
+		midPanel.setLayout(new GridLayout(0, 1, 5, 5));
+		midPanel.add(new JLabel("IP Address (leave blank for local host)"));
+		midPanel.add(m_ipAddress);
+		midPanel.add(new JLabel("Port"));
+		midPanel.add(m_port);
+		midPanel.add(new JLabel("Client ID"));
+		midPanel.add(m_clientId);
+		m_clientId.setText(Integer.toString(LAST_CLIENT_ID));
+
+		// create dlg box
+		getContentPane().add(midPanel, BorderLayout.CENTER);
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		setTitle("Connect");
+		pack();
+	}
+
+	void onOk() {
+		m_rc = false;
+
+		try {
+			// set id
+			m_retIpAddress = m_ipAddress.getText();
+			m_retPort = Integer.parseInt(m_port.getText());
+			m_retClientId = Integer.parseInt(m_clientId.getText());
+			LAST_CLIENT_ID = m_retClientId;
+		} catch (Exception e) {
+			Main.inform(this, "Error - " + e);
+			return;
+		}
+
+		m_rc = true;
+		setVisible(false);
+	}
+
+	void onCancel() {
+		LAST_CLIENT_ID = Integer.parseInt(m_clientId.getText());
+
+		m_rc = false;
+		setVisible(false);
+	}
 }

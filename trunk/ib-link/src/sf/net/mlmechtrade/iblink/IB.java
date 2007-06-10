@@ -10,44 +10,44 @@ import com.ib.client.Execution;
 import com.ib.client.Order;
 
 public class IB implements EWrapper {
-	
+
 	private EClientSocket m_client = new EClientSocket(this);
+
 	private int id = 0;
+
 	private HashMap<Integer, IBOrderStatus> orderStatus = new HashMap<Integer, IBOrderStatus>();
-	
-	public void connect(String ip, int port, int clientId) 
-	{
-		m_client.eConnect( ip, port, clientId);
+
+	public void connect(String ip, int port, int clientId) {
+		m_client.eConnect(ip, port, clientId);
 	}
-	
-	public void disconnect() 
-	{
+
+	public void disconnect() {
 		m_client.eDisconnect();
 	}
-	
+
 	public synchronized void reqId() {
 		id = 0;
 		m_client.reqIds(1);
 	}
-	
+
 	public int getId() {
 		int temp = id;
 		id = 0;
 		return temp;
 	}
-	
-	public void placeOrder( int id, Contract contract, Order order) {
+
+	public void placeOrder(int id, Contract contract, Order order) {
 		m_client.placeOrder(id, contract, order);
 	}
-	
-	public void cancelOrder( int id) {
+
+	public void cancelOrder(int id) {
 		m_client.cancelOrder(id);
 	}
-	
+
 	public void reqOpenOrders() {
 		m_client.reqAllOpenOrders();
 	}
-	
+
 	public void bondContractDetails(ContractDetails contractDetails) {
 		// TODO Auto-generated method stub
 
@@ -92,24 +92,23 @@ public class IB implements EWrapper {
 		os.parentId = parentId;
 		os.lastFillPrice = lastFillPrice;
 		os.avgFillPrice = avgFillPrice;
-		
-		synchronized(orderStatus) {
+
+		synchronized (orderStatus) {
 			orderStatus.put(new Integer(os.orderId), os);
 		}
 	}
-	
+
 	public IBOrderStatus getIBOrderStatus(int orderId) {
-		synchronized(orderStatus) {
-			return (IBOrderStatus)orderStatus.get(new Integer(orderId));
+		synchronized (orderStatus) {
+			return (IBOrderStatus) orderStatus.get(new Integer(orderId));
 		}
 	}
-	
+
 	public HashMap getOpenOrders() {
-		synchronized(orderStatus) {
-			return (HashMap)orderStatus.clone();
+		synchronized (orderStatus) {
+			return (HashMap) orderStatus.clone();
 		}
 	}
-	
 
 	public void receiveFA(int faDataType, String xml) {
 		// TODO Auto-generated method stub
@@ -145,7 +144,7 @@ public class IB implements EWrapper {
 	}
 
 	public void tickSize(int tickerId, int field, int size) {
-	
+
 	}
 
 	public void tickString(int tickerId, int tickType, String value) {
