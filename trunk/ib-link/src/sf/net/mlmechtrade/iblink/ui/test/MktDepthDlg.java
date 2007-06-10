@@ -2,18 +2,35 @@
  * MktDepthDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
-import com.ib.client.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+
+import com.ib.client.EClientSocket;
 
 public class MktDepthDlg extends JDialog {
-    final static int OPERATION_INSERT 		= 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 15209359891180170L;
+	final static int OPERATION_INSERT 		= 0;
     final static int OPERATION_UPDATE 		= 1;
     final static int OPERATION_DELETE 		= 2;
 
@@ -137,7 +154,11 @@ public class MktDepthDlg extends JDialog {
 }
 
 class MktDepthModel extends AbstractTableModel {
-    private LinkedList  m_allData = new LinkedList();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5498874409113049511L;
+	private LinkedList<MktDepthTableRow>  m_allData = new LinkedList<MktDepthTableRow>();
 
     synchronized public void addOrderAt(int position, String marketMaker, double price, int size)
     {

@@ -2,17 +2,33 @@
  * OrderDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import com.ib.client.*;
-import java.util.GregorianCalendar;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import com.ib.client.Contract;
+import com.ib.client.Order;
+
 public class OrderDlg extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6887175446747013201L;
 	final static String ALL_GENERIC_TICK_TAGS = "100,101,104,106,162,165,221,225";
     final static int OPERATION_INSERT = 0;
     final static int OPERATION_UPDATE = 1;
@@ -104,8 +120,8 @@ public class OrderDlg extends JDialog {
         setTitle( "Sample");
 
         java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints() ;
-        gbc.fill = gbc.BOTH ;
-        gbc.anchor = gbc.CENTER ;
+        gbc.fill = GridBagConstraints.BOTH ;
+        gbc.anchor = GridBagConstraints.CENTER ;
         gbc.weighty = 100 ;
         gbc.fill = GridBagConstraints.BOTH ;
         gbc.gridheight = 1 ;
@@ -116,8 +132,6 @@ public class OrderDlg extends JDialog {
         addGBComponent(pId, new JLabel( "Id"), gbc, COL1_WIDTH, GridBagConstraints.RELATIVE) ;
         addGBComponent(pId, m_Id, gbc, COL2_WIDTH, GridBagConstraints.REMAINDER) ;
 
-        // create contract panel
-        IBGridBagPanel gbl2 = new IBGridBagPanel( ) ;
         IBGridBagPanel pContractDetails = new IBGridBagPanel();
         pContractDetails.setBorder( BorderFactory.createTitledBorder( "Contract Info") );
         addGBComponent(pContractDetails, new JLabel( "Symbol"), gbc, COL1_WIDTH, GridBagConstraints.RELATIVE );
@@ -183,8 +197,6 @@ public class OrderDlg extends JDialog {
         addGBComponent(pOptionsExercise, new JLabel( "Override (0 or 1)"), gbc, COL1_WIDTH, GridBagConstraints.RELATIVE) ;
         addGBComponent(pOptionsExercise, m_overrideTextField, gbc, COL2_WIDTH, GridBagConstraints.REMAINDER) ;
 
-        // create historical data panel
-        IBGridBagPanel gbl5 = new IBGridBagPanel() ;
         IBGridBagPanel pBackfill = new IBGridBagPanel();
         pBackfill.setBorder( BorderFactory.createTitledBorder( "Historical Data Query") );
         GregorianCalendar gc = new GregorianCalendar();
@@ -269,7 +281,8 @@ public class OrderDlg extends JDialog {
         return val < 10 ? "0" + val : "" + val;
     }
 
-    void onSharesAlloc() {
+    @SuppressWarnings("deprecation")
+	void onSharesAlloc() {
         if ( !m_parent.m_bIsFAAccount ) {
             return;
         }
@@ -282,7 +295,8 @@ public class OrderDlg extends JDialog {
        // m_sharesAllocProfile = dlg.m_rc ? dlg.m_sharesAllocation : "";
     }
 
-    void onAddComboLegs() {
+    @SuppressWarnings("deprecation")
+	void onAddComboLegs() {
         ComboLegDlg m_comboLegDlg = new ComboLegDlg( this);
 
         // Flush the old combo legs, if any
@@ -367,7 +381,8 @@ public class OrderDlg extends JDialog {
         setVisible( false);
     }
 
-    public void show() {
+    @SuppressWarnings("deprecation")
+	public void show() {
         m_rc = false;
         super.show();
     }

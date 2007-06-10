@@ -2,14 +2,27 @@
  * ConnectDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ConnectDlg extends JDialog {
-    public static int LAST_CLIENT_ID = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4425517190728779893L;
+
+	public static int LAST_CLIENT_ID = 0;
 
     JTextField 	m_ipAddress = new JTextField();
     JTextField 	m_port = new JTextField( "7496");

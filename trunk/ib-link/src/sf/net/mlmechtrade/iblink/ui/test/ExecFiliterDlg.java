@@ -4,15 +4,29 @@
  *
  */
 
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import com.ib.client.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import com.ib.client.ExecutionFilter;
 
 public class ExecFiliterDlg extends JDialog {
-    public ExecutionFilter	m_execFilter = new ExecutionFilter();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6826728237383702553L;
+	public ExecutionFilter	m_execFilter = new ExecutionFilter();
     public boolean 		m_rc;
 
     private JTextField 	m_clientID = new JTextField("0");

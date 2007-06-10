@@ -2,14 +2,26 @@
  * LogConfigDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class LogConfigDlg extends JDialog {
-    public static int SYSTEM_LOG = 1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6687298336300462559L;
+	public static int SYSTEM_LOG = 1;
     public static int ERROR_LOG = 2;
     public static int WARN_LOG = 3;
     public static int INFO_LOG = 4;

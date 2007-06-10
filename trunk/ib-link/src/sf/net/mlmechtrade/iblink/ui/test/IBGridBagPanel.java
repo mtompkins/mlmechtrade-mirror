@@ -3,14 +3,21 @@
  *
  */
 
-package TestJavaClient ;
+package sf.net.mlmechtrade.iblink.ui.test ;
 
-import java.awt.* ;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JPanel;
 
 class IBGridBagPanel extends JPanel {
-    private static final Insets oneInsets = new Insets(1, 1, 1, 1);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7939729066605703140L;
+	private static final Insets oneInsets = new Insets(1, 1, 1, 1);
     private GridBagLayout m_layout = new GridBagLayout();
 
     IBGridBagPanel() {

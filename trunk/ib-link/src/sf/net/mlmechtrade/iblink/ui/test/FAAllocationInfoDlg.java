@@ -4,15 +4,25 @@
  *
  */
 
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 public class FAAllocationInfoDlg extends JDialog {
-    IBGridBagPanel mainJPanel = new IBGridBagPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8950330712159646903L;
+	IBGridBagPanel mainJPanel = new IBGridBagPanel();
     IBGridBagPanel faGroupJPanel = new IBGridBagPanel();
     IBGridBagPanel faProfileJPanel = new IBGridBagPanel();
 
