@@ -1,9 +1,9 @@
-package test;
-
-import ibLink.IB;
-import ibLink.IBOrderStatus;
+package sf.net.mlmechtrade.iblink.test;
 
 import java.util.Iterator;
+
+import sf.net.mlmechtrade.iblink.IB;
+import sf.net.mlmechtrade.iblink.IBOrderStatus;
 
 import com.ib.client.Contract;
 import com.ib.client.Order;
