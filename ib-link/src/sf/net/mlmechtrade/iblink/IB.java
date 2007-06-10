@@ -13,7 +13,7 @@ public class IB implements EWrapper {
 	
 	private EClientSocket m_client = new EClientSocket(this);
 	private int id = 0;
-	private HashMap orderStatus = new HashMap();
+	private HashMap<Integer, IBOrderStatus> orderStatus = new HashMap<Integer, IBOrderStatus>();
 	
 	public void connect(String ip, int port, int clientId) 
 	{
