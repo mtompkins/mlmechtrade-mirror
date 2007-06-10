@@ -2,18 +2,34 @@
  * AccountDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
-import javax.swing.*;
-import javax.swing.table.*;
 
-import com.ib.client.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
+import com.ib.client.Contract;
 
 public class AccountDlg extends JDialog {
-    private JTextField 		m_updateTime = new JTextField();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -233529520151262914L;
+	private JTextField 		m_updateTime = new JTextField();
     private JLabel 			m_timeLabel = new JLabel("Update time:");
     private JButton 		m_close = new JButton( "Close");
     private PortfolioTable 	m_portfolioModel = new PortfolioTable();
@@ -85,7 +101,11 @@ public class AccountDlg extends JDialog {
 
 
 class PortfolioTable extends AbstractTableModel {
-    Vector m_allData = new Vector();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4978338509342950730L;
+	Vector<PortfolioTableRow> m_allData = new Vector<PortfolioTableRow>();
 
     void updatePortfolio(Contract contract, int position, double marketPrice, double marketValue,
                          double averageCost, double unrealizedPNL, double realizedPNL, String accountName) {
@@ -221,7 +241,11 @@ class PortfolioTable extends AbstractTableModel {
 }
 
 class AcctValueModel extends AbstractTableModel {
-    Vector m_allData = new Vector();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -849356038692174976L;
+	Vector<AccountTableRow> m_allData = new Vector<AccountTableRow>();
 
     void updateAccountValue(String key, String val, String currency, String accountName) {
          AccountTableRow newData = new AccountTableRow(key, val, currency, accountName);
