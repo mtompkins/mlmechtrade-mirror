@@ -3,21 +3,35 @@
  * ComboLegDlg.java
  *
  */
-package TestJavaClient;
+package sf.net.mlmechtrade.iblink.ui.test;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
-import com.ib.client.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
+import com.ib.client.ComboLeg;
+import com.ib.client.Contract;
 
 public class ComboLegDlg extends JDialog {
-    private static String 	BUY = "BUY";
-    private static String 	SELL = "SELL";
-
-    private JTextField 		m_conId = new JTextField( "0");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3082323895755146826L;
+	private JTextField 		m_conId = new JTextField( "0");
     private JTextField 		m_ratio = new JTextField( "0");
     private JTextField 		m_action = new JTextField( "BUY");
     private JTextField 		m_exchange = new JTextField( "");
@@ -157,7 +171,11 @@ public class ComboLegDlg extends JDialog {
 }
 
 class ComboLegModel extends AbstractTableModel {
-    private Vector  m_allData = new Vector();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6798391599678472055L;
+	private Vector<ComboLeg>  m_allData = new Vector<ComboLeg>();
 
     synchronized public void addComboLeg( ComboLeg leg)
     {
@@ -174,7 +192,7 @@ class ComboLegModel extends AbstractTableModel {
     synchronized public void removeComboLeg( ComboLeg leg)
     {
         for ( int i=0; i < m_allData.size(); i++ ) {
-                if ( leg.equals( (ComboLeg)m_allData.get(i)) ) {
+                if ( leg.equals( m_allData.get(i)) ) {
                         m_allData.remove(i);
                         break;
                 }
@@ -196,7 +214,7 @@ class ComboLegModel extends AbstractTableModel {
     }
 
     synchronized public Object getValueAt(int r, int c) {
-        ComboLeg leg = (ComboLeg)m_allData.get(r);
+        ComboLeg leg = m_allData.get(r);
 
         switch (c) {
             case 0:
@@ -236,7 +254,7 @@ class ComboLegModel extends AbstractTableModel {
         }
     }
 
-    public Vector comboLegModel() {
+    public Vector<ComboLeg> comboLegModel() {
         return m_allData;
     }
 }
