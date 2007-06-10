@@ -1,4 +1,4 @@
-package ibLink;
+package sf.net.mlmechtrade.iblink;
 
 import java.util.HashMap;
 

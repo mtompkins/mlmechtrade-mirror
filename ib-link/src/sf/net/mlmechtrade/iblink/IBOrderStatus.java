@@ -1,4 +1,4 @@
-package ibLink;
+package sf.net.mlmechtrade.iblink;
 
 public class IBOrderStatus {
 	public int orderId; 
