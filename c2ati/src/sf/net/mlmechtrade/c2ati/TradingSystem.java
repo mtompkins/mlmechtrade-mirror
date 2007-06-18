@@ -10,6 +10,13 @@ public class TradingSystem {
 
 	private List<AssetPermition> permitions = new ArrayList<AssetPermition>();
 
+	private List<Long> pendingBlock = new ArrayList<Long>();
+
+	public String toString() {
+		return "TradingSystem: name=" + name + " systemId=" + systemId
+				+ " permitions=" + permitions + " pendingBlock=" + pendingBlock;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -28,5 +35,9 @@ public class TradingSystem {
 
 	public void setSystemId(long systemId) {
 		this.systemId = systemId;
+	}
+
+	public List<Long> getPendingBlock() {
+		return pendingBlock;
 	}
 }

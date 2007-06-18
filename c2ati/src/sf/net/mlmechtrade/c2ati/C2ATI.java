@@ -63,6 +63,8 @@ public class C2ATI {
 
 	private HttpClient client;
 
+	private boolean theFirstPool = true;
+
 	public C2ATI(String eMail, String password, boolean liveType, String host) {
 		this.eMail = eMail;
 		this.password = password;
@@ -85,7 +87,7 @@ public class C2ATI {
 
 		log.info("LOGIN REQUEST : " + request);
 
-		Document response = getResponse(request);
+		Document response = getResponse(request, false);
 
 		// Check error
 		checkError(response);
@@ -281,18 +283,95 @@ public class C2ATI {
 		processRequest(request, "ackcomplete");
 	}
 
-	// TOODO
-	// public List<TradingSystem> requestSystemList() {
-	// // Store Pool Interval
-	// long tmpPoolInterval = this.pollInterval;
-	// this.pollInterval = 120/2 * 1000;
-	// // Template
-	// // Sleep
-	// // Error
-	// // Result
-	// // Restoro Pool Interval
-	// this.pollInterval = tmpPoolInterval;
-	// }
+	public List<TradingSystem> requestSystemList() throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		// Store Pool Interval
+		long tmpPoolInterval = this.pollInterval;
+		this.pollInterval = 120 / 2 * 1000;
+		// Template
+		String requestTemplate = "http://%s:%s?cmd=ackcomplete&session=%s&h=%s";
+		String request = String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, this.sessionId, this.host);
+		// Get response
+		Document response = getResponse(request);
+		// Error
+		checkError(response);
+
+		// Parse document
+		DTMNodeList systems = (DTMNodeList) xPath.evaluate(
+				"//systemList/system", response, XPathConstants.NODESET);
+		// Result
+		List<TradingSystem> result = new ArrayList<TradingSystem>();
+		for (int i = 0; i < systems.getLength(); i++) {
+			TradingSystem tradingSystem = new TradingSystem();
+			result.add(tradingSystem);
+			Node system = systems.item(i);
+			String name = xPath.evaluate("//name", system);
+			tradingSystem.setName(name);
+			String systemIdStr = xPath.evaluate("//systemid", system);
+			long systemId = Long.parseLong(systemIdStr);
+			tradingSystem.setSystemId(systemId);
+			DTMNodeList permitions = (DTMNodeList) xPath.evaluate(
+					"//permissions/asset", system, XPathConstants.NODESET);
+			for (int j = 0; j < permitions.getLength(); j++) {
+				Node permition = systems.item(j);
+				AssetPermition permitionRec = new AssetPermition();
+				tradingSystem.getPermitions().add(permitionRec);
+				// Asset Type
+				String assetTypeStr = xPath.evaluate("//assettype", permition);
+				AssetType assetType = AssetType.valueOf(assetTypeStr);
+				permitionRec.setAssertType(assetType);
+				// Long
+				String longStr = xPath.evaluate("//long", permition);
+				permitionRec.setLongPermitted(longStr.equals("1"));
+				// Short
+				String shortStr = xPath.evaluate("//short", permition);
+				permitionRec.setShortPermittd(shortStr.endsWith("1"));
+			}
+		}
+		// Restoro Pool Interval
+		this.pollInterval = tmpPoolInterval;
+		log.debug(result);
+		return result;
+	}
+
+	public List<TradingSystem> getAllSignals() throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		String requestTemplate = "http://%s:%s?cmd=getallsignals&session=%s&h=%s";
+		String request = String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, this.sessionId, this.host);
+		// Get response
+		Document response = getResponse(request, false);
+		// Check error
+		checkError(response);
+		// Return
+		DTMNodeList systems = (DTMNodeList) xPath.evaluate(
+				"//allPendingSignals/system", response, XPathConstants.NODESET);
+		List<TradingSystem> result = new ArrayList<TradingSystem>();
+		for (int i = 0; i < systems.getLength(); i++) {
+			TradingSystem tradingSystem = new TradingSystem();
+			result.add(tradingSystem);
+			Node system = systems.item(i);
+			// sistemid
+			String systemIdStr = xPath.evaluate("\\sistemid", system);
+			long systemId = Long.parseLong(systemIdStr);
+			tradingSystem.setSystemId(systemId);
+			// Pending Block
+			DTMNodeList signalIds = (DTMNodeList) xPath
+					.evaluate("//pendingblock/signalid", response,
+							XPathConstants.NODESET);
+			for (int j = 0; j < signalIds.getLength(); j++) {
+				String signalIdStr = systems.item(i).getNodeValue();
+				long signalId = Long.parseLong(signalIdStr);
+				tradingSystem.getPendingBlock().add(signalId);
+			}
+		}
+		log.debug(result);
+		return result;
+
+	}
 
 	private void multFillConfirm(Object parameter) throws HttpException,
 			XPathExpressionException, IOException,
@@ -549,6 +628,10 @@ public class C2ATI {
 	}
 
 	private void checkPoolTime() {
+		if (theFirstPool) {
+			theFirstPool = false;
+			return;
+		}
 		long tmpTime = this.clientTime;
 		this.clientTime = System.currentTimeMillis();
 		long delta = tmpTime - this.clientTime - this.pollInterval;

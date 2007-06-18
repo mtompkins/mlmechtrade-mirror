@@ -1,18 +1,23 @@
 package sf.net.mlmechtrade.c2ati;
 
 public class AssetPermition {
-	private AssetType assertType;
+	private AssetType assetType;
 
 	private boolean longPermitted;
 
 	private boolean shortPermittd;
 
-	public AssetType getAssertType() {
-		return assertType;
+	public String toString() {
+		return "AssetPermition: assetType=" + assetType + " longPermitted="
+				+ longPermitted + " shortPermittd=" + shortPermittd;
 	}
 
-	public void setAssertType(AssetType assertType) {
-		this.assertType = assertType;
+	public AssetType getAssertType() {
+		return assetType;
+	}
+
+	public void setAssertType(AssetType assetType) {
+		this.assetType = assetType;
 	}
 
 	public boolean isLongPermitted() {
