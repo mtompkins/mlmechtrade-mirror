@@ -309,9 +309,7 @@ public class C2ATI {
 			Node system = systems.item(i);
 			String name = xPath.evaluate("//name", system);
 			tradingSystem.setName(name);
-			String systemIdStr = xPath.evaluate("//systemid", system);
-			long systemId = Long.parseLong(systemIdStr);
-			tradingSystem.setSystemId(systemId);
+			tradingSystem.setSystemId(getLong("systemid", system));
 			DTMNodeList permitions = (DTMNodeList) xPath.evaluate(
 					"//permissions/asset", system, XPathConstants.NODESET);
 			for (int j = 0; j < permitions.getLength(); j++) {
@@ -355,9 +353,7 @@ public class C2ATI {
 			result.add(tradingSystem);
 			Node system = systems.item(i);
 			// sistemid
-			String systemIdStr = xPath.evaluate("\\sistemid", system);
-			long systemId = Long.parseLong(systemIdStr);
-			tradingSystem.setSystemId(systemId);
+			tradingSystem.setSystemId(getLong("sistemid", system));
 			// Pending Block
 			DTMNodeList signalIds = (DTMNodeList) xPath
 					.evaluate("//pendingblock/signalid", response,
@@ -369,6 +365,73 @@ public class C2ATI {
 			}
 		}
 		log.debug(result);
+		return result;
+	}
+
+	public List<C2SystemState> requestSystemSync() throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		List<C2SystemState> result = new ArrayList<C2SystemState>();
+		String requestTemplate = "http://%s:%s?cmd=requestsystemsync&synctype=system&systemid=all&session=%s&h=%s";
+		String request = String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, this.sessionId, this.host);
+		// Get response
+		Document response = getResponse(request, false);
+		// Check error
+		checkError(response);
+		// Return
+		DTMNodeList systems = (DTMNodeList) xPath.evaluate("//sync/system",
+				response, XPathConstants.NODESET);
+		for (int i = 0; i < systems.getLength(); i++) {
+			C2SystemState c2SystemState = new C2SystemState();
+			result.add(c2SystemState);
+			Node system = systems.item(i);
+			// Sysem ID
+			c2SystemState.setSystemId(getLong("systemid", system));
+			// System Name
+			String systemName = xPath.evaluate("//systemname", system);
+			c2SystemState.setSystemName(systemName);
+			// Time Filter Secs
+			c2SystemState.setTimeFilterSecs(getLong("timefiltersecs", system));
+			// Time Filter Clock
+			String timeFilterClock = xPath
+					.evaluate("//timefilterclock", system);
+			c2SystemState.setTimeFilterClock(timeFilterClock);
+			// Positions
+			DTMNodeList positions = (DTMNodeList) xPath.evaluate("//position",
+					response, XPathConstants.NODESET);
+			for (int j = 0; j < positions.getLength(); j++) {
+				C2Position c2Postion = new C2Position();
+				c2SystemState.getPositions().add(c2Postion);
+				Node positon = positions.item(i);
+				// Symbol
+				String symbol = xPath.evaluate("//symbol", positon);
+				c2Postion.setSymbol(symbol);
+				// AssetType
+				String assetTypeStr = xPath.evaluate("//assettype", positon);
+				c2Postion.setAssetType(AssetType.valueOf(assetTypeStr));
+				// Quant
+				c2Postion.setQuant(getLong("quant", positon));
+				// Underlying
+				String underlying = xPath.evaluate("//underlying", positon);
+				c2Postion.setUnderlying(underlying);
+				// Right
+				String right = xPath.evaluate("//right", positon);
+				c2Postion.setRight(right);
+				// Strike
+				String strike = xPath.evaluate("//strike", positon);
+				c2Postion.setStrike(strike);
+				// Expir
+				String expir = xPath.evaluate("//expir", positon);
+				c2Postion.setExpir(expir);
+				// Exchange
+				String exchange = xPath.evaluate("//exchange", positon);
+				c2Postion.setExchange(exchange);
+				// Market Code
+				String marketCode = xPath.evaluate("//marketcode", positon);
+				c2Postion.setMarketCode(marketCode);
+			}
+		}
 		return result;
 
 	}
@@ -435,16 +498,9 @@ public class C2ATI {
 			throws XPathExpressionException {
 		C2RecentFill fill = new C2RecentFill();
 		result.getResentC2Fills().add(fill);
-		String signalIdStr = xPath.evaluate("//signalid", node);
-		long signalId = Long.parseLong(signalIdStr);
-		fill.setSignalId(signalId);
-		String filledAgoStr = xPath.evaluate("//filledago", node);
-		long filledAgo = Long.parseLong(filledAgoStr);
-		fill.setFilledAgo(filledAgo);
-		String filledPriceStr = xPath.evaluate("//filledprice", node);
-		double filledPrice = Double.parseDouble(filledPriceStr);
-		fill.setFilledPrice(filledPrice);
-
+		fill.setSignalId(getLong("signalid", node));
+		fill.setFilledAgo(getLong("filledago", node));
+		fill.setFilledPrice(getDouble("filledprice", node));
 		// Debug
 		log.debug(fill);
 	}
@@ -452,14 +508,10 @@ public class C2ATI {
 	private void addFillACKToResult(LatestSignals result, Node node)
 			throws XPathExpressionException {
 		FillAcknowledgment ack = new FillAcknowledgment();
-		String sigIdStr = xPath.evaluate("//sigid", node);
-		long sigId = Long.parseLong(sigIdStr);
-		ack.setSigId(sigId);
+		ack.setSigId(getLong("sigid", node));
 		String permId = xPath.evaluate("//permid", node);
 		ack.setPermId(permId);
-		String totalQuantStr = xPath.evaluate("//totalquant", node);
-		long totalQuant = Long.parseLong(totalQuantStr);
-		ack.setTotalQuant(totalQuant);
+		ack.setTotalQuant(getLong("totalquant", node));
 		result.getFillInfoReceived().add(ack);
 
 		// Debug
@@ -468,24 +520,17 @@ public class C2ATI {
 
 	private void addSignalToResult(LatestSignals result, Node node)
 			throws XPathExpressionException {
-		String signalIdStr = xPath.evaluate("//signalid", node);
-		long signalId = Long.parseLong(signalIdStr);
 		Signal signal = new Signal();
-		signal.setSignalid(signalId);
+		signal.setSignalid(getLong("signalid", node));
 		// Put object to structure
-		result.getSignals().put(signalId, signal);
+		result.getSignals().add(signal);
 		// systemname
 		String systemName = xPath.evaluate("//systemname", node);
 		signal.setSystemName(systemName);
 		// systemidnum
-		String systemIdNumStr = xPath.evaluate("//systemidnum", node);
-		// work around of bug (systemid empty)
-		long systemIdNum = Long.parseLong(systemIdNumStr);
-		signal.setSystemIdNum(systemIdNum);
+		signal.setSystemIdNum(getLong("systemidnum", node));
 		// postedwhen
-		String postedWhenStr = xPath.evaluate("//postedwhen", node);
-		long postedWhen = Long.parseLong(postedWhenStr);
-		signal.setPostedWhen(postedWhen);
+		signal.setPostedWhen(getLong("postedwhen", node));
 		// postedhumantime
 		String postedHumanTime = xPath.evaluate("//postedHumanTime", node);
 		signal.setPostedHumanTime(postedHumanTime);
@@ -494,13 +539,9 @@ public class C2ATI {
 		Action action = Action.valueOf(actionStr);
 		signal.setAction(action);
 		// scaledquant
-		String scaledQuantStr = xPath.evaluate("//scaledquant", node);
-		long scaledQuant = Long.parseLong(scaledQuantStr);
-		signal.setScaledQuant(scaledQuant);
+		signal.setScaledQuant(getLong("scaledquant", node));
 		// originalquant
-		String originalQuantStr = xPath.evaluate("//originalquant", node);
-		long originalQuant = Long.parseLong(originalQuantStr);
-		signal.setOriginalQuant(originalQuant);
+		signal.setOriginalQuant(getLong("originalquant", node));
 		// symbol
 		String symbol = xPath.evaluate("//symbol", node);
 		signal.setSymbol(symbol);
@@ -517,13 +558,9 @@ public class C2ATI {
 		OrderType orderType = OrderType.valueOf(orderTypeStr);
 		signal.setOrderType(orderType);
 		// stop
-		String stopStr = xPath.evaluate("//stop", node);
-		double stop = Double.parseDouble(stopStr);
-		signal.setStop(stop);
+		signal.setStop(getDouble("stop", node));
 		// limit
-		String limitStr = xPath.evaluate("//limit", node);
-		double limit = Double.parseDouble(limitStr);
-		signal.setLimit(limit);
+		signal.setLimit(getDouble("limit", node));
 		// tif
 		String tifStr = xPath.evaluate("//tif", node);
 		Duration tif = Duration.valueOf(tifStr);
@@ -692,5 +729,17 @@ public class C2ATI {
 
 	public String getPostedHumanTime() {
 		return postedHumanTime;
+	}
+
+	private long getLong(String field, Node node)
+			throws XPathExpressionException {
+		String tmpStr = xPath.evaluate("//" + field, node);
+		return Long.parseLong(tmpStr);
+	}
+
+	private double getDouble(String path, Node node)
+			throws XPathExpressionException {
+		String tmpStr = xPath.evaluate("//" + path, node);
+		return Double.parseDouble(tmpStr);
 	}
 }

@@ -1,18 +1,15 @@
 package sf.net.mlmechtrade.c2ati;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import sf.net.mlmechtrade.c2ati.Signal;
 
 public class LatestSignals {
 	List<Long> canselListIds = new ArrayList<Long>();
-	
+
 	List<String> canselListPermIds = new ArrayList<String>();
 
-	Map<Long, Signal> signals = new TreeMap<Long, Signal>();
+	List<Signal> signals = new LinkedList<Signal>();
 
 	String ocaChanges;
 
@@ -26,10 +23,6 @@ public class LatestSignals {
 
 	public List<Long> getCanselListIds() {
 		return canselListIds;
-	}
-
-	public Map<Long, Signal> getSignals() {
-		return signals;
 	}
 
 	public String getOcaChanges() {
@@ -58,5 +51,9 @@ public class LatestSignals {
 
 	public List<String> getCanselListPermIds() {
 		return canselListPermIds;
+	}
+
+	public List<Signal> getSignals() {
+		return signals;
 	}
 }
