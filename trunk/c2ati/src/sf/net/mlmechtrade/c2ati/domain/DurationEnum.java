@@ -1,5 +1,5 @@
 package sf.net.mlmechtrade.c2ati.domain;
 
-public enum OrderType {
-	STOP, LIMIT
+public enum DurationEnum {
+	DAY, GTC
 }

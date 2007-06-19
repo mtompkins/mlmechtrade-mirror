@@ -11,6 +11,12 @@ public class FillConfirm {
 
 	private double fillPrice;
 
+	public String toString() {
+		return "FillConfirm: sigId=" + sigId + " permId=" + permId
+				+ " quantity=" + quantity + " brokerageExecutionId="
+				+ brokerageExecutionId + " fillPrice=" + fillPrice;
+	}
+
 	public String getBrokerageExecutionId() {
 		return brokerageExecutionId;
 	}

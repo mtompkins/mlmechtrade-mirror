@@ -1,10 +1,9 @@
 package sf.net.mlmechtrade.c2ati.domain;
 
-
 public class C2Position {
 	private String symbol;
 
-	private AssetType assetType;
+	private AssetEnum assetType;
 
 	private long quant;
 
@@ -20,11 +19,18 @@ public class C2Position {
 
 	private String marketCode;
 
-	public AssetType getAssetType() {
+	public String toString() {
+		return "C2Position: symbol=" + symbol + " assetType=" + assetType
+				+ " quant=" + quant + " underlying=" + underlying + " right="
+				+ right + " strike=" + strike + " expir=" + expir
+				+ " exchange=" + exchange + " marketCode=" + marketCode;
+	}
+
+	public AssetEnum getAssetType() {
 		return assetType;
 	}
 
-	public void setAssetType(AssetType assetType) {
+	public void setAssetType(AssetEnum assetType) {
 		this.assetType = assetType;
 	}
 
