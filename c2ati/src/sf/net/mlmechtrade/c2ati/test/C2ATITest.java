@@ -23,14 +23,14 @@ public class C2ATITest extends TestCase {
 				"login.properties");
 		Properties prop = new Properties();
 		prop.load(is);
-		// Load props
-		String eMail = prop.getProperty("eMail");
-		String password = prop.getProperty("password");
-		String host = prop.getProperty("host", "host");
-		String isLifeAccountStr = prop.getProperty("liveType", "0");
-		boolean isLifeAccount = isLifeAccountStr.equals("1");
-		// Create
-		fixture = new C2ATI(eMail, password, isLifeAccount, host);
+		// Load live props
+		// String eMail = prop.getProperty("eMail");
+		// String password = prop.getProperty("password");
+		// String host = prop.getProperty("host", "host");
+		// String isLifeAccountStr = prop.getProperty("liveType", "0");
+		// boolean isLifeAccount = isLifeAccountStr.equals("1");
+		// Create C2ATI API Class
+		fixture = new C2ATIMockImpl();
 	}
 
 	public void testConnectToCollective() throws XPathExpressionException,

@@ -11,10 +11,8 @@ import org.xml.sax.SAXException;
 import sf.net.mlmechtrade.c2ati.C2ATI;
 
 public class C2ATIMockImpl extends C2ATI {
-
-	public C2ATIMockImpl(String eMail, String password, boolean liveType,
-			String host) {
-		super(eMail, password, liveType, host);
+	public C2ATIMockImpl() {
+		super("C2 eMail", "C2 passwor", false, "host");
 	}
 
 	protected Document getResponse(String request) throws IOException,
@@ -22,4 +20,10 @@ public class C2ATIMockImpl extends C2ATI {
 		return null;
 	}
 
+	protected Document getResponse(String request, boolean isPoolCommand)
+			throws IOException, HttpException, ParserConfigurationException,
+			SAXException {
+		return null;
+	}
+	
 }

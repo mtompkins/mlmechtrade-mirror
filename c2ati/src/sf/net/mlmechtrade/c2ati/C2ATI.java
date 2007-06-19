@@ -641,16 +641,6 @@ public class C2ATI {
 		return getResponse(request, true);
 	}
 
-	protected String readResponse(String request) throws HttpException,
-			IOException {
-		GetMethod get = new GetMethod(request);
-		client.executeMethod(get);
-		// Parse XML
-		String result = get.getResponseBodyAsString();
-		get.releaseConnection();
-		return result;
-	}
-
 	protected Document getResponse(String request, boolean isPoolCommand)
 			throws IOException, HttpException, ParserConfigurationException,
 			SAXException {
