@@ -1,5 +1,5 @@
 package sf.net.mlmechtrade.c2ati.domain;
 
-public enum Action {
+public enum ActionEnum {
 	BTO, BTC, STO, SSHORT, STC;
 }

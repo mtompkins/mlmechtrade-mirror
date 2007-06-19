@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class LatestSignals {
 	List<Long> canselListIds = new ArrayList<Long>();
 
@@ -21,6 +20,15 @@ public class LatestSignals {
 	List<String> completedTradesSigId = new ArrayList<String>();
 
 	List<String> completedTradesSigPerId = new ArrayList<String>();
+
+	public String toString() {
+		return "LatestSignals: canselListIds=" + canselListIds
+				+ " canselListPermIds" + canselListPermIds + " signals="
+				+ signals + " ocaChanges=" + ocaChanges + " fillInfoReceived="
+				+ fillInfoReceived + " resentC2Fills=" + resentC2Fills
+				+ " completedTradesSigId=" + completedTradesSigId
+				+ " completedTradesSigPerId=" + completedTradesSigPerId;
+	}
 
 	public List<Long> getCanselListIds() {
 		return canselListIds;

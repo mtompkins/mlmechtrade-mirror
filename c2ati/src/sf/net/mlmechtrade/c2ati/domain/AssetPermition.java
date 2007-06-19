@@ -2,7 +2,7 @@ package sf.net.mlmechtrade.c2ati.domain;
 
 
 public class AssetPermition {
-	private AssetType assetType;
+	private AssetEnum assetType;
 
 	private boolean longPermitted;
 
@@ -13,11 +13,11 @@ public class AssetPermition {
 				+ longPermitted + " shortPermittd=" + shortPermittd;
 	}
 
-	public AssetType getAssertType() {
+	public AssetEnum getAssertType() {
 		return assetType;
 	}
 
-	public void setAssertType(AssetType assetType) {
+	public void setAssertType(AssetEnum assetType) {
 		this.assetType = assetType;
 	}
 

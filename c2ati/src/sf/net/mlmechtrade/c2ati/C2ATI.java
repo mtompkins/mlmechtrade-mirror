@@ -18,18 +18,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import sf.net.mlmechtrade.c2ati.domain.Action;
+import sf.net.mlmechtrade.c2ati.domain.ActionEnum;
 import sf.net.mlmechtrade.c2ati.domain.AssetPermition;
-import sf.net.mlmechtrade.c2ati.domain.AssetType;
+import sf.net.mlmechtrade.c2ati.domain.AssetEnum;
 import sf.net.mlmechtrade.c2ati.domain.C2Position;
 import sf.net.mlmechtrade.c2ati.domain.C2RecentFill;
 import sf.net.mlmechtrade.c2ati.domain.C2SystemState;
-import sf.net.mlmechtrade.c2ati.domain.Duration;
+import sf.net.mlmechtrade.c2ati.domain.DurationEnum;
 import sf.net.mlmechtrade.c2ati.domain.FillAcknowledgment;
 import sf.net.mlmechtrade.c2ati.domain.FillConfirm;
 import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
-import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmType;
-import sf.net.mlmechtrade.c2ati.domain.OrderType;
+import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum;
+import sf.net.mlmechtrade.c2ati.domain.OrderEnum;
 import sf.net.mlmechtrade.c2ati.domain.Signal;
 import sf.net.mlmechtrade.c2ati.domain.TradingSystem;
 import sf.net.mlmechtrade.c2ati.util.DOMHelper;
@@ -256,7 +256,7 @@ public class C2ATI {
 	}
 
 	public void multFillConfirm(List<FillConfirm> fillConfirmList,
-			MultFillConfirmType type) throws HttpException,
+			MultFillConfirmEnum type) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 
@@ -332,7 +332,7 @@ public class C2ATI {
 				tradingSystem.getPermitions().add(permitionRec);
 				// Asset Type
 				String assetTypeStr = xPath.evaluate("//assettype", permition);
-				AssetType assetType = AssetType.valueOf(assetTypeStr);
+				AssetEnum assetType = AssetEnum.valueOf(assetTypeStr);
 				permitionRec.setAssertType(assetType);
 				// Long
 				String longStr = xPath.evaluate("//long", permition);
@@ -423,7 +423,7 @@ public class C2ATI {
 				c2Postion.setSymbol(symbol);
 				// AssetType
 				String assetTypeStr = xPath.evaluate("//assettype", positon);
-				c2Postion.setAssetType(AssetType.valueOf(assetTypeStr));
+				c2Postion.setAssetType(AssetEnum.valueOf(assetTypeStr));
 				// Quant
 				c2Postion.setQuant(getLong("quant", positon));
 				// Underlying
@@ -465,12 +465,12 @@ public class C2ATI {
 	}
 
 	private String getFillDataString(List<FillConfirm> fillConfirmList,
-			MultFillConfirmType type) {
+			MultFillConfirmEnum type) {
 		String result = "";
 		for (FillConfirm confirm : fillConfirmList) {
 			result += "&filldata=";
 			// Signal ID or Permanent ID
-			result += type == MultFillConfirmType.mult2fillconfirm ? confirm
+			result += type == MultFillConfirmEnum.mult2fillconfirm ? confirm
 					.getSigId() : confirm.getPermId();
 			// Separator
 			result += MULT_FILL_CONFIRM_SEPARATOR;
@@ -550,7 +550,7 @@ public class C2ATI {
 		signal.setPostedHumanTime(postedHumanTime);
 		// action
 		String actionStr = xPath.evaluate("//action", node);
-		Action action = Action.valueOf(actionStr);
+		ActionEnum action = ActionEnum.valueOf(actionStr);
 		signal.setAction(action);
 		// scaledquant
 		signal.setScaledQuant(getLong("scaledquant", node));
@@ -561,7 +561,7 @@ public class C2ATI {
 		signal.setSymbol(symbol);
 		// assettype
 		String assetTypeStr = xPath.evaluate("//assettype", node);
-		AssetType assetType = AssetType.valueOf(assetTypeStr);
+		AssetEnum assetType = AssetEnum.valueOf(assetTypeStr);
 		signal.setAssetType(assetType);
 		// mutualfund
 		String mutualFundStr = xPath.evaluate("//mutualfund", node);
@@ -569,7 +569,7 @@ public class C2ATI {
 		signal.setMutualFund(mutualFund);
 		// ordertype
 		String orderTypeStr = xPath.evaluate("//ordertype", node);
-		OrderType orderType = OrderType.valueOf(orderTypeStr);
+		OrderEnum orderType = OrderEnum.valueOf(orderTypeStr);
 		signal.setOrderType(orderType);
 		// stop
 		signal.setStop(getDouble("stop", node));
@@ -577,7 +577,7 @@ public class C2ATI {
 		signal.setLimit(getDouble("limit", node));
 		// tif
 		String tifStr = xPath.evaluate("//tif", node);
-		Duration tif = Duration.valueOf(tifStr);
+		DurationEnum tif = DurationEnum.valueOf(tifStr);
 		signal.setTif(tif);
 		// underlying
 		String underlying = xPath.evaluate("//underlying", node);

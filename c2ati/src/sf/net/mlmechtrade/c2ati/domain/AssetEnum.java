@@ -1,5 +1,5 @@
 package sf.net.mlmechtrade.c2ati.domain;
 
-public enum AssetType {
+public enum AssetEnum {
 	stock, futures, options, forex
 }

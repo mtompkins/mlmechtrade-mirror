@@ -3,7 +3,6 @@ package sf.net.mlmechtrade.c2ati.domain;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class C2SystemState {
 	private long systemId;
 
@@ -14,6 +13,12 @@ public class C2SystemState {
 	private String timeFilterClock;
 
 	List<C2Position> positions = new LinkedList<C2Position>();
+
+	public String toString() {
+		return "C2SystemState: systemId" + systemId + " systemName="
+				+ systemName + " timeFilterSecs=" + timeFilterSecs
+				+ " timeFilterClock=" + timeFilterClock;
+	}
 
 	public long getSystemId() {
 		return systemId;

@@ -14,7 +14,7 @@ public class Signal {
 
 	private String postedHumanTime;
 
-	private Action action;
+	private ActionEnum action;
 
 	private long scaledQuant;
 
@@ -22,17 +22,17 @@ public class Signal {
 
 	private String symbol;
 
-	private AssetType assetType;
+	private AssetEnum assetType;
 
 	private boolean mutualFund;
 
-	private OrderType orderType;
+	private OrderEnum orderType;
 
 	private double stop;
 
 	private double limit;
 
-	private Duration tif;
+	private DurationEnum tif;
 
 	private String underlying;
 
@@ -94,19 +94,19 @@ public class Signal {
 		return result + "\n";
 	}
 
-	public Action getAction() {
+	public ActionEnum getAction() {
 		return action;
 	}
 
-	public void setAction(Action action) {
+	public void setAction(ActionEnum action) {
 		this.action = action;
 	}
 
-	public AssetType getAssetType() {
+	public AssetEnum getAssetType() {
 		return assetType;
 	}
 
-	public void setAssetType(AssetType assetType) {
+	public void setAssetType(AssetEnum assetType) {
 		this.assetType = assetType;
 	}
 
@@ -190,11 +190,11 @@ public class Signal {
 		this.ocagroup = ocagroup;
 	}
 
-	public OrderType getOrderType() {
+	public OrderEnum getOrderType() {
 		return orderType;
 	}
 
-	public void setOrderType(OrderType orderType) {
+	public void setOrderType(OrderEnum orderType) {
 		this.orderType = orderType;
 	}
 
@@ -278,11 +278,11 @@ public class Signal {
 		this.systemName = systemName;
 	}
 
-	public Duration getTif() {
+	public DurationEnum getTif() {
 		return tif;
 	}
 
-	public void setTif(Duration tif) {
+	public void setTif(DurationEnum tif) {
 		this.tif = tif;
 	}
 
