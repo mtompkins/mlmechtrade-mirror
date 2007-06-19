@@ -2,7 +2,6 @@ package sf.net.mlmechtrade.c2ati.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,7 +17,7 @@ public class DOMHelper {
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
 
-		InputStream stream = new StringBufferInputStream(xmlString);
+		InputStream stream = new java.io.StringBufferInputStream(xmlString);
 		return parser.parse(stream);
 	}
 
