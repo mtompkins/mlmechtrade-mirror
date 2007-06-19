@@ -1,8 +1,6 @@
 package sf.net.mlmechtrade.c2ati.test;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -19,10 +17,10 @@ public class C2ATITest extends TestCase {
 	C2ATI fixture;
 
 	public void setUp() throws IOException {
-		InputStream is = getClass().getClassLoader().getResourceAsStream(
-				"login.properties");
-		Properties prop = new Properties();
-		prop.load(is);
+		// InputStream is = getClass().getClassLoader().getResourceAsStream(
+		// "login.properties");
+		// Properties prop = new Properties();
+		// prop.load(is);
 		// Load live props
 		// String eMail = prop.getProperty("eMail");
 		// String password = prop.getProperty("password");
