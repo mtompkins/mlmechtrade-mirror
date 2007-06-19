@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.domain;
 
 public class FillAcknowledgment {
 	private long sigId;

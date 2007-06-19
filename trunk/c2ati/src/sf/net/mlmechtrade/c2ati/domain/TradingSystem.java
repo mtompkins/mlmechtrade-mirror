@@ -1,7 +1,8 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TradingSystem {
 	private String name;

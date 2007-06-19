@@ -1,6 +1,7 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.domain;
 
 import org.w3c.dom.Node;
+
 
 public class Signal {
 	private String systemName;

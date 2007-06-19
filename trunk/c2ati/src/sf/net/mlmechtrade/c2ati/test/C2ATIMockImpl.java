@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.test;
 
 import java.io.IOException;
 
@@ -8,9 +8,11 @@ import org.apache.commons.httpclient.HttpException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class C2ATIMOCK extends C2ATI {
+import sf.net.mlmechtrade.c2ati.C2ATI;
 
-	public C2ATIMOCK(String eMail, String password, boolean liveType,
+public class C2ATIMockImpl extends C2ATI {
+
+	public C2ATIMockImpl(String eMail, String password, boolean liveType,
 			String host) {
 		super(eMail, password, liveType, host);
 	}
