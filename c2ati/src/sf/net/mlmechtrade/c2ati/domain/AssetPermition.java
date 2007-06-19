@@ -1,4 +1,5 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.domain;
+
 
 public class AssetPermition {
 	private AssetType assetType;

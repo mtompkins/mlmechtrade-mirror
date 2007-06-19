@@ -18,6 +18,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import sf.net.mlmechtrade.c2ati.domain.Action;
+import sf.net.mlmechtrade.c2ati.domain.AssetPermition;
+import sf.net.mlmechtrade.c2ati.domain.AssetType;
+import sf.net.mlmechtrade.c2ati.domain.C2Position;
+import sf.net.mlmechtrade.c2ati.domain.C2RecentFill;
+import sf.net.mlmechtrade.c2ati.domain.C2SystemState;
+import sf.net.mlmechtrade.c2ati.domain.Duration;
+import sf.net.mlmechtrade.c2ati.domain.FillAcknowledgment;
+import sf.net.mlmechtrade.c2ati.domain.FillConfirm;
+import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
+import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmType;
+import sf.net.mlmechtrade.c2ati.domain.OrderType;
+import sf.net.mlmechtrade.c2ati.domain.Signal;
+import sf.net.mlmechtrade.c2ati.domain.TradingSystem;
 import sf.net.mlmechtrade.c2ati.util.DOMHelper;
 
 import com.sun.org.apache.xml.internal.dtm.ref.DTMNodeList;

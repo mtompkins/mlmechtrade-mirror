@@ -7,12 +7,13 @@ import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import junit.framework.TestCase;
+
 import org.xml.sax.SAXException;
 
 import sf.net.mlmechtrade.c2ati.C2ATI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
-import sf.net.mlmechtrade.c2ati.LatestSignals;
-import junit.framework.TestCase;
+import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
 
 public class C2ATITest extends TestCase {
 	C2ATI fixture;
@@ -36,6 +37,7 @@ public class C2ATITest extends TestCase {
 			IOException, ParserConfigurationException, SAXException, C2ATIError {
 		fixture.login();
 		LatestSignals signals = fixture.latestSignals();
+		assertNotNull(signals);
 		fixture.logOff();
 	}
 }

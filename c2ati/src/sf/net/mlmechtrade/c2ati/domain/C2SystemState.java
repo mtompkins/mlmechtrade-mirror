@@ -1,7 +1,8 @@
-package sf.net.mlmechtrade.c2ati;
+package sf.net.mlmechtrade.c2ati.domain;
 
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class C2SystemState {
 	private long systemId;
