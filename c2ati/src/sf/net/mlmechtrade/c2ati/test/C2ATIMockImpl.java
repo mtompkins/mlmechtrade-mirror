@@ -1,6 +1,7 @@
 package sf.net.mlmechtrade.c2ati.test;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -9,6 +10,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import sf.net.mlmechtrade.c2ati.C2ATI;
+import sf.net.mlmechtrade.c2ati.util.DOMHelper;
 
 public class C2ATIMockImpl extends C2ATI {
 	public C2ATIMockImpl() {
@@ -17,13 +19,15 @@ public class C2ATIMockImpl extends C2ATI {
 
 	protected Document getResponse(String request) throws IOException,
 			HttpException, ParserConfigurationException, SAXException {
-		return null;
+		return getResponse(request, true);
 	}
 
 	protected Document getResponse(String request, boolean isPoolCommand)
 			throws IOException, HttpException, ParserConfigurationException,
 			SAXException {
-		return null;
+		String command = TestUtil.getCmd(request);
+		InputStream is = getClass().getClassLoader().getResourceAsStream(
+				"test/" + command + ".xml");
+		return DOMHelper.parse(is);
 	}
-	
 }
