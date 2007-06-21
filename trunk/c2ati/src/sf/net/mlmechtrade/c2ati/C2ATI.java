@@ -498,13 +498,8 @@ public class C2ATI {
 
 	private void sinchronizeServerState(Document response)
 			throws XPathExpressionException {
-		String tmp;
-		tmp = xPath.evaluate("//pollinterval", response);
-		this.pollInterval = Long.parseLong(tmp);
-
-		tmp = xPath.evaluate("//servertime", response);
-		this.serverTime = Long.parseLong(tmp);
-
+		this.pollInterval = getLong("pollinterval", response);
+		this.serverTime = getLong("servertime", response);
 		this.postedHumanTime = xPath.evaluate("//humantime", response);
 	}
 

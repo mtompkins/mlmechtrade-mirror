@@ -1,0 +1,20 @@
+<collective2>
+<status>OK</status>
+<error>
+<code>0</code>
+</error>
+<data>
+   <session>267127353762716967</session>
+    <first>P</first>
+    <last>B</last>
+
+    <redirectip>64.68.145.33</redirectip>
+    <redirectport>7878</redirectport>
+    <pollinterval>7000</pollinterval>
+    <servertime>1181585143</servertime>
+    <humantime>2007-06-11 14:05:43</humantime>
+    
+
+</data>
+
+</collective2>
