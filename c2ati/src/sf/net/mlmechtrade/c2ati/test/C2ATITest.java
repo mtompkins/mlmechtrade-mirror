@@ -33,8 +33,10 @@ public class C2ATITest extends TestCase {
 		fixture.login();
 		fixture.logOff();
 	}
-	
-	public void testLatestSignals() throws HttpException, XPathExpressionException, IOException, ParserConfigurationException, SAXException, C2ATIError {
+
+	public void testLatestSignals() throws HttpException,
+			XPathExpressionException, IOException,
+			ParserConfigurationException, SAXException, C2ATIError {
 		LatestSignals signals = fixture.latestSignals();
 		assertNotNull(signals);
 		// canselListIds
@@ -51,62 +53,53 @@ public class C2ATITest extends TestCase {
 		List<Signal> sSignals = signals.getSignals();
 		assertEquals(4, sSignals.size());
 		testSignal(sSignals);
+		xxxxxxxxxxxxxxxx Left Intentionaly
 	}
 
 	private void testSignal(List<Signal> signals) {
 		Signal signal = signals.get(0);
 		assertEquals("XXX", signal.getSystemName());
 		assertEquals(2272, signal.getSystemIdNum());
-//		assertEquals(267066, signal.getSignalid());
-//		assertEquals(1181568629, signal.getPostedWhen());
-//		assertEquals("2007-06-11 09:30:29", signal.getPostedHumanTime());
-//		assertEquals(ActionEnum.SSHORT, signal.getAction());
-//		assertEquals(33, signal.getScaledQuant());
-//		private long scaledQuant;
-//
-//		private long originalQuant;
-//
-//		private String symbol;
-//
-//		private AssetEnum assetType;
-//
-//		private boolean mutualFund;
-//
-//		private OrderEnum orderType;
-//
-//		private double stop;
-//
-//		private double limit;
-//
-//		private DurationEnum tif;
-//
-//		private String underlying;
-//
-//		private String right;
-//
-//		private String strike;
-//
-//		private String expir;
-//
-//		private String exchange;
-//
-//		private String marketcode;
-//
-//		private String ocagroup;
-//
-//		private Node conditionalUpon;
-//
-//		private String commentary;
-//
-//		private String[] matchingOpenSigsSigId;
-//
-//		private String[] matchingOpenSigsPermId;		
-		
+		assertEquals(267066, signal.getSignalid());
+		assertEquals(1181568629, signal.getPostedWhen());
+		assertEquals("2007-06-11 09:30:29", signal.getPostedHumanTime());
+		assertEquals(ActionEnum.SSHORT, signal.getAction());
+		assertEquals(33, signal.getScaledQuant());
+		assertEquals(320, signal.getOriginalQuant());
+		assertEquals("IBM", signal.getSymbol());
+		assertEquals(AssetEnum.stock, signal.getAssetType());
+		assertEquals(false, signal.isMutualFund());
+		assertEquals(OrderEnum.STOP, signal.getOrderType());
+		assertEquals(30.66, signal.getStop());
+		assertEquals(0.0, signal.getLimit());
+		assertEquals(DurationEnum.DAY, signal.getTif());
+		assertEquals("", signal.getUnderlying());
+		assertEquals("", signal.getRight());
+		assertEquals("0", signal.getStrike());
+		assertEquals("", signal.getExpir());
+		assertEquals("", signal.getExchange());
+		assertEquals("", signal.getMarketcode());
+		assertEquals("", signal.getOcagroup());
+		assertEquals("", signal.getConditionalUpon().getTextContent());
+		assertEquals("", signal.getCommentary());
+		Long[] matchingOpenSigsSigId = signal.getMatchingOpenSigsSigId();
+		assertEquals(2, matchingOpenSigsSigId.length);
+		assertEquals(new Long(1234L), matchingOpenSigsSigId[0]);
+		assertEquals(new Long(5678L), matchingOpenSigsSigId[1]);
+		String[] matchingOpenSigsPermId = signal.getMatchingOpenSigsPermId();
+		assertEquals(2, matchingOpenSigsPermId.length);
+		assertEquals("abcd-efg", matchingOpenSigsPermId[0]);
+		assertEquals("zxy-ytr", matchingOpenSigsPermId[1]);
+		signal = signals.get(1);
+		assertEquals(ActionEnum.BTO, signal.getAction());
+		signal = signals.get(3);
+		assertEquals(DurationEnum.GTC, signal.getTif());
+		assertEquals(OrderEnum.LIMIT, signal.getOrderType());
+		assertEquals(0.0, signal.getStop());
+		assertEquals(36.56, signal.getLimit());
 	}
 
 }
-
-
 
 // InputStream is = getClass().getClassLoader().getResourceAsStream(
 // "login.properties");
