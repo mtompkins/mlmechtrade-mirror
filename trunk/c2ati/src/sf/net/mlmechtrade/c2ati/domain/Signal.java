@@ -52,7 +52,7 @@ public class Signal {
 
 	private String commentary;
 
-	private String[] matchingOpenSigsSigId;
+	private Long[] matchingOpenSigsSigId;
 
 	private String[] matchingOpenSigsPermId;
 
@@ -84,7 +84,7 @@ public class Signal {
 				+ conditionalUpon.getTextContent();
 		result += "\n" + "Commentary        = " + commentary;
 		result += "\n" + "Matching Open Signal IDs = ";
-		for (String openSigId : matchingOpenSigsSigId) {
+		for (long openSigId : matchingOpenSigsSigId) {
 			result += " " + openSigId;
 		}
 		result += "\n" + "Matching Open Permanent Signal IDs =";
@@ -166,11 +166,11 @@ public class Signal {
 		this.matchingOpenSigsPermId = matchingOpenSigsPermId;
 	}
 
-	public String[] getMatchingOpenSigsSigId() {
+	public Long[] getMatchingOpenSigsSigId() {
 		return matchingOpenSigsSigId;
 	}
 
-	public void setMatchingOpenSigsSigId(String[] matchingOpenSigsSigId) {
+	public void setMatchingOpenSigsSigId(Long[] matchingOpenSigsSigId) {
 		this.matchingOpenSigsSigId = matchingOpenSigsSigId;
 	}
 

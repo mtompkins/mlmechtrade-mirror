@@ -498,9 +498,9 @@ public class C2ATI {
 
 	private void sinchronizeServerState(Document response)
 			throws XPathExpressionException {
-		this.pollInterval = getLong("pollinterval", response);
-		this.serverTime = getLong("servertime", response);
-		this.postedHumanTime = xPath.evaluate("//humantime", response);
+		this.pollInterval = getLong("//data/pollinterval", response);
+		this.serverTime = getLong("//data/servertime", response);
+		this.postedHumanTime = xPath.evaluate("//data/humantime", response);
 	}
 
 	private void addRecentC2FillsToResult(LatestSignals result, Node node)
@@ -530,7 +530,6 @@ public class C2ATI {
 	private void addSignalToResult(LatestSignals result, Node node)
 			throws XPathExpressionException {
 		Signal signal = new Signal();
-		signal.setSignalid(getLong("signalid", node));
 		// Put object to structure
 		result.getSignals().add(signal);
 		// systemname
@@ -538,13 +537,15 @@ public class C2ATI {
 		signal.setSystemName(systemName);
 		// systemidnum
 		signal.setSystemIdNum(getLong("systemidnum", node));
+		// signalid
+		signal.setSignalid(getLong("signalid", node));
 		// postedwhen
 		signal.setPostedWhen(getLong("postedwhen", node));
 		// postedhumantime
-		String postedHumanTime = xPath.evaluate("//postedHumanTime", node);
+		String postedHumanTime = xPath.evaluate("postedhumantime", node);
 		signal.setPostedHumanTime(postedHumanTime);
 		// action
-		String actionStr = xPath.evaluate("//action", node);
+		String actionStr = xPath.evaluate("action", node);
 		ActionEnum action = ActionEnum.valueOf(actionStr);
 		signal.setAction(action);
 		// scaledquant
@@ -552,18 +553,18 @@ public class C2ATI {
 		// originalquant
 		signal.setOriginalQuant(getLong("originalquant", node));
 		// symbol
-		String symbol = xPath.evaluate("//symbol", node);
+		String symbol = xPath.evaluate("symbol", node);
 		signal.setSymbol(symbol);
 		// assettype
-		String assetTypeStr = xPath.evaluate("//assettype", node);
+		String assetTypeStr = xPath.evaluate("assettype", node);
 		AssetEnum assetType = AssetEnum.valueOf(assetTypeStr);
 		signal.setAssetType(assetType);
 		// mutualfund
-		String mutualFundStr = xPath.evaluate("//mutualfund", node);
+		String mutualFundStr = xPath.evaluate("mutualfund", node);
 		boolean mutualFund = mutualFundStr.equals("1");
 		signal.setMutualFund(mutualFund);
 		// ordertype
-		String orderTypeStr = xPath.evaluate("//ordertype", node);
+		String orderTypeStr = xPath.evaluate("ordertype", node);
 		OrderEnum orderType = OrderEnum.valueOf(orderTypeStr);
 		signal.setOrderType(orderType);
 		// stop
@@ -571,56 +572,53 @@ public class C2ATI {
 		// limit
 		signal.setLimit(getDouble("limit", node));
 		// tif
-		String tifStr = xPath.evaluate("//tif", node);
+		String tifStr = xPath.evaluate("tif", node);
 		DurationEnum tif = DurationEnum.valueOf(tifStr);
 		signal.setTif(tif);
 		// underlying
-		String underlying = xPath.evaluate("//underlying", node);
+		String underlying = xPath.evaluate("underlying", node);
 		signal.setUnderlying(underlying);
 		// right
-		String right = xPath.evaluate("//right", node);
+		String right = xPath.evaluate("right", node);
 		signal.setRight(right);
 		// strike
-		String strike = xPath.evaluate("//strike", node);
+		String strike = xPath.evaluate("strike", node);
 		signal.setStrike(strike);
 		// expir
-		String expir = xPath.evaluate("//expir", node);
+		String expir = xPath.evaluate("expir", node);
 		signal.setExpir(expir);
 		// exchange
-		String exchange = xPath.evaluate("//exchange", node);
+		String exchange = xPath.evaluate("exchange", node);
 		signal.setExchange(exchange);
 		// marketcode
-		String marketcode = xPath.evaluate("//marketcode", node);
+		String marketcode = xPath.evaluate("marketcode", node);
 		signal.setMarketcode(marketcode);
 		// ocagroup
-		String ocagroup = xPath.evaluate("//ocagroup", node);
+		String ocagroup = xPath.evaluate("ocagroup", node);
 		signal.setOcagroup(ocagroup);
 		// conditionalupon
-		Node conditionalUpon = (Node) xPath.evaluate("//conditionalupon", node,
+		Node conditionalUpon = (Node) xPath.evaluate("conditionalupon", node,
 				XPathConstants.NODE);
 		signal.setConditionalUpon(conditionalUpon);
 		// commentary
-		String commentary = xPath.evaluate("//commentary", node);
+		String commentary = xPath.evaluate("commentary", node);
 		signal.setCommentary(commentary);
 		// matchingOpenSigs
 		DTMNodeList matchingOpenSigs = (DTMNodeList) xPath.evaluate(
 				"//matchingOpenSigs/match", node, XPathConstants.NODESET);
-		ArrayList<String> matchingOpenSigIdArr = new ArrayList<String>();
+		ArrayList<Long> matchingOpenSigIdArr = new ArrayList<Long>();
 		ArrayList<String> matchingOpenSigPermIdsArr = new ArrayList<String>();
 		for (int i = 0; i < matchingOpenSigs.getLength(); i++) {
 			Node matchingOpenSig = matchingOpenSigs.item(i);
-			String sigId = xPath.evaluate("//sigid", matchingOpenSig);
-			if (sigId.length() > 0) {
-				matchingOpenSigIdArr.add(sigId);
-			}
-			String permId = xPath.evaluate("//permid", matchingOpenSig);
+			matchingOpenSigIdArr.add(getLong("sigid", matchingOpenSig));
+			String permId = xPath.evaluate("permid", matchingOpenSig);
 			if (permId.length() > 0) {
 				matchingOpenSigPermIdsArr.add(permId);
 			}
 		}
 
-		String[] matchingOpenSigsSigIds = matchingOpenSigIdArr
-				.toArray(new String[matchingOpenSigIdArr.size()]);
+		Long[] matchingOpenSigsSigIds = matchingOpenSigIdArr
+				.toArray(new Long[matchingOpenSigIdArr.size()]);
 		signal.setMatchingOpenSigsSigId(matchingOpenSigsSigIds);
 
 		String[] MatchingOpenSigsPermIds = matchingOpenSigPermIdsArr
@@ -732,13 +730,14 @@ public class C2ATI {
 
 	private long getLong(String field, Node node)
 			throws XPathExpressionException {
-		String tmpStr = xPath.evaluate("//" + field, node);
+		// String tmpStr = xPath.evaluate("//" + field, node);
+		String tmpStr = xPath.evaluate(field, node);
 		return Long.parseLong(tmpStr);
 	}
 
 	private double getDouble(String path, Node node)
 			throws XPathExpressionException {
-		String tmpStr = xPath.evaluate("//" + path, node);
+		String tmpStr = xPath.evaluate(path, node);
 		return Double.parseDouble(tmpStr);
 	}
 }
