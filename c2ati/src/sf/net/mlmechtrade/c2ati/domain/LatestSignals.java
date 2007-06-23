@@ -15,7 +15,7 @@ public class LatestSignals {
 
 	List<C2RecentFill> resentC2Fills = new ArrayList<C2RecentFill>();
 
-	List<String> completedTradesSigId = new ArrayList<String>();
+	List<Long> completedTradesSigId = new ArrayList<Long>();
 
 	List<String> completedTradesSigPerId = new ArrayList<String>();
 
@@ -40,7 +40,7 @@ public class LatestSignals {
 		return resentC2Fills;
 	}
 
-	public List<String> getCompletedTradesSigId() {
+	public List<Long> getCompletedTradesSigId() {
 		return completedTradesSigId;
 	}
 

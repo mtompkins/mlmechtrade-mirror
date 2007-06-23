@@ -56,14 +56,23 @@ public class C2ATITest extends TestCase {
 		assertEquals(4, sSignals.size());
 		testSignal(sSignals);
 		// fillInfoReceived
-		List<FillAcknowledgment> fillInfoReceived = signals.getFillInfoReceived();
+		List<FillAcknowledgment> fillInfoReceived = signals
+				.getFillInfoReceived();
 		assertEquals(2, fillInfoReceived.size());
 		testFillInfoReceived(fillInfoReceived);
 		// resentC2Fills
-		List<C2RecentFill> recentC2Fills = signals.getResentC2Fills(); 
+		List<C2RecentFill> recentC2Fills = signals.getResentC2Fills();
 		assertEquals(2, recentC2Fills.size());
 		testRecentC2Fills(recentC2Fills);
-		
+		// completedTradesSigId
+		List<Long> completedTradesSigId = signals.getCompletedTradesSigId();
+		assertEquals(2, completedTradesSigId.size());
+		assertEquals(new Long(12001), completedTradesSigId.get(0));
+		assertEquals(new Long(12004), completedTradesSigId.get(1));
+		// completedTradesSigPerId
+		List<String> completedTradesSigPerId = signals
+				.getCompletedTradesSigPerId();
+		assertEquals(2, completedTradesSigId.size());
 	}
 
 	private void testRecentC2Fills(List<C2RecentFill> recentC2Fills) {
@@ -77,9 +86,6 @@ public class C2ATITest extends TestCase {
 		assertEquals("DDD", recentC2Fill.getPermId());
 		assertEquals(83072, recentC2Fill.getFilledAgo());
 		assertEquals(11.11, recentC2Fill.getFilledPrice());
-
-
-
 	}
 
 	private void testFillInfoReceived(List<FillAcknowledgment> fillInfoReceived) {
@@ -90,8 +96,8 @@ public class C2ATITest extends TestCase {
 		fillAcknowledment = fillInfoReceived.get(1);
 		assertEquals(222, fillAcknowledment.getSigId());
 		assertEquals("bbb", fillAcknowledment.getPermId());
-		assertEquals(20, fillAcknowledment.getTotalQuant());		
-		
+		assertEquals(20, fillAcknowledment.getTotalQuant());
+
 	}
 
 	private void testSignal(List<Signal> signals) {
