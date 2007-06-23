@@ -12,7 +12,6 @@ public class AllTests {
 		suite.addTestSuite(C2ATIErrorTest.class);
 		suite.addTestSuite(C2ATITest.class);
 		suite.addTestSuite(c2ATISyncTest.class);
-		suite.addTestSuite(TestUtil.class);
 		// $JUnit-END$
 		return suite;
 	}
