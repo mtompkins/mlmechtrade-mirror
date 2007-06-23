@@ -260,6 +260,11 @@ public class C2ATI {
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 
+		String request = multFillConfirmCommandString(fillConfirmList, type);
+		processRequest(request, type.toString());
+	}
+
+	public String multFillConfirmCommandString(List<FillConfirm> fillConfirmList, MultFillConfirmEnum type) {
 		// Template
 		String requestTemplate = "http://%s:%s?cmd=" + type
 				+ "&session=%s&h=%s";
@@ -271,9 +276,7 @@ public class C2ATI {
 
 		// Live parameter
 		request += "&live=" + (this.lifeType ? "1" : "0");
-
-		// Process request
-		processRequest(request, type.toString());
+		return request;
 	}
 
 	public void multFillConfirmSigId(long sigId) throws HttpException,
