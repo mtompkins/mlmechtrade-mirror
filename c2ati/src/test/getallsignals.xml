@@ -1,40 +1,24 @@
 <collective2>
-<status>OK</status>
-<error>
-<code>0</code>
-</error>
-<data>
-<allPendingSignals>
-<system>
-   <systemid>15816213</systemid>
-   <pendingblock>
-   <signalid>26869706</signalid>
-
-   <signalid>26869709</signalid>
-   <signalid>26869712</signalid>
-   <signalid>26869715</signalid>
-   <signalid>26869718</signalid>
-   <signalid>26869721</signalid>
-   <signalid>26869724</signalid>
-
-   <signalid>26869727</signalid>
-   <signalid>26869730</signalid>
-   <signalid>26869733</signalid>
-   <signalid>26869737</signalid>
-   <signalid>26869740</signalid>
-   <signalid>26869743</signalid>
-
-   <signalid>26869746</signalid>
-   <signalid>26655693</signalid>
-   <signalid>26766996</signalid>
-   <signalid>26767074</signalid>
-   <signalid>26767168</signalid>
-   <signalid>26804963</signalid>
-
-   <signalid>26804975</signalid>
-   </pendingblock>
-</system>
-</allPendingSignals>
-
-</data>
+	<status>OK</status>
+	<error>
+		<code>0</code>
+	</error>
+	<data>
+		<allPendingSignals>
+			<system>
+				<systemid>15816213</systemid>
+				<pendingblock>
+					<signalid>26869706</signalid>
+					<signalid>26869709</signalid>
+				</pendingblock>
+			</system>
+			<system>
+				<systemid>2423423</systemid>
+				<pendingblock>
+					<signalid>26863333</signalid>
+					<signalid>26844444</signalid>
+				</pendingblock>
+			</system>
+		</allPendingSignals>
+	</data>
 </collective2>
