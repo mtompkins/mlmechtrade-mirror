@@ -264,7 +264,8 @@ public class C2ATI {
 		processRequest(request, type.toString());
 	}
 
-	public String multFillConfirmCommandString(List<FillConfirm> fillConfirmList, MultFillConfirmEnum type) {
+	public String multFillConfirmCommandString(
+			List<FillConfirm> fillConfirmList, MultFillConfirmEnum type) {
 		// Template
 		String requestTemplate = "http://%s:%s?cmd=" + type
 				+ "&session=%s&h=%s";
@@ -469,9 +470,12 @@ public class C2ATI {
 
 	private String getFillDataString(List<FillConfirm> fillConfirmList,
 			MultFillConfirmEnum type) {
-		String result = "";
-		for (FillConfirm confirm : fillConfirmList) {
-			result += "&filldata=";
+		if (fillConfirmList.size() == 0) {
+			return "";
+		}
+		String result = "&filldata=";
+		for (int i = 0; i < fillConfirmList.size(); i++) {
+			FillConfirm confirm = fillConfirmList.get(i);
 			// Signal ID or Permanent ID
 			result += type == MultFillConfirmEnum.mult2fillconfirm ? confirm
 					.getSigId() : confirm.getPermId();
@@ -484,6 +488,11 @@ public class C2ATI {
 					+ MULT_FILL_CONFIRM_SEPARATOR;
 			// Price Of Fill
 			result += confirm.getFillPrice();
+			if (i != fillConfirmList.size() - 1) {
+				result += MULT_FILL_CONFIRM_SEPARATOR;
+			} else {
+				result += '|';
+			}
 		}
 		return result;
 	}
