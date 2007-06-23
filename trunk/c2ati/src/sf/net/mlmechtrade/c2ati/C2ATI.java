@@ -260,13 +260,7 @@ public class C2ATI {
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		String request = multFillConfirmCommandString(fillConfirmList, type);
-		if (log.isInfoEnabled()) {
-			log.info(type.toString().toUpperCase() + " " + request);
-		}
 		processRequest(request, type.toString());
-		if (log.isInfoEnabled()) {
-			log.info(type.toString().toUpperCase() + " OK!");
-		}
 	}
 
 	public String multFillConfirmCommandString(
@@ -304,13 +298,7 @@ public class C2ATI {
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host);
 
-		if (log.isInfoEnabled()) {
-			log.info("ACKCOMPLETE  " + request);
-		}
-
 		processRequest(request, "ackcomplete");
-
-		log.info("ACKCOMPLETE  OK!");
 	}
 
 	public void ackc2Fill(String permId) throws HttpException,
@@ -512,9 +500,7 @@ public class C2ATI {
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String request = ack2FillRequestString(id);
-		log.info("ACK2FILL " + request);
 		processRequest(request, "ackc2fill");
-		log.info("ACK2FILL  OK!");
 	}
 
 	private String ack2FillRequestString(Object id) {
