@@ -1,0 +1,24 @@
+<collective2>
+	<status>OK</status>
+	<error>
+		<code>0</code>
+	</error>
+	<data>
+		<allPendingSignals>
+			<system>
+				<systemid>15816213</systemid>
+				<pendingblock>
+					<signalid>26869706</signalid>
+					<signalid>26869709</signalid>
+				</pendingblock>
+			</system>
+			<system>
+				<systemid>2423423</systemid>
+				<pendingblock>
+					<signalid>26863333</signalid>
+					<signalid>26844444</signalid>
+				</pendingblock>
+			</system>
+		</allPendingSignals>
+	</data>
+</collective2>
