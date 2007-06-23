@@ -15,7 +15,7 @@ import sf.net.mlmechtrade.c2ati.domain.FillConfirm;
 import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum;
 import junit.framework.TestCase;
 
-public class c2ATIACKTest extends TestCase {
+public class C2ATIACKTest extends TestCase {
 	C2ATI fixture;
 
 	public void setUp() throws IOException {
