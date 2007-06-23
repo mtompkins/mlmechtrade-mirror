@@ -508,6 +508,9 @@ public class C2ATI {
 		C2RecentFill fill = new C2RecentFill();
 		result.getResentC2Fills().add(fill);
 		fill.setSignalId(getLong("signalid", node));
+		String permId = xPath.evaluate("permid", node);
+		fill.setPermId(permId);
+		fill.setSignalId(getLong("signalid", node));
 		fill.setFilledAgo(getLong("filledago", node));
 		fill.setFilledPrice(getDouble("filledprice", node));
 		// Debug
@@ -518,7 +521,7 @@ public class C2ATI {
 			throws XPathExpressionException {
 		FillAcknowledgment ack = new FillAcknowledgment();
 		ack.setSigId(getLong("sigid", node));
-		String permId = xPath.evaluate("//permid", node);
+		String permId = xPath.evaluate("permid", node);
 		ack.setPermId(permId);
 		ack.setTotalQuant(getLong("totalquant", node));
 		result.getFillInfoReceived().add(ack);
@@ -533,7 +536,7 @@ public class C2ATI {
 		// Put object to structure
 		result.getSignals().add(signal);
 		// systemname
-		String systemName = xPath.evaluate("//systemname", node);
+		String systemName = xPath.evaluate("systemname", node);
 		signal.setSystemName(systemName);
 		// systemidnum
 		signal.setSystemIdNum(getLong("systemidnum", node));
@@ -730,7 +733,6 @@ public class C2ATI {
 
 	private long getLong(String field, Node node)
 			throws XPathExpressionException {
-		// String tmpStr = xPath.evaluate("//" + field, node);
 		String tmpStr = xPath.evaluate(field, node);
 		return Long.parseLong(tmpStr);
 	}
