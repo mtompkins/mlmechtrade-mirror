@@ -260,9 +260,13 @@ public class C2ATI {
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		String request = multFillConfirmCommandString(fillConfirmList, type);
-		log.info(type.toString().toUpperCase() + " " + request);
+		if (log.isInfoEnabled()) {
+			log.info(type.toString().toUpperCase() + " " + request);
+		}
 		processRequest(request, type.toString());
-		log.info(type.toString().toUpperCase() + " OK!" + request);
+		if (log.isInfoEnabled()) {
+			log.info(type.toString().toUpperCase() + " OK!");
+		}
 	}
 
 	public String multFillConfirmCommandString(
@@ -296,7 +300,7 @@ public class C2ATI {
 	public void ackComplete(long sigId) throws HttpException, IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=ackcomplete&sigid=%l&session=%s&h=%s";
+		String requestTemplate = "http://%s:%s?cmd=ackcomplete&sigid=%s&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host);
 
@@ -321,20 +325,47 @@ public class C2ATI {
 		ack2Fill(sigId);
 	}
 
-	private void ack2Fill(Object id) throws IOException, HttpException,
-			ParserConfigurationException, SAXException,
+	public List<TradingSystem> getAllSignals() throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
-		String request = ack2FillRequestString(id);
-		log.info("ACK2FILL " + request);
-		processRequest(request, "ackc2fill");
-		log.info("ACK2FILL  OK!");
-	}
+		String requestTemplate = "http://%s:%s?cmd=getallsignals&session=%s&h=%s";
+		String request = String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, this.sessionId, this.host);
 
-	private String ack2FillRequestString(Object id) {
-		String requestTemplate = "http://%s:%s?cmd=ackc2fill&" + id instanceof String ? "permid"
-				: "sigid" + "=%s&session=%s&h=%s";
-		return String.format(requestTemplate, this.serverIPAddress,
-				this.serverPort, id, this.sessionId, this.host);
+		if (log.isInfoEnabled()) {
+			log.info("GETALLSIGNALS " + request);
+		}
+
+		// Get response
+		Document response = getResponse(request, false);
+		// Check error
+		checkError(response);
+		// Return
+		String systemXPath = "/collective2/data/allPendingSignals/system";
+		DTMNodeList systems = (DTMNodeList) xPath.evaluate(systemXPath,
+				response, XPathConstants.NODESET);
+		List<TradingSystem> result = new ArrayList<TradingSystem>();
+		for (int i = 0; i < systems.getLength(); i++) {
+			TradingSystem tradingSystem = new TradingSystem();
+			result.add(tradingSystem);
+			Node system = systems.item(i);
+			// sistemid
+			tradingSystem.setSystemId(getLong("systemid", system));
+			// Pending Block
+			DTMNodeList signalIds = (DTMNodeList) xPath.evaluate(
+					"pendingblock/signalid", system, XPathConstants.NODESET);
+			for (int j = 0; j < signalIds.getLength(); j++) {
+				// Node node = systems.item(j);
+				// /collective2/data/allPendingSignals/system[1]/pendingblock/signalid
+				String xPathStr = systemXPath + "[" + (i + 1)
+						+ "]/pendingblock/signalid[" + (j + 1) + "]";
+				long signalId = getLong(xPathStr, response);
+				tradingSystem.getPendingBlock().add(signalId);
+			}
+		}
+		log.debug(result);
+		log.info("GETALLSIGNALS OK!");
+		return result;
 	}
 
 	public List<TradingSystem> requestSystemList() throws HttpException,
@@ -347,6 +378,9 @@ public class C2ATI {
 		String requestTemplate = "http://%s:%s?cmd=ackcomplete&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, this.sessionId, this.host);
+		if (log.isInfoEnabled()) {
+			log.info("ACKCOMPLETE " + request);
+		}
 		// Get response
 		Document response = getResponse(request);
 		// Error
@@ -385,40 +419,7 @@ public class C2ATI {
 		// Restoro Pool Interval
 		this.pollInterval = tmpPoolInterval;
 		log.debug(result);
-		return result;
-	}
-
-	public List<TradingSystem> getAllSignals() throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=getallsignals&session=%s&h=%s";
-		String request = String.format(requestTemplate, this.serverIPAddress,
-				this.serverPort, this.sessionId, this.host);
-		// Get response
-		Document response = getResponse(request, false);
-		// Check error
-		checkError(response);
-		// Return
-		DTMNodeList systems = (DTMNodeList) xPath.evaluate(
-				"//allPendingSignals/system", response, XPathConstants.NODESET);
-		List<TradingSystem> result = new ArrayList<TradingSystem>();
-		for (int i = 0; i < systems.getLength(); i++) {
-			TradingSystem tradingSystem = new TradingSystem();
-			result.add(tradingSystem);
-			Node system = systems.item(i);
-			// sistemid
-			tradingSystem.setSystemId(getLong("sistemid", system));
-			// Pending Block
-			DTMNodeList signalIds = (DTMNodeList) xPath
-					.evaluate("//pendingblock/signalid", response,
-							XPathConstants.NODESET);
-			for (int j = 0; j < signalIds.getLength(); j++) {
-				String signalIdStr = systems.item(i).getNodeValue();
-				long signalId = Long.parseLong(signalIdStr);
-				tradingSystem.getPendingBlock().add(signalId);
-			}
-		}
-		log.debug(result);
+		log.info("ACKCOMPLETE OK!");
 		return result;
 	}
 
@@ -431,11 +432,14 @@ public class C2ATI {
 				this.serverPort, this.sessionId, this.host);
 		// Get response
 		Document response = getResponse(request, false);
+		if (log.isInfoEnabled()) {
+			log.info("REQUESTSYSTEMSYNC " + request);
+		}
 		// Check error
 		checkError(response);
 		// Return
-		DTMNodeList systems = (DTMNodeList) xPath.evaluate("//sync/system",
-				response, XPathConstants.NODESET);
+		DTMNodeList systems = (DTMNodeList) xPath.evaluate(
+				"//data/sync/system", response, XPathConstants.NODESET);
 		for (int i = 0; i < systems.getLength(); i++) {
 			C2SystemState c2SystemState = new C2SystemState();
 			result.add(c2SystemState);
@@ -443,51 +447,83 @@ public class C2ATI {
 			// Sysem ID
 			c2SystemState.setSystemId(getLong("systemid", system));
 			// System Name
-			String systemName = xPath.evaluate("//systemname", system);
+			String systemName = xPath.evaluate("systemname", system);
 			c2SystemState.setSystemName(systemName);
 			// Time Filter Secs
 			c2SystemState.setTimeFilterSecs(getLong("timefiltersecs", system));
 			// Time Filter Clock
-			String timeFilterClock = xPath
-					.evaluate("//timefilterclock", system);
+			String timeFilterClock = xPath.evaluate(
+					"timefilterclock/humantime", system);
 			c2SystemState.setTimeFilterClock(timeFilterClock);
 			// Positions
-			DTMNodeList positions = (DTMNodeList) xPath.evaluate("//position",
+			String xPathStr = "/collective2/data/sync/system[" + (i + 1)
+					+ "]/position";
+			DTMNodeList positions = (DTMNodeList) xPath.evaluate(xPathStr,
 					response, XPathConstants.NODESET);
 			for (int j = 0; j < positions.getLength(); j++) {
+				String xPathPrefix = xPathStr + "[" + (j + 1) + "]/";
 				C2Position c2Postion = new C2Position();
 				c2SystemState.getPositions().add(c2Postion);
-				Node positon = positions.item(i);
+				// Node positon = positions.item(i);
 				// Symbol
-				String symbol = xPath.evaluate("symbol", positon);
+				String symbol = xPath
+						.evaluate(xPathPrefix + "symbol", response);
 				c2Postion.setSymbol(symbol);
 				// AssetType
-				String assetTypeStr = xPath.evaluate("assettype", positon);
+				String assetTypeStr = xPath.evaluate(xPathPrefix + "type",
+						response);
 				c2Postion.setAssetType(AssetEnum.valueOf(assetTypeStr));
+				// mutualfund
+				String mutualFundStr = xPath.evaluate(xPathPrefix
+						+ "mutualfund", response);
+				c2Postion.setFund(mutualFundStr.equals("1"));
 				// Quant
-				c2Postion.setQuant(getLong("quant", positon));
+				c2Postion.setQuant(getLong(xPathPrefix + "quant", response));
 				// Underlying
-				String underlying = xPath.evaluate("underlying", positon);
+				String underlying = xPath.evaluate(xPathPrefix + "underlying",
+						response);
 				c2Postion.setUnderlying(underlying);
 				// Right
-				String right = xPath.evaluate("right", positon);
+				String right = xPath.evaluate(xPathPrefix + "right", response);
 				c2Postion.setRight(right);
 				// Strike
-				String strike = xPath.evaluate("strike", positon);
+				String strike = xPath
+						.evaluate(xPathPrefix + "strike", response);
 				c2Postion.setStrike(strike);
 				// Expir
-				String expir = xPath.evaluate("expir", positon);
+				String expir = xPath.evaluate(xPathPrefix + "expir", response);
 				c2Postion.setExpir(expir);
 				// Exchange
-				String exchange = xPath.evaluate("exchange", positon);
+				String exchange = xPath.evaluate(xPathPrefix + "exchange",
+						response);
 				c2Postion.setExchange(exchange);
 				// Market Code
-				String marketCode = xPath.evaluate("marketcode", positon);
+				String marketCode = xPath.evaluate(xPathPrefix + "marketcode",
+						response);
 				c2Postion.setMarketCode(marketCode);
 			}
 		}
+		log.info("REQUESTSYSTEMSYNC OK!");
 		return result;
 
+	}
+
+	private void ack2Fill(Object id) throws IOException, HttpException,
+			ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		String request = ack2FillRequestString(id);
+		log.info("ACK2FILL " + request);
+		processRequest(request, "ackc2fill");
+		log.info("ACK2FILL  OK!");
+	}
+
+	private String ack2FillRequestString(Object id) {
+		String param = (id instanceof String) ? "permid" : "sigid";
+		String requestTemplate = "http://%s:%s?cmd=ackc2fill&" + param
+				+ "=%s&session=%s&h=%s";
+		String response = String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, id, this.sessionId, this.host);
+		return response;
 	}
 
 	private void multFillConfirm(Object parameter) throws HttpException,

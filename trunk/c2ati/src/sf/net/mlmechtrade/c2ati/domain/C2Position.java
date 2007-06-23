@@ -5,6 +5,8 @@ public class C2Position {
 
 	private AssetEnum assetType;
 
+	private boolean fund;
+
 	private long quant;
 
 	private String underlying;
@@ -21,9 +23,10 @@ public class C2Position {
 
 	public String toString() {
 		return "C2Position: symbol=" + symbol + " assetType=" + assetType
-				+ " quant=" + quant + " underlying=" + underlying + " right="
-				+ right + " strike=" + strike + " expir=" + expir
-				+ " exchange=" + exchange + " marketCode=" + marketCode;
+				+ " fund=" + fund + " quant=" + quant + " underlying="
+				+ underlying + " right=" + right + " strike=" + strike
+				+ " expir=" + expir + " exchange=" + exchange + " marketCode="
+				+ marketCode;
 	}
 
 	public AssetEnum getAssetType() {
@@ -96,5 +99,13 @@ public class C2Position {
 
 	public void setUnderlying(String underlying) {
 		this.underlying = underlying;
+	}
+
+	public boolean isFund() {
+		return fund;
+	}
+
+	public void setFund(boolean fund) {
+		this.fund = fund;
 	}
 }

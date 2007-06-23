@@ -1,41 +1,39 @@
 <collective2>
-<status>OK</status>
-<error>
-<code>0</code>
-</error>
-<data>
-<systemList>
-     <system>
-          <name>Tango</name>
-          <systemid>15816213</systemid>
+	<status>OK</status>
+	<error>
+		<code>0</code>
+	</error>
+	<data>
+		<systemList>
+			<system>
+				<name>TTT</name>
+				<systemid>344555</systemid>
 
-          <permissions>
-               <asset>
-                    <assettype>forex</assettype>
-                    <long>1</long>
-                    <short>1</short>
-               </asset>
-               <asset>
+				<permissions>
+					<asset>
+						<assettype>forex</assettype>
+						<long>1</long>
+						<short>1</short>
+					</asset>
+					<asset>
+						<assettype>futures</assettype>
+						<long>1</long>
+						<short>1</short>
+					</asset>
+					<asset>
+						<assettype>options</assettype>
+						<long>1</long>
+						<short>0</short>
+					</asset>
+					<asset>
+						<assettype>stocks</assettype>
+						<long>1</long>
+						<short>1</short>
+					</asset>
 
-                    <assettype>futures</assettype>
-                    <long>1</long>
-                    <short>1</short>
-               </asset>
-               <asset>
-                    <assettype>options</assettype>
-                    <long>1</long>
+				</permissions>
+			</system>
+		</systemList>
 
-                    <short>0</short>
-               </asset>
-               <asset>
-                    <assettype>stocks</assettype>
-                    <long>1</long>
-                    <short>1</short>
-               </asset>
-
-          </permissions>
-     </system>
-</systemList>
-
-</data>
+	</data>
 </collective2>
