@@ -7,9 +7,11 @@ public class C2RecentFill {
 
 	private double filledPrice;
 
+	private String permId;
+
 	public String toString() {
-		return "Recent C2 Fill: signalId=" + signalId + " filledAgo="
-				+ filledAgo + " filledPrice" + filledPrice;
+		return "Recent C2 Fill: signalId=" + signalId + " permId=" + permId
+				+ " filledAgo=" + filledAgo + " filledPrice" + filledPrice;
 	}
 
 	public long getFilledAgo() {
@@ -34,5 +36,13 @@ public class C2RecentFill {
 
 	public void setSignalId(long signalId) {
 		this.signalId = signalId;
+	}
+
+	public String getPermId() {
+		return permId;
+	}
+
+	public void setPermId(String permId) {
+		this.permId = permId;
 	}
 }

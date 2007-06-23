@@ -11,8 +11,6 @@ public class LatestSignals {
 
 	List<Signal> signals = new LinkedList<Signal>();
 
-	String ocaChanges;
-
 	List<FillAcknowledgment> fillInfoReceived = new ArrayList<FillAcknowledgment>();
 
 	List<C2RecentFill> resentC2Fills = new ArrayList<C2RecentFill>();
@@ -24,7 +22,7 @@ public class LatestSignals {
 	public String toString() {
 		return "LatestSignals: canselListIds=" + canselListIds
 				+ " canselListPermIds" + canselListPermIds + " signals="
-				+ signals + " ocaChanges=" + ocaChanges + " fillInfoReceived="
+				+ signals + " fillInfoReceived="
 				+ fillInfoReceived + " resentC2Fills=" + resentC2Fills
 				+ " completedTradesSigId=" + completedTradesSigId
 				+ " completedTradesSigPerId=" + completedTradesSigPerId;
@@ -32,14 +30,6 @@ public class LatestSignals {
 
 	public List<Long> getCanselListIds() {
 		return canselListIds;
-	}
-
-	public String getOcaChanges() {
-		return ocaChanges;
-	}
-
-	public void setOcaChanges(String ocaChanges) {
-		this.ocaChanges = ocaChanges;
 	}
 
 	public List<FillAcknowledgment> getFillInfoReceived() {

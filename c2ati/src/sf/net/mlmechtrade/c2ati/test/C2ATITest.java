@@ -16,7 +16,9 @@ import sf.net.mlmechtrade.c2ati.C2ATI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
 import sf.net.mlmechtrade.c2ati.domain.ActionEnum;
 import sf.net.mlmechtrade.c2ati.domain.AssetEnum;
+import sf.net.mlmechtrade.c2ati.domain.C2RecentFill;
 import sf.net.mlmechtrade.c2ati.domain.DurationEnum;
+import sf.net.mlmechtrade.c2ati.domain.FillAcknowledgment;
 import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
 import sf.net.mlmechtrade.c2ati.domain.OrderEnum;
 import sf.net.mlmechtrade.c2ati.domain.Signal;
@@ -53,7 +55,43 @@ public class C2ATITest extends TestCase {
 		List<Signal> sSignals = signals.getSignals();
 		assertEquals(4, sSignals.size());
 		testSignal(sSignals);
-		xxxxxxxxxxxxxxxx Left Intentionaly
+		// fillInfoReceived
+		List<FillAcknowledgment> fillInfoReceived = signals.getFillInfoReceived();
+		assertEquals(2, fillInfoReceived.size());
+		testFillInfoReceived(fillInfoReceived);
+		// resentC2Fills
+		List<C2RecentFill> recentC2Fills = signals.getResentC2Fills(); 
+		assertEquals(2, recentC2Fills.size());
+		testRecentC2Fills(recentC2Fills);
+		
+	}
+
+	private void testRecentC2Fills(List<C2RecentFill> recentC2Fills) {
+		C2RecentFill recentC2Fill = recentC2Fills.get(0);
+		assertEquals(333, recentC2Fill.getSignalId());
+		assertEquals("CCC", recentC2Fill.getPermId());
+		assertEquals(83073, recentC2Fill.getFilledAgo());
+		assertEquals(36.93, recentC2Fill.getFilledPrice());
+		recentC2Fill = recentC2Fills.get(1);
+		assertEquals(444, recentC2Fill.getSignalId());
+		assertEquals("DDD", recentC2Fill.getPermId());
+		assertEquals(83072, recentC2Fill.getFilledAgo());
+		assertEquals(11.11, recentC2Fill.getFilledPrice());
+
+
+
+	}
+
+	private void testFillInfoReceived(List<FillAcknowledgment> fillInfoReceived) {
+		FillAcknowledgment fillAcknowledment = fillInfoReceived.get(0);
+		assertEquals(1234, fillAcknowledment.getSigId());
+		assertEquals("aaa-bbb-ccc", fillAcknowledment.getPermId());
+		assertEquals(10, fillAcknowledment.getTotalQuant());
+		fillAcknowledment = fillInfoReceived.get(1);
+		assertEquals(222, fillAcknowledment.getSigId());
+		assertEquals("bbb", fillAcknowledment.getPermId());
+		assertEquals(20, fillAcknowledment.getTotalQuant());		
+		
 	}
 
 	private void testSignal(List<Signal> signals) {
@@ -93,6 +131,7 @@ public class C2ATITest extends TestCase {
 		signal = signals.get(1);
 		assertEquals(ActionEnum.BTO, signal.getAction());
 		signal = signals.get(3);
+		assertEquals(26867, signal.getSignalid());
 		assertEquals(DurationEnum.GTC, signal.getTif());
 		assertEquals(OrderEnum.LIMIT, signal.getOrderType());
 		assertEquals(0.0, signal.getStop());
