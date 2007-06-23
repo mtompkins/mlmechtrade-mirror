@@ -201,8 +201,8 @@ public class C2ATI {
 				"//completetrades/sigid", response, XPathConstants.NODESET);
 		for (int i = 0; i < completeTradesSigIds.getLength(); i++) {
 			Node node = completeTradesSigIds.item(i);
-			String sigId = node.getTextContent();
-			result.getCompletedTradesSigId().add(sigId);
+			String sigIdStr = node.getTextContent();
+			result.getCompletedTradesSigId().add(Long.parseLong(sigIdStr));
 		}
 		// Complete trades permid
 		DTMNodeList completeTradesPermIds = (DTMNodeList) xPath.evaluate(
