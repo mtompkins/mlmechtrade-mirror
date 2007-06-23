@@ -70,4 +70,16 @@ public class c2ATIACKTest extends TestCase {
 				MultFillConfirmEnum.multfillconfirmcumu);
 		fixture.logOff();
 	}
+	//public void testRecentc2fill() throws XPathExpressionException,
+	// IOException, ParserConfigurationException, SAXException, C2ATIError {
+//fixture.login();
+//fixture.
+//fixture.logOff();
+//}
+	public void testCompleteTrades() throws XPathExpressionException,
+			IOException, ParserConfigurationException, SAXException, C2ATIError {
+		fixture.login();
+		fixture.ackComplete(5555);
+		fixture.logOff();
+	}
 }
