@@ -228,7 +228,7 @@ public class C2ATI {
 	public void confirmSig(long quantity, long sigId, String permId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%l";
+		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host, quantity);
 		if (permId != null) {
