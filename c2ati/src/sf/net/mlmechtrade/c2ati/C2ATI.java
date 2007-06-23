@@ -206,7 +206,7 @@ public class C2ATI {
 		}
 		// Complete trades permid
 		DTMNodeList completeTradesPermIds = (DTMNodeList) xPath.evaluate(
-				"//completetrades/sigid", response, XPathConstants.NODESET);
+				"//completetrades/permid", response, XPathConstants.NODESET);
 		for (int i = 0; i < completeTradesPermIds.getLength(); i++) {
 			Node node = completeTradesPermIds.item(i);
 			String permId = node.getTextContent();

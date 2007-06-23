@@ -9,7 +9,6 @@ import javax.xml.xpath.XPathExpressionException;
 import junit.framework.TestCase;
 
 import org.apache.commons.httpclient.HttpException;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import sf.net.mlmechtrade.c2ati.C2ATI;
@@ -72,7 +71,9 @@ public class C2ATITest extends TestCase {
 		// completedTradesSigPerId
 		List<String> completedTradesSigPerId = signals
 				.getCompletedTradesSigPerId();
-		assertEquals(2, completedTradesSigId.size());
+		assertEquals(2, completedTradesSigPerId.size());
+		assertEquals("abcd", completedTradesSigPerId.get(0));
+		assertEquals("efgh", completedTradesSigPerId.get(1));
 	}
 
 	private void testRecentC2Fills(List<C2RecentFill> recentC2Fills) {
