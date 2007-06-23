@@ -309,6 +309,34 @@ public class C2ATI {
 		log.info("ACKCOMPLETE  OK!");
 	}
 
+	public void ackc2Fill(String permId) throws HttpException,
+			XPathExpressionException, IOException,
+			ParserConfigurationException, SAXException, C2ATIError {
+		ack2Fill(permId);
+	}
+
+	public void ackc2Fill(long sigId) throws HttpException,
+			XPathExpressionException, IOException,
+			ParserConfigurationException, SAXException, C2ATIError {
+		ack2Fill(sigId);
+	}
+
+	private void ack2Fill(Object id) throws IOException, HttpException,
+			ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		String request = ack2FillRequestString(id);
+		log.info("ACK2FILL " + request);
+		processRequest(request, "ackc2fill");
+		log.info("ACK2FILL  OK!");
+	}
+
+	private String ack2FillRequestString(Object id) {
+		String requestTemplate = "http://%s:%s?cmd=ackc2fill&" + id instanceof String ? "permid"
+				: "sigid" + "=%s&session=%s&h=%s";
+		return String.format(requestTemplate, this.serverIPAddress,
+				this.serverPort, id, this.sessionId, this.host);
+	}
+
 	public List<TradingSystem> requestSystemList() throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
