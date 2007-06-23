@@ -260,7 +260,7 @@ public class C2ATI {
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		String request = multFillConfirmCommandString(fillConfirmList, type);
-		log.info(type.toString().toUpperCase() + request);
+		log.info(type.toString().toUpperCase() + " " + request);
 		processRequest(request, type.toString());
 		log.info(type.toString().toUpperCase() + " OK!" + request);
 	}
@@ -299,7 +299,14 @@ public class C2ATI {
 		String requestTemplate = "http://%s:%s?cmd=ackcomplete&sigid=%l&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host);
+
+		if (log.isInfoEnabled()) {
+			log.info("ACKCOMPLETE  " + request);
+		}
+
 		processRequest(request, "ackcomplete");
+
+		log.info("ACKCOMPLETE  OK!");
 	}
 
 	public List<TradingSystem> requestSystemList() throws HttpException,
