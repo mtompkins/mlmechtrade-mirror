@@ -1,0 +1,69 @@
+<collective2>
+	<status>OK</status>
+	<error>
+		<code>0</code>
+	</error>
+	<data>
+		<sync>
+			<system>
+				<systemid>158523</systemid>
+				<systemname>YYY</systemname>
+				<timefiltersecs>1181841762</timefiltersecs>
+
+				<timefilterclock>
+					<humantime>2007-06-14 13:22:42</humantime>
+				</timefilterclock>
+				<position>
+					<symbol>CCCC</symbol>
+					<type>stock</type>
+					<mutualfund>0</mutualfund>
+					<quant>132</quant>
+
+					<underlying></underlying>
+					<right></right>
+					<strike>0</strike>
+					<expir></expir>
+					<exchange></exchange>
+					<marketcode>1</marketcode>
+				</position>
+				<position>
+					<symbol>YHOO</symbol>
+					<type>stock</type>
+					<mutualfund>0</mutualfund>
+					<quant>199</quant>
+
+					<underlying></underlying>
+					<right></right>
+					<strike>0</strike>
+					<expir></expir>
+					<exchange></exchange>
+					<marketcode>1</marketcode>
+				</position>
+			</system>
+
+			<system>
+				<systemid>2278789</systemid>
+				<systemname>GGGG</systemname>
+				<timefiltersecs>1181841762</timefiltersecs>
+				<timefilterclock>
+					<humantime>2007-06-14 13:22:42</humantime>
+				</timefilterclock>
+				<position>
+					<symbol>JJJJ</symbol>
+
+					<type>stock</type>
+					<mutualfund>0</mutualfund>
+					<quant>83</quant>
+					<underlying></underlying>
+					<right></right>
+					<strike>0</strike>
+					<expir></expir>
+
+					<exchange></exchange>
+					<marketcode>1</marketcode>
+				</position>
+			</system>
+		</sync>
+
+	</data>
+</collective2>
