@@ -22,6 +22,7 @@ public class c2ATISyncTest extends TestCase {
 			IOException, ParserConfigurationException, SAXException, C2ATIError {
 		fixture.login();
 		fixture.confirmSig(1, 1111, "abc");
+		fixture.cancelConfirmSigId(1234);
 		fixture.logOff();
 	}
 }
