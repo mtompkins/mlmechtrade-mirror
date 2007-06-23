@@ -259,9 +259,10 @@ public class C2ATI {
 			MultFillConfirmEnum type) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
-
 		String request = multFillConfirmCommandString(fillConfirmList, type);
+		log.info(type.toString().toUpperCase() + request);
 		processRequest(request, type.toString());
+		log.info(type.toString().toUpperCase() + " OK!" + request);
 	}
 
 	public String multFillConfirmCommandString(
