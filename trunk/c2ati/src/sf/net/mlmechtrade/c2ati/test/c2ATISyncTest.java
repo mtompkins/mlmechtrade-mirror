@@ -48,7 +48,7 @@ public class c2ATISyncTest extends TestCase {
 		fillConfirm2.setPermId("443");
 		fillConfirm2.setQuantity(35);
 		fillConfirm2.setSigId(555555);	
-		String expected="http://64.68.145.33:7878?cmd=mult2fillconfirm&session=267127353762716967&h=host&filldata=4444444|sep|20|sep|aaaa|sep|12.05|sep|4444444|sep|200|sep|cccc|sep|11.50|sep|555555|sep|35|sep|bbb|sep|23.16|sep|555555|sep|24|sep|ddd|sep|11.95|&live=0";
+		String expected="http://64.68.145.33:7878?cmd=mult2fillconfirm&session=267127353762716967&h=host&filldata=4444444|sep|20|sep|aaaa|sep|12.05|sep|555555|sep|35|sep|bbb|sep|23.16|&live=0";
 		String actual = fixture.multFillConfirmCommandString(fillConfirmList, MultFillConfirmEnum.mult2fillconfirm);
 		assertEquals(expected, actual);
 		fixture.multFillConfirm(fillConfirmList, MultFillConfirmEnum.mult2fillconfirm);
