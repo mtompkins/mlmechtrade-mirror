@@ -240,7 +240,7 @@ public class C2ATI {
 	public void cancelConfirmSigId(long sigId) throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&sigid=%l&session=%s&h=%s";
+		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&sigid=%s&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host);
 		processRequest(request, "cancelconfirm");
