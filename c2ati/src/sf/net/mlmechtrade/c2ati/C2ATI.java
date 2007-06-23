@@ -459,30 +459,30 @@ public class C2ATI {
 				c2SystemState.getPositions().add(c2Postion);
 				Node positon = positions.item(i);
 				// Symbol
-				String symbol = xPath.evaluate("//symbol", positon);
+				String symbol = xPath.evaluate("symbol", positon);
 				c2Postion.setSymbol(symbol);
 				// AssetType
-				String assetTypeStr = xPath.evaluate("//assettype", positon);
+				String assetTypeStr = xPath.evaluate("assettype", positon);
 				c2Postion.setAssetType(AssetEnum.valueOf(assetTypeStr));
 				// Quant
 				c2Postion.setQuant(getLong("quant", positon));
 				// Underlying
-				String underlying = xPath.evaluate("//underlying", positon);
+				String underlying = xPath.evaluate("underlying", positon);
 				c2Postion.setUnderlying(underlying);
 				// Right
-				String right = xPath.evaluate("//right", positon);
+				String right = xPath.evaluate("right", positon);
 				c2Postion.setRight(right);
 				// Strike
-				String strike = xPath.evaluate("//strike", positon);
+				String strike = xPath.evaluate("strike", positon);
 				c2Postion.setStrike(strike);
 				// Expir
-				String expir = xPath.evaluate("//expir", positon);
+				String expir = xPath.evaluate("expir", positon);
 				c2Postion.setExpir(expir);
 				// Exchange
-				String exchange = xPath.evaluate("//exchange", positon);
+				String exchange = xPath.evaluate("exchange", positon);
 				c2Postion.setExchange(exchange);
 				// Market Code
-				String marketCode = xPath.evaluate("//marketcode", positon);
+				String marketCode = xPath.evaluate("marketcode", positon);
 				c2Postion.setMarketCode(marketCode);
 			}
 		}
