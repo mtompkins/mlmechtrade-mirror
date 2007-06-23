@@ -52,6 +52,10 @@ public class c2ATISyncTest extends TestCase {
 		String actual = fixture.multFillConfirmCommandString(fillConfirmList, MultFillConfirmEnum.mult2fillconfirm);
 		assertEquals(expected, actual);
 		fixture.multFillConfirm(fillConfirmList, MultFillConfirmEnum.mult2fillconfirm);
+		String expected2 ="http://64.68.145.33:7878?cmd=mult3fillconfirm&session=267127353762716967&h=host&filldata=122|sep|20|sep|aaaa|sep|12.05|sep|443|sep|35|sep|bbb|sep|23.16|&live=0";
+		String actual2 = fixture.multFillConfirmCommandString(fillConfirmList, MultFillConfirmEnum.mult3fillconfirm);
+		assertEquals(expected2, actual2);
+		fixture.multFillConfirm(fillConfirmList, MultFillConfirmEnum.mult3fillconfirm);
 		fixture.logOff();
 	}
 }
