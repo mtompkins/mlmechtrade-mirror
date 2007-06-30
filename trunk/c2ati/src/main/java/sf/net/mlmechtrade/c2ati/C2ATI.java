@@ -92,7 +92,7 @@ public class C2ATI {
 				10000);
 	}
 
-	public void login() throws IOException, ParserConfigurationException,
+	public synchronized void login() throws IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=login&e=%s&p=%s&protoversion=%s&client=%s&h=%s&build=%s";
 		String request = String.format(requestTemplate, INIT_SERVER_HOST,
@@ -127,7 +127,7 @@ public class C2ATI {
 		log.info("LOGIN REQUEST : OK!");
 	}
 
-	public void logOff() throws ParserConfigurationException, SAXException,
+	public synchronized void logOff() throws ParserConfigurationException, SAXException,
 			IOException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=logoff&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
@@ -135,7 +135,7 @@ public class C2ATI {
 		processRequest(request, "logoff");
 	}
 
-	public LatestSignals latestSignals() throws HttpException, IOException,
+	public synchronized LatestSignals latestSignals() throws HttpException, IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		// Prepare template
@@ -225,7 +225,7 @@ public class C2ATI {
 		return result;
 	}
 
-	public void confirmSig(long quantity, long sigId, String permId)
+	public synchronized void confirmSig(long quantity, long sigId, String permId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s";
@@ -237,7 +237,7 @@ public class C2ATI {
 		processRequest(request, "confirmsig");
 	}
 
-	public void cancelConfirmSigId(long sigId) throws HttpException,
+	public synchronized void cancelConfirmSigId(long sigId) throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&sigid=%s&session=%s&h=%s";
@@ -246,7 +246,7 @@ public class C2ATI {
 		processRequest(request, "cancelconfirm");
 	}
 
-	public void cancelConfirmPermId(String permId) throws HttpException,
+	public synchronized void cancelConfirmPermId(String permId) throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&permid=%s&session=%s&h=%s";
@@ -255,7 +255,7 @@ public class C2ATI {
 		processRequest(request, "cancelconfirm");
 	}
 
-	public void multFillConfirm(List<FillConfirm> fillConfirmList,
+	public synchronized void multFillConfirm(List<FillConfirm> fillConfirmList,
 			MultFillConfirmEnum type) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
@@ -263,7 +263,7 @@ public class C2ATI {
 		processRequest(request, type.toString());
 	}
 
-	public String multFillConfirmCommandString(
+	public synchronized String multFillConfirmCommandString(
 			List<FillConfirm> fillConfirmList, MultFillConfirmEnum type) {
 		// Template
 		String requestTemplate = "http://%s:%s?cmd=" + type
@@ -279,19 +279,19 @@ public class C2ATI {
 		return request;
 	}
 
-	public void multFillConfirmSigId(long sigId) throws HttpException,
+	public synchronized void multFillConfirmSigId(long sigId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(sigId);
 	}
 
-	public void multFillConfirmPermId(String permId) throws HttpException,
+	public synchronized void multFillConfirmPermId(String permId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(permId);
 	}
 
-	public void ackComplete(long sigId) throws HttpException, IOException,
+	public synchronized void ackComplete(long sigId) throws HttpException, IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=ackcomplete&sigid=%s&session=%s&h=%s";
@@ -301,19 +301,19 @@ public class C2ATI {
 		processRequest(request, "ackcomplete");
 	}
 
-	public void ackc2Fill(String permId) throws HttpException,
+	public synchronized void ackc2Fill(String permId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		ack2Fill(permId);
 	}
 
-	public void ackc2Fill(long sigId) throws HttpException,
+	public synchronized void ackc2Fill(long sigId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		ack2Fill(sigId);
 	}
 
-	public List<TradingSystem> getAllSignals() throws HttpException,
+	public synchronized List<TradingSystem> getAllSignals() throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=getallsignals&session=%s&h=%s";
@@ -356,7 +356,7 @@ public class C2ATI {
 		return result;
 	}
 
-	public List<TradingSystem> requestSystemList() throws HttpException,
+	public synchronized List<TradingSystem> requestSystemList() throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		// Store Pool Interval
@@ -411,7 +411,7 @@ public class C2ATI {
 		return result;
 	}
 
-	public List<C2SystemState> requestSystemSync() throws HttpException,
+	public synchronized List<C2SystemState> requestSystemSync() throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		List<C2SystemState> result = new ArrayList<C2SystemState>();
@@ -761,11 +761,11 @@ public class C2ATI {
 		return eMail;
 	}
 
-	public void setEMail(String mail) {
+	public synchronized void setEMail(String mail) {
 		eMail = mail;
 	}
 
-	public void setPassword(String password) {
+	public synchronized void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -773,7 +773,7 @@ public class C2ATI {
 		return host;
 	}
 
-	public void setHost(String host) {
+	public synchronized void setHost(String host) {
 		this.host = host;
 	}
 
