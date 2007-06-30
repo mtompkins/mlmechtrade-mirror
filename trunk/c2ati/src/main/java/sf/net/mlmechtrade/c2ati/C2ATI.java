@@ -753,11 +753,11 @@ public class C2ATI {
 		this.clientTime = System.currentTimeMillis();
 	}
 
-	public long getServerTime() {
+	public synchronized long getServerTime() {
 		return serverTime;
 	}
 
-	public String getEMail() {
+	public synchronized String getEMail() {
 		return eMail;
 	}
 
@@ -769,7 +769,7 @@ public class C2ATI {
 		this.password = password;
 	}
 
-	public String getHost() {
+	public synchronized String getHost() {
 		return host;
 	}
 
@@ -777,27 +777,27 @@ public class C2ATI {
 		this.host = host;
 	}
 
-	public String getSessionId() {
+	public synchronized String getSessionId() {
 		return sessionId;
 	}
 
-	public long getPollInterval() {
+	public synchronized long getPollInterval() {
 		return pollInterval;
 	}
 
-	public long getClientTime() {
+	public synchronized long getClientTime() {
 		return clientTime;
 	}
 
-	public String getServerIPAddress() {
+	public synchronized String getServerIPAddress() {
 		return serverIPAddress;
 	}
 
-	public String getServerlPort() {
+	public synchronized String getServerlPort() {
 		return serverPort;
 	}
 
-	public String getPostedHumanTime() {
+	public synchronized String getPostedHumanTime() {
 		return postedHumanTime;
 	}
 
