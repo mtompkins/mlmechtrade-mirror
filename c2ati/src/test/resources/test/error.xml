@@ -1,0 +1,32 @@
+<!-- 
+Known error types:
+MISSINGORINCORRECTPARAMS – Only sent during login, if your client sends an invalid protocol version,
+client type, or host id.
+INCORRECTEMAILPW – Sent during login, if Collective2 email and password are unknown or do not
+match.
+OLDCLIENT – This client/protocol version are no longer supported. The URL field will be filled in with a
+page where new software can be downloaded or an explanation can be issued. If you want to force this error
+message when an “old” version of your software checks in, please let Collective2 know which build numbers
+you want to trigger this flag.
+NOSUBSCRIPTIONS – The C2 customer (identified by the email and password during login) has no valid
+subscriptions to trading systems, and thus will not receive any signals. The URL field will be filled in with a
+URL that takes the customer to a page where he can sign up for trading systems with free trial periods.
+SESSION TIMED OUT – Your client did not contact the server for over 20 minutes. The session id is now
+invalid. You must re-login and request a new session id.
+
+NEEDAGMT – Before an end-user can use the C2 AutoTrading platform, he is required to read and
+electronically sign an Agreement in which he acknowledges the risks of AutoTrading. No trades will be sent
+until this agreement is signed. When you receive a NEEDAGMT message, you will also be given a <url>.
+You should open a browser window and go to that URL. There, the customer will be able to read and (if he
+chooses) sign the agreement. In the meantime, you can continue polling C2, and will continue receiving the
+NEEDAGMT message. As soon as the customer signs the agreement, this error message will no longer be
+sent.
+ -->
+
+<collective2>
+<status>error</status>
+<error>
+<code>MISSINGORINCORRECTPARAMS</code>
+<url></url>
+</error>
+</collective2>
