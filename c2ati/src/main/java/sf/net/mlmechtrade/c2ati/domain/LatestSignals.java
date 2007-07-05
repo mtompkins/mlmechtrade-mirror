@@ -7,7 +7,7 @@ import java.util.List;
 public class LatestSignals {
 	List<Long> canselListIds = new ArrayList<Long>();
 
-	List<String> canselListPermIds = new ArrayList<String>();
+	List<String> cancelListPermIds = new ArrayList<String>();
 
 	List<Signal> signals = new LinkedList<Signal>();
 
@@ -21,14 +21,14 @@ public class LatestSignals {
 
 	public String toString() {
 		return "LatestSignals: canselListIds=" + canselListIds
-				+ " canselListPermIds" + canselListPermIds + " signals="
+				+ " cancelListPermIds" + cancelListPermIds + " signals="
 				+ signals + " fillInfoReceived="
 				+ fillInfoReceived + " resentC2Fills=" + resentC2Fills
 				+ " completedTradesSigId=" + completedTradesSigId
 				+ " completedTradesSigPerId=" + completedTradesSigPerId;
 	}
 
-	public List<Long> getCanselListIds() {
+	public List<Long> getCancelListIds() {
 		return canselListIds;
 	}
 
@@ -48,8 +48,8 @@ public class LatestSignals {
 		return completedTradesSigPerId;
 	}
 
-	public List<String> getCanselListPermIds() {
-		return canselListPermIds;
+	public List<String> getCancelListPermIds() {
+		return cancelListPermIds;
 	}
 
 	public List<Signal> getSignals() {

@@ -41,12 +41,12 @@ public class C2ATITest extends TestCase {
 		LatestSignals signals = fixture.latestSignals();
 		assertNotNull(signals);
 		// canselListIds
-		List<Long> canselListIds = signals.getCanselListIds();
-		assertEquals(2, canselListIds.size());
-		assertEquals(new Long(111L), canselListIds.get(0));
-		assertEquals(new Long(222L), canselListIds.get(1));
+		List<Long> cancelListIds = signals.getCancelListIds();
+		assertEquals(2, cancelListIds.size());
+		assertEquals(new Long(111L), cancelListIds.get(0));
+		assertEquals(new Long(222L), cancelListIds.get(1));
 		// canselListPermIds
-		List<String> canselListPermIds = signals.getCanselListPermIds();
+		List<String> canselListPermIds = signals.getCancelListPermIds();
 		assertEquals(2, canselListPermIds.size());
 		assertEquals("AAA", canselListPermIds.get(0));
 		assertEquals("BBB", canselListPermIds.get(1));
