@@ -1,21 +1,139 @@
 package sf.net.mlmechtrade.iblink;
 
-public class IBOrderStatus {
-	public int orderId;
+import java.util.Observable;
 
-	public String status;
+import com.ib.client.Contract;
+import com.ib.client.Order;
 
-	public int filled;
+public class IBOrderStatus extends Observable {
+	private int orderId;
 
-	public int remaining;
+	private IBOrderState state;
 
-	public double avgFillPrice;
+	private int filled;
 
-	public int permId;
+	private int remaining;
 
-	public int parentId;
+	private double avgFillPrice;
 
-	public double lastFillPrice;
+	private int permId;
 
-	public int clientId;
+	private int parentId;
+
+	private double lastFillPrice;
+
+	private int clientId;
+
+	private Contract conctract;
+
+	private Order order;
+
+	public String toString() {
+		return "orderId=" + orderId + " state=" + state + " filled=" + filled
+				+ " remaining=" + remaining + " avgFillPrice=" + avgFillPrice
+				+ " permId=" + permId + " parentId=" + parentId
+				+ " lastFillPrice=" + lastFillPrice + " clientId=" + clientId
+				+ " conctract=" + conctract + " order=" + order;
+	}
+
+	public double getAvgFillPrice() {
+		return avgFillPrice;
+	}
+
+	public void setAvgFillPrice(double avgFillPrice) {
+		this.avgFillPrice = avgFillPrice;
+		setChanged();
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+		setChanged();
+	}
+
+	public int getFilled() {
+		return filled;
+	}
+
+	public void setFilled(int filled) {
+		this.filled = filled;
+		setChanged();
+	}
+
+	public double getLastFillPrice() {
+		return lastFillPrice;
+	}
+
+	public void setLastFillPrice(double lastFillPrice) {
+		this.lastFillPrice = lastFillPrice;
+		setChanged();
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+		setChanged();
+	}
+
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+		setChanged();
+	}
+
+	public int getPermId() {
+		return permId;
+	}
+
+	public void setPermId(int permId) {
+		this.permId = permId;
+		setChanged();
+	}
+
+	public int getRemaining() {
+		return remaining;
+	}
+
+	public void setRemaining(int remaining) {
+		this.remaining = remaining;
+		setChanged();
+	}
+
+	public void setStatus(String status) {
+		this.state = IBOrderState.valueOf(status);
+		setChanged();
+	}
+
+	public Contract getConctract() {
+		return conctract;
+	}
+
+	public void setConctract(Contract conctract) {
+		this.conctract = conctract;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public IBOrderState getState() {
+		return state;
+	}
+
+	public void setState(IBOrderState state) {
+		this.state = state;
+	}
 }

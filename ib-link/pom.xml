@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>sf.net.mlmechtrade</groupId>
+  <artifactId>sf.net.mlmechtrade.ib</artifactId>
+  <version>0.0.1</version>
+  <description>IB API implementation for MTS</description>
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.9</version>
+    </dependency>
+    <dependency>    
+      <groupId>sf.net.mlmechtrade</groupId>
+	  <artifactId>sf.net.mlmechtrade.c2ati</artifactId>
+	  <version>0.0.1</version>
+    </dependency>    
+  </dependencies>
+</project>
+

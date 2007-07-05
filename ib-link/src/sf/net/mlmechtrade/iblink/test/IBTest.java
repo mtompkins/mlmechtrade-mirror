@@ -15,84 +15,60 @@ public class IBTest {
 
 		ib.connect("", 7496, 1);
 
-		// request next unique id
-		ib.reqId();
-
-		int id = 0;
-
-		// wait till we get new id.
-		while (id == 0) {
-			id = ib.getId();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-			}
-		}
-
 		// everything like in TWS
 		Contract contract = new Contract();
-
 		contract.m_symbol = "IBM";
 		contract.m_secType = "STK";
 		contract.m_exchange = "SMART";
 
 		Order order = new Order();
-
+		order.m_tif = "GTC";
 		order.m_action = "BUY";
-		order.m_totalQuantity = 55;
+		order.m_totalQuantity = 1;
 		order.m_orderType = "LMT";
 		order.m_lmtPrice = 80.44;
 		order.m_transmit = true;
 		order.m_origin = 1;
 
 		// place order. Look at tws for order to appear!
-		ib.placeOrder(id, contract, order);
-		System.out.println("Order id " + id);
+		Integer permId = ib.placeOrder(contract, order);
+		System.out.println("PermId " + permId);
 
-		IBOrderStatus os = null;
+		printOrderState(ib, permId);
 
-		// just checking order status
-		while (os == null) {
-			os = ib.getIBOrderStatus(id);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-			}
-		}
+		// id = ib.waitlId();
+		// contract = new Contract();
+		//
+		// contract.m_symbol = "MSFT";
+		// contract.m_secType = "STK";
+		// contract.m_exchange = "SMART";
+		//
+		// order = new Order();
+		//
+		// order.m_action = "BUY";
+		// order.m_totalQuantity = 1;
+		// order.m_orderType = "MKT";
+		// order.m_transmit = true;
+		// order.m_origin = 1;
+		//
+		// ib.placeOrder(id, contract, order);
+		// System.out.println("Order id " + id);
 
-		System.out.println("Order status: " + os.status);
+		printOrders(ib);
 
-		// the same with another stock. Please note order type is MKT (market)
-		// now.
-		ib.reqId();
+		dissconnect(ib);
+	}
 
-		id = 0;
+	private static void printOrderState(IB ib, int permId) {
+		Integer id = ib.getOrderId(permId);
+		IBOrderStatus os = ib.getIBOrderStatus(id);
 
-		while (id == 0) {
-			id = ib.getId();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-			}
-		}
+		System.out.println("Order status: " + os.getState() + " permID="
+				+ os.getPermId());
+	}
 
-		contract = new Contract();
-
-		contract.m_symbol = "MSFT";
-		contract.m_secType = "STK";
-		contract.m_exchange = "SMART";
-
-		order = new Order();
-
-		order.m_action = "BUY";
-		order.m_totalQuantity = 155;
-		order.m_orderType = "MKT";
-		order.m_transmit = true;
-		order.m_origin = 1;
-
-		ib.placeOrder(id, contract, order);
-		System.out.println("Order id " + id);
-
+	private static void printOrders(IB ib) {
+		IBOrderStatus os;
 		// Get orders we have just submitted to tws
 		ib.reqOpenOrders();
 
@@ -105,11 +81,15 @@ public class IBTest {
 
 		while (orders.hasNext()) {
 			os = (IBOrderStatus) orders.next();
-			System.out.println("Order id: " + os.orderId + " Order status: "
-					+ os.status + " Filled " + os.filled + " Remaining "
-					+ os.remaining + " Avg price " + os.avgFillPrice);
+			System.out.println("Order id: " + os.getOrderId()
+					+ " Order status: " + os.getState() + " Filled "
+					+ os.getFilled() + " Remaining " + os.getRemaining()
+					+ " Avg price " + os.getAvgFillPrice() + " PermId="
+					+ os.getPermId());
 		}
+	}
 
+	private static void dissconnect(IB ib) {
 		// Always sleep before closing othewise orders can be lost
 		try {
 			Thread.sleep(1000);
