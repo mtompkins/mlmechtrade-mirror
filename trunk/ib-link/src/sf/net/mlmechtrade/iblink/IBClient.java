@@ -1,7 +1,10 @@
 package sf.net.mlmechtrade.iblink;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 import org.apache.log4j.Logger;
 
@@ -12,27 +15,33 @@ import com.ib.client.EWrapper;
 import com.ib.client.Execution;
 import com.ib.client.Order;
 
-public class IB implements EWrapper {
+public class IBClient implements EWrapper {
 
 	protected final static Logger log = Logger.getLogger(IBClient.class);
 
-	private EClientSocket m_client = new EClientSocket(this);
+	private EClientSocket mClientSocket = new EClientSocket(this);
 
 	private int id = 0;
 
-	private HashMap<Integer, IBOrderStatus> orderStatus = new HashMap<Integer, IBOrderStatus>();
+	private Map<Integer, IBOrderStatus> orderStatus = Collections
+			.synchronizedMap(new HashMap<Integer, IBOrderStatus>());
+
+	private Queue<Order> orderQueue = new LinkedList<Order>();
 
 	public void connect(String ip, int port, int clientId) {
-		m_client.eConnect(ip, port, clientId);
+		log.info("ip=" + ip + " port=" + port + " clientId=" + clientId);
+		mClientSocket.eConnect(ip, port, clientId);
 	}
 
 	public void disconnect() {
-		m_client.eDisconnect();
+		log.info("");
+		mClientSocket.eDisconnect();
 	}
 
-	public synchronized void reqId() {
+	private synchronized void reqId() {
+		log.info("");
 		id = 0;
-		m_client.reqIds(1);
+		mClientSocket.reqIds(1);
 	}
 
 	public int waitlId() {
@@ -45,108 +54,81 @@ public class IB implements EWrapper {
 
 		// wait till we get new id.
 		while (id == 0) {
+			reqId();
 			id = getId();
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 			}
-			if (id != 0) {
-				break;
-			}
-			reqId();
 		}
 		return id;
 	}
 
+	public IBOrderStatus waitOrderStatus(int orderId) {
+		log.info("orderId=" + orderId);
+		IBOrderStatus os = null;
+		while (os == null) {
+			os = getIBOrderStatus(orderId);
+			// Sleep after invocation
+			if (os != null) {
+				break;
+			}
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+			}
+		}
+		log.info("return OrcerStatus=" + os);
+		return os;
+	}
+
 	public int getId() {
+		log.info("id=" + id);
 		int temp = id;
 		id = 0;
 		return temp;
 	}
 
-	public Integer placeOrder(Contract contract, Order order) {
-		int id = waitlId();
-		m_client.placeOrder(id, contract, order);
-		reqOpenOrders();
-		Integer permId = null;
-		for (int i = 0; i < 10; i++) {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-			}
-			reqOpenOrders();
-			permId = getPermId(id);
-			if (permId != null) {
-				return permId;
-			}
-		}
-		return null;
+	public void placeOrder(int id, Contract contract, Order order) {
+		log.info("id=" + id + " contract=" + contract + " order=" + order);
+		mClientSocket.placeOrder(id, contract, order);
 	}
 
 	public void cancelOrder(int id) {
-		m_client.cancelOrder(id);
+		log.info("id=" + id);
+		mClientSocket.cancelOrder(id);
 	}
 
 	public void reqOpenOrders() {
-		// m_client.reqAllOpenOrders();
-		m_client.reqOpenOrders();
+		log.info("");
+		mClientSocket.reqOpenOrders();
 	}
 
-	public Integer getOrderId(int permId) {
-		reqOpenOrders();
-		Iterator<IBOrderStatus> it = orderStatus.values().iterator();
-		synchronized (orderStatus) {
-			IBOrderStatus value = it.next();
-			if (value.getPermId() == permId) {
-				return value.getOrderId();
-			}
-		}
-		return null;
+	public void reqAllOpenOrders() {
+		log.info("");
+		mClientSocket.reqAllOpenOrders();
 	}
 
-	public Integer getPermId(int id) {
-		Iterator<IBOrderStatus> it = orderStatus.values().iterator();
-		synchronized (orderStatus) {
-			while (it.hasNext()) {
-				IBOrderStatus value = it.next();
-				if (value.getOrderId() == id) {
-					return value.getPermId();
-				}
-			}
-		}
-		return null;
-
-	}
-
-	public IBOrderStatus getOrderStatus(int permId) {
-		reqOpenOrders();
-		Integer id = null;
-		for (int i = 0; i < 10; i++) {
-			if (id != null) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-				}
-			}
-			id = getPermId(permId);
-			if (id != null) {
-				return orderStatus.get(id);
-			}
-		}
-		return null;
+	public void reqContractDetails(Contract contract) {
+		log.info("contract=" + contract);
+		mClientSocket.reqContractDetails(contract);
 	}
 
 	public void bondContractDetails(ContractDetails contractDetails) {
+		log.info("contractDetails=" + contractDetails);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void contractDetails(ContractDetails contractDetails) {
+		log.info("contractDetails=" + contractDetails);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void execDetails(int orderId, Contract contract, Execution execution) {
+		log.info("orderId=" + orderId + " contract=" + contract + " execution="
+				+ execution);
 		// TODO Auto-generated method stub
 
 	}
@@ -154,22 +136,41 @@ public class IB implements EWrapper {
 	public void historicalData(int reqId, String date, double open,
 			double high, double low, double close, int volume, int count,
 			double WAP, boolean hasGaps) {
+		log.info("reqId=" + reqId + " date=" + date + " open=" + open
+				+ " high=" + high + " low=" + low + " close=" + close
+				+ " volume=" + volume + " count=count");
 	}
 
 	public void managedAccounts(String accountsList) {
+		log.info("accountsList=" + accountsList);
 		// TODO Auto-generated method stub
 	}
 
 	public void nextValidId(int numIds) {
 		id = numIds;
+		log.info("numIds=" + numIds);
 	}
 
 	public void openOrder(int orderId, Contract contract, Order order) {
+		synchronized (orderStatus) {
+			IBOrderStatus status = orderStatus.get(orderId);
+			if (status == null) {
+				status = new IBOrderStatus();
+				// status.setClientId(clientId);
+				// TODO: FILL IBOrder details !!!
+				// intentionally left
+			}
+			status.setConctract(contract);
+			status.setOrder(order);
+		}
+		log.info("orderId=" + orderId + " contract=" + contract + " order="
+				+ order);
 	}
 
 	public void orderStatus(int orderId, String status, int filled,
 			int remaining, double avgFillPrice, int permId, int parentId,
 			double lastFillPrice, int clientId) {
+
 		IBOrderStatus os = new IBOrderStatus();
 		os.setOrderId(orderId);
 		os.setStatus(status);
@@ -188,18 +189,15 @@ public class IB implements EWrapper {
 	}
 
 	public IBOrderStatus getIBOrderStatus(int orderId) {
-		synchronized (orderStatus) {
-			return (IBOrderStatus) orderStatus.get(new Integer(orderId));
-		}
+		return orderStatus.get(orderId);
 	}
 
-	public HashMap getOpenOrders() {
-		synchronized (orderStatus) {
-			return (HashMap) orderStatus.clone();
-		}
+	public Map getOpenOrders() {
+		return orderStatus;
 	}
 
 	public void receiveFA(int faDataType, String xml) {
+		log.info("faDataType=" + faDataType + " xml=" + xml);
 		// TODO Auto-generated method stub
 
 	}
@@ -207,16 +205,22 @@ public class IB implements EWrapper {
 	public void scannerData(int reqId, int rank,
 			ContractDetails contractDetails, String distance, String benchmark,
 			String projection) {
+		log.info("reqId=" + reqId + " rank=" + rank + " contractDetails="
+				+ contractDetails + " distance=" + distance + "benchmark="
+				+ benchmark + " projection=" + projection);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void scannerParameters(String xml) {
+		log.info(xml);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void tickGeneric(int tickerId, int tickType, double value) {
+		log.info("tickerId=" + tickerId + " tickType=" + tickType + " value="
+				+ value);
 		// TODO Auto-generated method stub
 
 	}
@@ -224,6 +228,9 @@ public class IB implements EWrapper {
 	public void tickOptionComputation(int tickerId, int field,
 			double impliedVol, double delta, double modelPrice,
 			double pvDividend) {
+		log.info("tickerId=" + tickerId + " field=" + field + " impliedVol="
+				+ impliedVol + " delta=" + delta + " modelPrice=" + modelPrice
+				+ " pvDividend=" + pvDividend);
 		// TODO Auto-generated method stub
 
 	}
@@ -233,40 +240,52 @@ public class IB implements EWrapper {
 	}
 
 	public void tickSize(int tickerId, int field, int size) {
-
+		log.info("tickerId=" + tickerId + " field=" + field + " size=" + size);
 	}
 
 	public void tickString(int tickerId, int tickType, String value) {
+		log.info("tickerId = " + tickerId + " tickType=" + tickType + " value="
+				+ value);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void updateAccountTime(String timeStamp) {
+		log.info("timeStamp=" + timeStamp);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void updateAccountValue(String key, String value, String currency,
 			String accountName) {
+		log.info("key=" + key + " value=" + value + " currency=" + currency
+				+ " accountName=" + accountName);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void updateMktDepth(int tickerId, int position, int operation,
 			int side, double price, int size) {
+		log.info("tickerId=" + tickerId + " position=" + position
+				+ " operation" + operation + " side=" + side + " price="
+				+ price + " size=" + size);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void updateMktDepthL2(int tickerId, int position,
 			String marketMaker, int operation, int side, double price, int size) {
+		log.info("tickerId=" + tickerId + " position=" + position
+				+ " marketMaker=" + marketMaker + " operation=" + operation
+				+ " side=" + side + " price=" + price + " size=" + size);
 		// TODO Auto-generated method stub
 
 	}
 
 	public void updateNewsBulletin(int msgId, int msgType, String message,
 			String origExchange) {
-		// TODO Auto-generated method stub
+		log.info("msgId=" + msgId + " msgType=" + msgType + " message="
+				+ message);
 
 	}
 
@@ -274,27 +293,31 @@ public class IB implements EWrapper {
 			double marketPrice, double marketValue, double averageCost,
 			double unrealizedPNL, double realizedPNL, String accountName) {
 		// TODO Auto-generated method stub
+		log.info("contract=" + contract + " position=" + position
+				+ " marketPrice=" + marketPrice + " marketValue=" + marketValue
+				+ " averageCost=" + averageCost + " unrealizedPNL="
+				+ unrealizedPNL + " realizedPNL=" + realizedPNL
+				+ " accountName=" + accountName);
 
 	}
 
 	public void connectionClosed() {
+		log.info("");
 		// TODO Auto-generated method stub
 
 	}
 
 	public void error(Exception e) {
-		// TODO Auto-generated method stub
-
+		log.error(e);
 	}
 
 	public void error(String str) {
-		// TODO Auto-generated method stub
-
+		log.error(str);
 	}
 
 	public void error(int id, int errorCode, String errorMsg) {
-		// TODO Auto-generated method stub
-
+		log.error("id=" + id + " errorCode=" + errorCode + " errorMsg="
+				+ errorMsg);
 	}
 
 }
