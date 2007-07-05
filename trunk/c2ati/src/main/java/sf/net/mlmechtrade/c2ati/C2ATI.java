@@ -1,6 +1,8 @@
 package sf.net.mlmechtrade.c2ati;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,9 @@ public class C2ATI {
 
 	public static final String INIT_SERVER_HOST = "64.68.145.3";
 
-	public static final String INIT_SERVER_PORT = "7878";
+	public static final Integer INIT_SERVER_PORT = 7878;
+	
+	public static final String INIT_URL_PROTOCOL = "http";
 
 	private String MULT_FILL_CONFIRM_SEPARATOR = "|sep|";
 
@@ -94,9 +98,9 @@ public class C2ATI {
 
 	public synchronized void login() throws IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=login&e=%s&p=%s&protoversion=%s&client=%s&h=%s&build=%s";
-		String request = String.format(requestTemplate, INIT_SERVER_HOST,
-				INIT_SERVER_PORT, eMail, password, PROTO_VERSION, CLIENT, host,
+		String requestTemplate = formatUrlStart(INIT_SERVER_HOST, INIT_SERVER_PORT) + 
+			"cmd=login&e=%s&p=%s&protoversion=%s&client=%s&h=%s&build=%s";
+		String request = String.format(requestTemplate, eMail, password, PROTO_VERSION, CLIENT, host,
 				BUILD);
 
 		log.info("LOGIN REQUEST : " + request);
@@ -127,6 +131,11 @@ public class C2ATI {
 		log.info("LOGIN REQUEST : OK!");
 	}
 
+	private static String formatUrlStart(String host, int port) throws MalformedURLException {
+		URL url = new URL(INIT_URL_PROTOCOL, host, port, "?");
+		return url.toExternalForm();
+	}
+
 	public synchronized void logOff() throws ParserConfigurationException, SAXException,
 			IOException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=logoff&session=%s&h=%s";
@@ -152,24 +161,24 @@ public class C2ATI {
 		LatestSignals result = new LatestSignals();
 
 		// Cancel List
-		DTMNodeList canselListIds = (DTMNodeList) xPath
+		DTMNodeList cancelListIds = (DTMNodeList) xPath
 				.evaluate("//cancelsiglist/cancelsigid", response,
 						XPathConstants.NODESET);
-		for (int i = 0; i < canselListIds.getLength(); i++) {
-			String canselSigId = canselListIds.item(i).getTextContent();
-			result.getCanselListIds().add(Long.parseLong(canselSigId));
+		for (int i = 0; i < cancelListIds.getLength(); i++) {
+			String canselSigId = cancelListIds.item(i).getTextContent();
+			result.getCancelListIds().add(Long.parseLong(canselSigId));
 		}
-		DTMNodeList canselListPermIds = (DTMNodeList) xPath.evaluate(
+		DTMNodeList cancelListPermIds = (DTMNodeList) xPath.evaluate(
 				"//cancelsiglist/cancelpermid", response,
 				XPathConstants.NODESET);
-		for (int i = 0; i < canselListPermIds.getLength(); i++) {
-			String cancelPermId = canselListPermIds.item(i).getTextContent();
-			result.getCanselListPermIds().add(cancelPermId);
+		for (int i = 0; i < cancelListPermIds.getLength(); i++) {
+			String cancelPermId = cancelListPermIds.item(i).getTextContent();
+			result.getCancelListPermIds().add(cancelPermId);
 		}
 		if (log.isDebugEnabled()) {
-			log.debug("Cansel List Signal IDs: " + result.getCanselListIds());
+			log.debug("Cancel List Signal IDs: " + result.getCancelListIds());
 			log.debug("Cansel List Pemanent IDs: "
-					+ result.getCanselListPermIds());
+					+ result.getCancelListPermIds());
 		}
 
 		// Signals
