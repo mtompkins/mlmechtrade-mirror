@@ -6,7 +6,7 @@ package sf.net.mlmechtrade.c2ati;
  * @since C2 version 8.2
  *
  */
-public enum C2CommandEnum {
+public enum C2ATICommandEnum {
 
 	login,
 	logoff,

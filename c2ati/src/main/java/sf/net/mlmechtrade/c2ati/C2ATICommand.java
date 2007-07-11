@@ -12,21 +12,16 @@ import sf.net.mlmechtrade.c2ati.util.HttpHelper;
  * Collective2C command, maps to http request to be sent to C2
  *
  */
-public class C2Command {
+public class C2ATICommand {
 	
-	/** Factory method for convienence */
-	public static C2Command create(C2CommandEnum command) {
-		return new C2Command(command);
-	}
-	
-	private C2CommandEnum command;
+	private C2ATICommandEnum command;
 
 	/**
 	 * Parameters map for http request : key=val
 	 */
 	protected Map<String, String> params = new HashMap<String, String>();
 
-	protected C2Command(C2CommandEnum command) {
+	public C2ATICommand(C2ATICommandEnum command) {
 		
 		assert command != null;
 
@@ -45,7 +40,7 @@ public class C2Command {
 		return ret;
 	}
 
-	public C2CommandEnum getCommand() {
+	public C2ATICommandEnum getCommand() {
 		return command;
 	}
 
@@ -56,7 +51,7 @@ public class C2Command {
 		return Collections.unmodifiableMap(params);
 	}
 	
-	public C2Command setParam(String param, String value) {
+	public C2ATICommand setParam(String param, String value) {
 
 		if (value != null) {
 			checkParameter(param, value);
@@ -69,6 +64,11 @@ public class C2Command {
 	}
 
 	protected void checkParameter(String param, String value) {
+	}
+	
+	/** Factory method for convienence */
+	public static C2ATICommand create(C2ATICommandEnum command) {
+		return new C2ATICommand(command);
 	}
 	
 }

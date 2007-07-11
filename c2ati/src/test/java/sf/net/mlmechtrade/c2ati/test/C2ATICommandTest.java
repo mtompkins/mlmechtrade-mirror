@@ -1,15 +1,15 @@
 package sf.net.mlmechtrade.c2ati.test;
 
-import sf.net.mlmechtrade.c2ati.C2Command;
-import sf.net.mlmechtrade.c2ati.C2CommandEnum;
+import sf.net.mlmechtrade.c2ati.C2ATICommand;
+import sf.net.mlmechtrade.c2ati.C2ATICommandEnum;
 import junit.framework.TestCase;
 
-public class C2CommandTest extends TestCase {
+public class C2ATICommandTest extends TestCase {
 	
 	public void test() {
 		
-		final C2Command cmd = 
-			C2Command.create(C2CommandEnum.ackc2fill)
+		final C2ATICommand cmd = 
+			C2ATICommand.create(C2ATICommandEnum.ackc2fill)
 				.setParam("x", "X")
 				.setParam("y", "Y")
 				.setParam("z", "Z")
