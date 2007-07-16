@@ -1,6 +1,6 @@
 package sf.net.mlmechtrade.c2api;
 
-import sf.net.mlmechtrade.C2AnnotatedCommand;
+import sf.net.mlmechtrade.C2Command;
 
 /**
  * 
@@ -8,9 +8,9 @@ import sf.net.mlmechtrade.C2AnnotatedCommand;
  * 
  *
  */
-public class C2SignalEntryCommand extends C2AnnotatedCommand<C2SignalEntryCommandEnum, C2SignalEntryCommandParamEnum> {
+public class C2SignalEntryCommand extends C2Command<C2SignalEntryCommandEnum, C2SignalEntryCommandParamEnum> {
 
-	public C2SignalEntryCommand(C2SignalEntryCommandEnum command) {
+	protected C2SignalEntryCommand(C2SignalEntryCommandEnum command) {
 		super(command);
 	}
 

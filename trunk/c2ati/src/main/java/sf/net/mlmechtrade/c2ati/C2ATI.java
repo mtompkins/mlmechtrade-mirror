@@ -39,7 +39,7 @@ import sf.net.mlmechtrade.c2ati.util.DOMHelper;
 import com.sun.org.apache.xml.internal.dtm.ref.DTMNodeList;
 
 public class C2ATI {
-	Logger log = Logger.getLogger(C2ATI.class);
+	Logger log = Logger.getLogger(getClass());
 
 	public static final String PROTO_VERSION = "8.2";
 
