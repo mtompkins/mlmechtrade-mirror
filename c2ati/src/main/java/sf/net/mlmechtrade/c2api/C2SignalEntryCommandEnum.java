@@ -40,9 +40,67 @@ public enum C2SignalEntryCommandEnum {
 	 */
 	reverse,
 
+	/** To request an OCA id number, send the following command: */
+	requestocaid,
+
 	/**
 	You can specify that a group of trades act as a One-Cancels-Another (OCA) group. The definition of an OCA group is this: as soon as the first order within the group is filled, the remaining orders within the group are cancelled.
 	To make an oca group, you need to specify the ocagroupid with each signal you enter. The ocagroupid is an unique number. You can either specify your own ocagroupid, or can request one from the C2 server.	 */
-	ocaid
+	ocaid,
+	
+	/**
+	 * <h1>Canceling Orders</h1>
+	 * 
+	 */
+	cancel,
+	
+	/**
+	 * <h1>Cancel all pending orders</h1>
+	 * 
+	 */
+	cancelallpending,
 
+	/**
+	 * <h1>Flushing signals</h1>
+	 * 
+	 */
+	flushpendingsignals,
+
+	/**
+	 * <h1>Closing all positions</h1>
+	 * 
+	 */
+	closeallpositions,
+
+
+	/**
+	 * <h1>Requesting Buying Power</h1>
+	 * 
+	 */
+	getbuypower,
+
+	/**
+	 * <h1>Requesting signal status</h1>
+	 * 
+	 */
+	signalstatus,
+
+	/**
+	 * <h1>Requesting position status</h1>
+	 * 
+	 */
+	positionstatus,
+
+	/**
+	 * <h1>Requesting all systems</h1>
+	 * 
+	 */
+	allsystems,
+	
+	
+	/**
+	 * <h1>Get equity info: getsystemhypothetical</h1>
+	 * 
+	 */
+	getsystemhypothetical,
 }
