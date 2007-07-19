@@ -1,12 +1,9 @@
 package sf.net.mlmechtrade.c2api.request;
 
-import sf.net.mlmechtrade.C2Request;
-import sf.net.mlmechtrade.c2api.C2SignalEntryCommandEnum;
-import sf.net.mlmechtrade.c2api.C2SignalEntryCommandParamEnum;
-import static sf.net.mlmechtrade.c2api.C2SignalEntryCommandEnum.*;
+import static sf.net.mlmechtrade.c2api.C2SignalEntryCommandEnum.signal;
+import sf.net.mlmechtrade.C2Error;
 
-public class PlaceOrderRequest
-					extends C2Request<C2SignalEntryCommandEnum, C2SignalEntryCommandParamEnum> {
+public class PlaceOrderRequest extends TradeSignalRequest {
 	
 	
 	public static enum Action {
@@ -36,16 +33,6 @@ public class PlaceOrderRequest
 		forex
 	}
 	
-	public static enum Duration {
-		
-		/** Day Order */
-		DAY,
-
-		/** Good Til Cancel */
-		GTC
-	}
-	
-
 	private String systemid;
 	private String pw;
 	private Action action;
@@ -54,9 +41,13 @@ public class PlaceOrderRequest
 	private String symbol;
 	private double limit;
 	private double stop;
-	private Duration duration;
+	private DurationEnum duration;
+	
 	/** own signal id - greater than zero and less than or equal to 4294967295. */
-	private long signalid; 
+	private long signalid;
+	
+	/** A conditional order is an order that does not become valid until a preceding order is filled. */
+	private double conditionalupon;
 
 	public PlaceOrderRequest() {
 		super(signal);
@@ -70,11 +61,11 @@ public class PlaceOrderRequest
 		this.action = action;
 	}
 
-	public Duration getDuration() {
+	public DurationEnum getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Duration duration) {
+	public void setDuration(DurationEnum duration) {
 		this.duration = duration;
 	}
 
@@ -148,5 +139,19 @@ public class PlaceOrderRequest
 
 	public void setOwnSignalId(long ownSignalId) {
 		setSignalid(signalid);
+	}
+
+	public double getConditionalupon() {
+		return conditionalupon;
+	}
+
+	public void setConditionalupon(double conditionalupon) {
+		this.conditionalupon = conditionalupon;
+	}
+
+	@Override
+	public C2Error validate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
