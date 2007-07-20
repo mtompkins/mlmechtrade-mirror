@@ -3,6 +3,8 @@
 
 <target name="main" description="xsd -> java, ...Requires JAXB_HOME env.var to be set...">
 	
+	<echo message="Unused... We won't use XML schemas, at least for now in this project (KISS rule)."/>
+	<!--
 	<property environment="env"/>
 	<property name="jaxbHomePath" value="${env.JAXB_HOME}"/>
 
@@ -11,7 +13,7 @@
 		<fileset dir="${jaxbHomePath}/lib" includes="*.jar"/>
 	</path>
 	
-	<!-- https://jaxb.dev.java.net/jaxb20-ea/docs/xjcTask.html -->
+	<echo message="If this step fails, see https://jaxb.dev.java.net/jaxb20-ea/docs/xjcTask.html"/>
 	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
 		<classpath refid="jaxbClasspath" />
 	</taskdef>
@@ -20,6 +22,7 @@
 		<schema  dir="src/main/resources/schemas" includes="*.xsd"/>
 		<arg value="-no-header"/>
 	</xjc>
+	-->
 </target>
 
 </project>
