@@ -1,30 +1,31 @@
 package sf.net.mlmechtrade.c2api.request;
 
 import static sf.net.mlmechtrade.c2api.C2SignalEntryCommandEnum.reverse;
+import static sf.net.mlmechtrade.c2api.request.DurationEnum.GTC;
 import sf.net.mlmechtrade.C2Error;
+import sf.net.mlmechtrade.annotations.Required;
 
 /**
- * If you are long an instrument, and you want to go short (or vice-versa) that is called a reversal. 
- *
-<p>Here are the reversal-related parameters you can use:
-
-<li>cmd=reverse (required)
-
-<li>symbol=SYMBOL (required)
-
-<li>triggerprice=price (optional)
-
-<li>duration=DAY/GTC (optional; will be GTC unless specified)
-
-<li>quant=new opening quant (optional; use only if you want your final position to be a quantity different than your prior quantity; if not specified, you will go from long to short, or short to long, using the same quantity of position before the reversal)
-
-
- */
+ * If you are long an instrument, and you want to go short (or vice-versa) that is 
+ * called a reversal. 
+  */
 public class ReversalOrderRequest extends TradeSignalRequest {
-	
+
+	/** symbol=SYMBOL (required) */
+	@Required
 	private String symbol;
+	
+	/** price (optional) */
 	private double triggerprice;
-	private DurationEnum duration;
+	
+	/** optional; will be GTC unless specified*/
+	private DurationEnum duration = GTC;
+	
+	/** new opening quant (optional; use only if you want your final position to be
+	 *  a quantity different than your prior quantity; if not specified, 
+	 *  you will go from long to short, or short to long, 
+	 *  using the same quantity of position before the reversal)
+	 */
 	private int quant;
 
 	public ReversalOrderRequest() {

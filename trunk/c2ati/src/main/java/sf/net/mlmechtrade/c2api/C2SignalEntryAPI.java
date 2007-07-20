@@ -1,14 +1,29 @@
 package sf.net.mlmechtrade.c2api;
 
 import sf.net.mlmechtrade.C2Error;
+import sf.net.mlmechtrade.c2api.request.AllSystemsRequest;
+import sf.net.mlmechtrade.c2api.request.CancelAllPendingRequest;
+import sf.net.mlmechtrade.c2api.request.CancelOrderRequest;
+import sf.net.mlmechtrade.c2api.request.FlushPendingSignalsRequest;
 import sf.net.mlmechtrade.c2api.request.PlaceOrderRequest;
+import sf.net.mlmechtrade.c2api.request.RequestOCAidRequest;
+import sf.net.mlmechtrade.c2api.request.ReversalOrderRequest;
+import sf.net.mlmechtrade.c2api.response.AllSystemsResponse;
+import sf.net.mlmechtrade.c2api.response.CancelAllPendingResponse;
+import sf.net.mlmechtrade.c2api.response.CancelOrderResponse;
+import sf.net.mlmechtrade.c2api.response.FlushPendingSignalsResponse;
 import sf.net.mlmechtrade.c2api.response.PlaceOrderResponse;
+import sf.net.mlmechtrade.c2api.response.RequestOCAidResponse;
+import sf.net.mlmechtrade.c2api.response.ReversalOrderResponse;
 
 /**
  * <h1>C2 Signal Entry API</h1>
  * 
  * <p>Overview
- * <p>Many traders use computer programs to place trades. To accommodate these traders,  Collective2 makes available a Signal Entry API. All calls to this API are accomplished through HTTP, by having your program call a URL.
+ * <p>Many traders use computer programs to place trades.
+ * To accommodate these traders,  Collective2 makes available a Signal Entry API.
+ * All calls to this API are accomplished through HTTP,
+ *  by having your program call a URL.
  * <p>
  * 
  * Before you begin, you'll need to have created at least one trading system on 
@@ -28,7 +43,47 @@ import sf.net.mlmechtrade.c2api.response.PlaceOrderResponse;
  */
 public interface C2SignalEntryAPI {
 	
-	/** Placing an order */
+	/** Place an order */
 	PlaceOrderResponse placeOrder(PlaceOrderRequest request) throws C2Error;
 
+	/** Cancel an order */
+	CancelOrderResponse cancelOrder(CancelOrderRequest request) throws C2Error;
+
+	/** Cancel all pending orders */
+	CancelAllPendingResponse cancelOrder(CancelAllPendingRequest request) throws C2Error;
+
+	/** Reverse Order */
+	ReversalOrderResponse reverseOrder(ReversalOrderRequest request) throws C2Error;
+	
+	/** Request id for One-Cancels-Another (OCA) group */
+	RequestOCAidResponse requestOCAid(RequestOCAidRequest request) throws C2Error;
+
+	/** Request all systems */
+	AllSystemsResponse retrieveAllSystems(AllSystemsRequest request) throws C2Error;
+	
+	/** Flush signals */
+	FlushPendingSignalsResponse flushPendingSignals(FlushPendingSignalsRequest request) throws C2Error;
+
+	//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
+//	/**  */
+//	Response xxxx(Request request) throws C2Error;
 }

@@ -40,7 +40,7 @@ public enum C2SignalEntryCommandEnum {
 	 */
 	reverse,
 
-	/** To request an OCA id number, send the following command: */
+	/** To request an OCA id number */
 	requestocaid,
 
 	/**

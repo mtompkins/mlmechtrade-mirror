@@ -36,18 +36,27 @@ public class PlaceOrderRequest extends TradeSignalRequest {
 	private String systemid;
 	private String pw;
 	private Action action;
-	private int quant;
+	private Integer quant;
 	private Instrument instrument;
 	private String symbol;
-	private double limit;
-	private double stop;
+	private Double limit;
+	private Double stop;
 	private DurationEnum duration;
+	
+	//&stoploss=900.50&profittarget=1200
+	private Double stoploss, profittarget;
+
+	//delay=X, where X is the number of seconds you want to delay a signal before processing it.
+	private Integer delay;
+
 	
 	/** own signal id - greater than zero and less than or equal to 4294967295. */
 	private long signalid;
 	
 	/** A conditional order is an order that does not become valid until a preceding order is filled. */
 	private double conditionalupon;
+	
+	// TODO: parkuntil
 
 	public PlaceOrderRequest() {
 		super(signal);
@@ -133,14 +142,6 @@ public class PlaceOrderRequest extends TradeSignalRequest {
 		this.signalid = signalid;
 	}
 
-	public long getOwnSignalId() {
-		return getSignalid();
-	}
-
-	public void setOwnSignalId(long ownSignalId) {
-		setSignalid(signalid);
-	}
-
 	public double getConditionalupon() {
 		return conditionalupon;
 	}
@@ -153,5 +154,41 @@ public class PlaceOrderRequest extends TradeSignalRequest {
 	public C2Error validate() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getDelay() {
+		return delay;
+	}
+
+	public void setDelay(Integer delay) {
+		this.delay = delay;
+	}
+
+	public Double getProfittarget() {
+		return profittarget;
+	}
+
+	public void setProfittarget(Double profittarget) {
+		this.profittarget = profittarget;
+	}
+
+	public Double getStoploss() {
+		return stoploss;
+	}
+
+	public void setStoploss(Double stoploss) {
+		this.stoploss = stoploss;
+	}
+
+	public void setLimit(Double limit) {
+		this.limit = limit;
+	}
+
+	public void setQuant(Integer quant) {
+		this.quant = quant;
+	}
+
+	public void setStop(Double stop) {
+		this.stop = stop;
 	}
 }
