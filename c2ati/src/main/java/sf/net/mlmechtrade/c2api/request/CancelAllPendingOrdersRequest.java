@@ -11,13 +11,13 @@ http://www.collective2 .com/cgi-perl/signal. mpl
 </pre>
  *
  */
-public class CancelAllPendingRequest extends TradeSignalRequest {
+public class CancelAllPendingOrdersRequest extends TradeSignalRequest {
 	
 	private Integer signalid;
 	private Integer systemid; //TODO - Is systemid common??
 	private String pw; //TODO - Is pw common??
 
-	public CancelAllPendingRequest() {
+	public CancelAllPendingOrdersRequest() {
 		super(C2SignalEntryCommandEnum.cancelallpending);
 	}
 

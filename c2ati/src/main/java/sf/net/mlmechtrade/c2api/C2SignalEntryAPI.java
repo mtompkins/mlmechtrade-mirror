@@ -2,19 +2,29 @@ package sf.net.mlmechtrade.c2api;
 
 import sf.net.mlmechtrade.C2Error;
 import sf.net.mlmechtrade.c2api.request.AllSystemsRequest;
-import sf.net.mlmechtrade.c2api.request.CancelAllPendingRequest;
+import sf.net.mlmechtrade.c2api.request.CancelAllPendingOrdersRequest;
 import sf.net.mlmechtrade.c2api.request.CancelOrderRequest;
+import sf.net.mlmechtrade.c2api.request.CloseAllPositionsRequest;
 import sf.net.mlmechtrade.c2api.request.FlushPendingSignalsRequest;
+import sf.net.mlmechtrade.c2api.request.GetBuyPowerRequest;
+import sf.net.mlmechtrade.c2api.request.GetSystemHypotheticalRequest;
 import sf.net.mlmechtrade.c2api.request.PlaceOrderRequest;
+import sf.net.mlmechtrade.c2api.request.PositionStatusRequest;
 import sf.net.mlmechtrade.c2api.request.RequestOCAidRequest;
 import sf.net.mlmechtrade.c2api.request.ReversalOrderRequest;
+import sf.net.mlmechtrade.c2api.request.SignalStatusRequest;
 import sf.net.mlmechtrade.c2api.response.AllSystemsResponse;
-import sf.net.mlmechtrade.c2api.response.CancelAllPendingResponse;
+import sf.net.mlmechtrade.c2api.response.CancelAllPendingOrdersResponse;
 import sf.net.mlmechtrade.c2api.response.CancelOrderResponse;
+import sf.net.mlmechtrade.c2api.response.CloseAllPositionsResponse;
 import sf.net.mlmechtrade.c2api.response.FlushPendingSignalsResponse;
+import sf.net.mlmechtrade.c2api.response.GetBuyPowerResponse;
+import sf.net.mlmechtrade.c2api.response.GetSystemHypotheticalResponse;
 import sf.net.mlmechtrade.c2api.response.PlaceOrderResponse;
+import sf.net.mlmechtrade.c2api.response.PositionStatusResponse;
 import sf.net.mlmechtrade.c2api.response.RequestOCAidResponse;
 import sf.net.mlmechtrade.c2api.response.ReversalOrderResponse;
+import sf.net.mlmechtrade.c2api.response.SignalStatusResponse;
 
 /**
  * <h1>C2 Signal Entry API</h1>
@@ -43,47 +53,91 @@ import sf.net.mlmechtrade.c2api.response.ReversalOrderResponse;
  */
 public interface C2SignalEntryAPI {
 	
-	/** Place an order */
+	/** <h1>Place an order</h1>
+	 */
 	PlaceOrderResponse placeOrder(PlaceOrderRequest request) throws C2Error;
 
-	/** Cancel an order */
+	/** <h1>Cancel an order</h1>
+	 */
 	CancelOrderResponse cancelOrder(CancelOrderRequest request) throws C2Error;
 
-	/** Cancel all pending orders */
-	CancelAllPendingResponse cancelOrder(CancelAllPendingRequest request) throws C2Error;
+	/** <h1>Cancel all pending orders</h1>
+	 */
+	CancelAllPendingOrdersResponse cancelAllPendingOrders(CancelAllPendingOrdersRequest request) throws C2Error;
 
-	/** Reverse Order */
+	/** <h1>Reverse Order</h1>
+	 */
 	ReversalOrderResponse reverseOrder(ReversalOrderRequest request) throws C2Error;
 	
-	/** Request id for One-Cancels-Another (OCA) group */
+	/** <h1>Request id for One-Cancels-Another (OCA) group</h1>
+	 */
 	RequestOCAidResponse requestOCAid(RequestOCAidRequest request) throws C2Error;
 
-	/** Request all systems */
+	/** <h1>Request all systems</h1>
+	 */
 	AllSystemsResponse retrieveAllSystems(AllSystemsRequest request) throws C2Error;
 	
-	/** Flush signals */
+	/** <h1>Flush signals</h1>
+	 */
 	FlushPendingSignalsResponse flushPendingSignals(FlushPendingSignalsRequest request) throws C2Error;
 
-	//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
-//	Response xxxx(Request request) throws C2Error;
-//	/**  */
+	/**
+	 * <h1>Close all positions</h1>
+	 *
+	 * You can instruct the system to close all open positions. This will issue
+	 * a set of closing orders, at market, for any position you have open. You
+	 * might want to issue this at the end of the trading day, to make sure you
+	 * are flat before the markets close.
+	 * <p>
+	 * If you have no positions open, the command will be ignored.
+	 */
+	CloseAllPositionsResponse closeAllPositions(CloseAllPositionsRequest request)
+			throws C2Error;
+
+	/**<h1>Request Buying Power</h1>
+	 * 
+	 */
+	GetBuyPowerResponse getBuyPower(GetBuyPowerRequest request) throws C2Error;
+
+	/**<h1>Request signal status</h1>
+	 * 
+	 */
+	SignalStatusResponse getSignalStatus(SignalStatusRequest request) throws C2Error;
+
+	/**<h1>Request position status</h1>
+	 * 
+	 */
+	PositionStatusResponse getPosition(PositionStatusRequest request) throws C2Error;
+	
+	/**
+	 * <h1>Request all systems owned by me</h1>
+	 * The command allsystems returns a list of the trading systems "owned" by a
+	 * particular C2 user.
+	 * <p>
+	 * Please note that the list returns only the trading systems started by the
+	 * customer -- not the systems subscribed to by the customer.
+	 */
+	AllSystemsResponse getAllSystems(AllSystemsRequest request) throws C2Error;
+
+	
+	/**
+	 * <h1>Get equity info</h1>
+	 * The command called getsystemhypothetical (getsystemhypo also accepted)
+	 * allows you to request equity information about trading systems on
+	 * Collective2.
+	 * <p>
+	 * <b>Important:</b> the data returned reveals Collective2’s hypothetical
+	 * system account information. The data does not include any
+	 * customer/brokerage real-life account data.
+	 */
+	GetSystemHypotheticalResponse getSystemHypothetical(
+			GetSystemHypotheticalRequest request) throws C2Error;	
+	
+	//TODO : check missing commands, especially derivates of a very owerloaded signal command
+	
+	
+	//	/**<h1></h1>
+//	 * 
+//	 */
 //	Response xxxx(Request request) throws C2Error;
 }
