@@ -6,7 +6,7 @@ import sf.net.mlmechtrade.c2api.C2SignalEntryCommandEnum;
 public class CloseAllPositionsRequest extends TradeSignalRequest {
 
 	public CloseAllPositionsRequest() {
-		super(C2SignalEntryCommandEnum.cancel);
+		super(C2SignalEntryCommandEnum.closeallpositions);
 	}
 
 	@Override
