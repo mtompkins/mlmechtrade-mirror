@@ -16,36 +16,38 @@ public class IBTest {
 
 		ib.connect("", 7496, 1);
 
-		// everything like in TWS
-		Contract contract = new Contract();
-		contract.m_symbol = "IBM";
-		contract.m_secType = "STK";
-		contract.m_exchange = "SMART";
+//		// everything like in TWS
+//		Contract contract = new Contract();
+//		contract.m_symbol = "IBM";
+//		contract.m_secType = "STK";
+//		contract.m_exchange = "SMART";
+//
+//		Order order = new Order();
+//		order.m_tif = "LMT";
+//		order.m_action = "BUY";
+//		order.m_totalQuantity = 1;
+//		order.m_orderType = "LMT";
+//		order.m_lmtPrice = 80.44;
+//		order.m_transmit = true;
+//		order.m_origin = 1;
+//
+//		// place order. Look at tws for order to appear!
+//		Integer permId = ib.placeOrder(contract, order);
+//		System.out.println("PermId " + permId);
+//
+//		printOrderState(ib, permId);
 
-		Order order = new Order();
-		order.m_tif = "LMT";
-		order.m_action = "BUY";
-		order.m_totalQuantity = 1;
-		order.m_orderType = "LMT";
-		order.m_lmtPrice = 80.44;
-		order.m_transmit = true;
-		order.m_origin = 1;
-
-		// place order. Look at tws for order to appear!
-		Integer permId = ib.placeOrder(contract, order);
-		System.out.println("PermId " + permId);
-		permId = ib.placeOrder(contract, order);
-		System.out.println("PermId " + permId);		
-
-		printOrderState(ib, permId);
-
-		ib.cancelOrderPermId(permId);
-
-		printOrderState(ib, permId);
+//		ib.cancelOrderPermId(permId);
+//
+//		printOrderState(ib, permId);
+//
+		printOrders(ib);
+		
+		ib.cancelOrderPermId(1433956156);
 
 		printOrders(ib);
-
-		dissconnect(ib);
+		
+		ib.disconnect();
 	}
 
 	private static void printOrderState(IB ib, int permId) {
@@ -65,16 +67,6 @@ public class IBTest {
 					+ " Avg price " + os.getAvgFillPrice() + " PermId="
 					+ os.getPermId());
 		}
-	}
-
-	private static void dissconnect(IB ib) {
-		// Always sleep before closing othewise orders can be lost
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-		}
-
-		ib.disconnect();
 	}
 
 }

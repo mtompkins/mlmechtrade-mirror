@@ -20,9 +20,18 @@ public class IBImpl implements EWrapper, IB {
 
 	private int id = 0;
 
+	private String ip;
+
+	private int port;
+
+	private int clientId;
+
 	private HashMap<Integer, IBOrderStatus> orderStatus = new HashMap<Integer, IBOrderStatus>();
 
 	public void connect(String ip, int port, int clientId) {
+		this.ip = ip;
+		this.port = port;
+		this.clientId = clientId;
 		m_client.eConnect(ip, port, clientId);
 	}
 
@@ -63,8 +72,7 @@ public class IBImpl implements EWrapper, IB {
 		int id = waitlId();
 		m_client.placeOrder(id, contract, order);
 		Integer permId = null;
-		for (int i = 0; i < 20; i++) {
-			sleep(100);
+		for (int i = 0; i < 4; i++) {
 			reqOpenOrders();
 			permId = getPermId(id);
 			if (permId != null) {
@@ -87,7 +95,7 @@ public class IBImpl implements EWrapper, IB {
 	public void reqOpenOrders() {
 		// m_client.reqAllOpenOrders();
 		m_client.reqOpenOrders();
-		sleep(500);
+		sleep(1100);
 	}
 
 	public int getOrderId(int permId) {
@@ -100,10 +108,12 @@ public class IBImpl implements EWrapper, IB {
 			}
 			Iterator<IBOrderStatus> it = orderStatus.values().iterator();
 			synchronized (orderStatus) {
-				IBOrderStatus value = it.next();
-				if (value.getPermId() == permId) {
-					return value.getOrderId();
-				}
+				while (it.hasNext()) {
+					IBOrderStatus value = it.next();
+					if (value.getPermId() == permId) {
+						return value.getOrderId();
+					}
+				} // while
 			}
 		}
 		throw new RuntimeException("Unable to get id");
@@ -319,6 +329,11 @@ public class IBImpl implements EWrapper, IB {
 	}
 
 	public void error(int id, int errorCode, String errorMsg) {
+		if (errorCode == ERR_NOT_CONNECTED) {
+			log.info("Try recconnect!");
+			sleep(1000);
+			m_client.eConnect(ip, port, clientId);
+		}
 		String excString = "Order ID = " + id + " Error Code=" + errorCode
 				+ " " + errorMsg;
 		log.error(excString);

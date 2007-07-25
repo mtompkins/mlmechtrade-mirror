@@ -7,11 +7,14 @@ import com.ib.client.Order;
 
 public interface IB {
 	public static final int DEFAULT_PORT = 7496;
+	public static final int ERR_NOT_CONNECTED = 504;
 	
 	public abstract boolean isConnected();
 
 	public abstract Integer placeOrder(Contract contract, Order order);
 
+	public abstract void cancelOrder(int id);
+	
 	public abstract void cancelOrderPermId(int permId);
 
 	public abstract HashMap getOpenOrders();
