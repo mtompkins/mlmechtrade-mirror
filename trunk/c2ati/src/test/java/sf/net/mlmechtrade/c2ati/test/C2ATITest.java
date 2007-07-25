@@ -48,7 +48,7 @@ public class C2ATITest extends TestCase {
 		// canselListPermIds
 		List<String> canselListPermIds = signals.getCancelListPermIds();
 		assertEquals(2, canselListPermIds.size());
-		assertEquals("AAA", canselListPermIds.get(0));
+		assertEquals("331995710", canselListPermIds.get(0));
 		assertEquals("BBB", canselListPermIds.get(1));
 		// signals
 		List<Signal> sSignals = signals.getSignals();
@@ -79,7 +79,7 @@ public class C2ATITest extends TestCase {
 	private void testRecentC2Fills(List<C2RecentFill> recentC2Fills) {
 		C2RecentFill recentC2Fill = recentC2Fills.get(0);
 		assertEquals(333, recentC2Fill.getSignalId());
-		assertEquals("CCC", recentC2Fill.getPermId());
+		assertEquals("EEE", recentC2Fill.getPermId());
 		assertEquals(83073, recentC2Fill.getFilledAgo());
 		assertEquals(36.93, recentC2Fill.getFilledPrice());
 		recentC2Fill = recentC2Fills.get(1);
@@ -115,7 +115,7 @@ public class C2ATITest extends TestCase {
 		assertEquals(AssetEnum.stock, signal.getAssetType());
 		assertEquals(false, signal.isMutualFund());
 		assertEquals(OrderEnum.STOP, signal.getOrderType());
-		assertEquals(30.66, signal.getStop());
+		assertEquals(117.0, signal.getStop());
 		assertEquals(0.0, signal.getLimit());
 		assertEquals(DurationEnum.DAY, signal.getTif());
 		assertEquals("", signal.getUnderlying());
@@ -142,7 +142,7 @@ public class C2ATITest extends TestCase {
 		assertEquals(DurationEnum.GTC, signal.getTif());
 		assertEquals(OrderEnum.LIMIT, signal.getOrderType());
 		assertEquals(0.0, signal.getStop());
-		assertEquals(36.56, signal.getLimit());
+		assertEquals(12.0, signal.getLimit());
 	}
 
 }

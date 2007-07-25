@@ -16,7 +16,7 @@ public class Signal {
 
 	private ActionEnum action;
 
-	private long scaledQuant;
+	private int scaledQuant;
 
 	private long originalQuant;
 
@@ -222,11 +222,11 @@ public class Signal {
 		this.right = right;
 	}
 
-	public long getScaledQuant() {
+	public int getScaledQuant() {
 		return scaledQuant;
 	}
 
-	public void setScaledQuant(long scaledQuant) {
+	public void setScaledQuant(int scaledQuant) {
 		this.scaledQuant = scaledQuant;
 	}
 
