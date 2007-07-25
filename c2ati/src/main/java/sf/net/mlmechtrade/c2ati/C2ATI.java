@@ -50,7 +50,7 @@ public class C2ATI {
 	public static final String INIT_SERVER_HOST = "64.68.145.3";
 
 	public static final Integer INIT_SERVER_PORT = 7878;
-	
+
 	public static final String INIT_URL_PROTOCOL = "http";
 
 	private String MULT_FILL_CONFIRM_SEPARATOR = "|sep|";
@@ -96,12 +96,14 @@ public class C2ATI {
 				10000);
 	}
 
-	public synchronized void login() throws IOException, ParserConfigurationException,
-			SAXException, XPathExpressionException, C2ATIError {
-		String requestTemplate = formatUrlStart(INIT_SERVER_HOST, INIT_SERVER_PORT) + 
-			"cmd=login&e=%s&p=%s&protoversion=%s&client=%s&h=%s&build=%s";
-		String request = String.format(requestTemplate, eMail, password, PROTO_VERSION, CLIENT, host,
-				BUILD);
+	public synchronized void login() throws IOException,
+			ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError {
+		String requestTemplate = formatUrlStart(INIT_SERVER_HOST,
+				INIT_SERVER_PORT)
+				+ "cmd=login&e=%s&p=%s&protoversion=%s&client=%s&h=%s&build=%s";
+		String request = String.format(requestTemplate, eMail, password,
+				PROTO_VERSION, CLIENT, host, BUILD);
 
 		log.info("LOGIN REQUEST : " + request);
 
@@ -131,21 +133,22 @@ public class C2ATI {
 		log.info("LOGIN REQUEST : OK!");
 	}
 
-	private static String formatUrlStart(String host, int port) throws MalformedURLException {
+	private static String formatUrlStart(String host, int port)
+			throws MalformedURLException {
 		URL url = new URL(INIT_URL_PROTOCOL, host, port, "?");
 		return url.toExternalForm();
 	}
 
-	public synchronized void logOff() throws ParserConfigurationException, SAXException,
-			IOException, XPathExpressionException, C2ATIError {
+	public synchronized void logOff() throws ParserConfigurationException,
+			SAXException, IOException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=logoff&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, this.sessionId, this.host);
 		processRequest(request, "logoff");
 	}
 
-	public synchronized LatestSignals latestSignals() throws HttpException, IOException,
-			ParserConfigurationException, SAXException,
+	public synchronized LatestSignals latestSignals() throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		// Prepare template
 		String requestTemplate = "http://%s:%s?cmd=latestsigs&session=%s&h=%s";
@@ -237,27 +240,27 @@ public class C2ATI {
 	public synchronized void confirmSig(long quantity, long sigId, String permId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s";
+		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s&permid=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
-				this.serverPort, sigId, this.sessionId, this.host, quantity);
+				this.serverPort, sigId, this.sessionId, this.host, quantity, permId);
 		if (permId != null) {
 			request += "&permid=" + permId;
 		}
 		processRequest(request, "confirmsig");
 	}
 
-	public synchronized void cancelConfirmSigId(long sigId) throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
+	public synchronized void cancelConfirmSigId(long sigId)
+			throws HttpException, IOException, ParserConfigurationException,
+			SAXException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&sigid=%s&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, sigId, this.sessionId, this.host);
 		processRequest(request, "cancelconfirm");
 	}
 
-	public synchronized void cancelConfirmPermId(String permId) throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
+	public synchronized void cancelConfirmPermId(String permId)
+			throws HttpException, IOException, ParserConfigurationException,
+			SAXException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=cancelconfirm&permid=%s&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, permId, this.sessionId, this.host);
@@ -288,20 +291,20 @@ public class C2ATI {
 		return request;
 	}
 
-	public synchronized void multFillConfirmSigId(long sigId) throws HttpException,
-			XPathExpressionException, IOException,
+	public synchronized void multFillConfirmSigId(long sigId)
+			throws HttpException, XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(sigId);
 	}
 
-	public synchronized void multFillConfirmPermId(String permId) throws HttpException,
-			XPathExpressionException, IOException,
+	public synchronized void multFillConfirmPermId(String permId)
+			throws HttpException, XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(permId);
 	}
 
-	public synchronized void ackComplete(long sigId) throws HttpException, IOException,
-			ParserConfigurationException, SAXException,
+	public synchronized void ackComplete(long sigId) throws HttpException,
+			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=ackcomplete&sigid=%s&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
@@ -322,9 +325,9 @@ public class C2ATI {
 		ack2Fill(sigId);
 	}
 
-	public synchronized List<TradingSystem> getAllSignals() throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
+	public synchronized List<TradingSystem> getAllSignals()
+			throws HttpException, IOException, ParserConfigurationException,
+			SAXException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=getallsignals&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
 				this.serverPort, this.sessionId, this.host);
@@ -365,9 +368,9 @@ public class C2ATI {
 		return result;
 	}
 
-	public synchronized List<TradingSystem> requestSystemList() throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
+	public synchronized List<TradingSystem> requestSystemList()
+			throws HttpException, IOException, ParserConfigurationException,
+			SAXException, XPathExpressionException, C2ATIError {
 		// Store Pool Interval
 		long tmpPoolInterval = this.pollInterval;
 		this.pollInterval = 120 / 2 * 1000;
@@ -420,9 +423,9 @@ public class C2ATI {
 		return result;
 	}
 
-	public synchronized List<C2SystemState> requestSystemSync() throws HttpException,
-			IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, C2ATIError {
+	public synchronized List<C2SystemState> requestSystemSync()
+			throws HttpException, IOException, ParserConfigurationException,
+			SAXException, XPathExpressionException, C2ATIError {
 		List<C2SystemState> result = new ArrayList<C2SystemState>();
 		String requestTemplate = "http://%s:%s?cmd=requestsystemsync&synctype=system&systemid=all&session=%s&h=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
@@ -631,7 +634,7 @@ public class C2ATI {
 		ActionEnum action = ActionEnum.valueOf(actionStr);
 		signal.setAction(action);
 		// scaledquant
-		signal.setScaledQuant(getLong("scaledquant", node));
+		signal.setScaledQuant(getIint("scaledquant", node));
 		// originalquant
 		signal.setOriginalQuant(getLong("originalquant", node));
 		// symbol
@@ -814,6 +817,12 @@ public class C2ATI {
 			throws XPathExpressionException {
 		String tmpStr = xPath.evaluate(field, node);
 		return Long.parseLong(tmpStr);
+	}
+
+	private int getIint(String field, Node node)
+			throws XPathExpressionException {
+		String tmpStr = xPath.evaluate(field, node);
+		return Integer.parseInt(tmpStr);
 	}
 
 	private double getDouble(String path, Node node)
