@@ -8,6 +8,8 @@ import com.ib.client.Order;
 public class IBOrderStatus extends Observable {
 	private int orderId;
 
+	private IBOrderState prevState;
+	
 	private IBOrderState state;
 
 	private int filled;
@@ -34,6 +36,20 @@ public class IBOrderStatus extends Observable {
 				+ " permId=" + permId + " parentId=" + parentId
 				+ " lastFillPrice=" + lastFillPrice + " clientId=" + clientId
 				+ " conctract=" + conctract + " order=" + order;
+	}
+	
+	public void copy(IBOrderStatus newState) {
+		this.avgFillPrice = newState.avgFillPrice;
+		this.clientId = newState.clientId;
+		this.conctract = newState.conctract;
+		this.filled = newState.filled;
+		this.lastFillPrice = newState.lastFillPrice;
+		this.order = newState.order;
+		this.orderId = newState.orderId;
+		this.parentId = newState.parentId;
+		this.permId = newState.permId;
+		this.prevState = this.state;
+		this.state = newState.state;
 	}
 
 	public double getAvgFillPrice() {
@@ -110,7 +126,6 @@ public class IBOrderStatus extends Observable {
 
 	public void setStatus(String status) {
 		this.state = IBOrderState.valueOf(status);
-		setChanged();
 	}
 
 	public Contract getConctract() {
@@ -133,7 +148,14 @@ public class IBOrderStatus extends Observable {
 		return state;
 	}
 
-	public void setState(IBOrderState state) {
-		this.state = state;
+	public IBOrderState getPrevState() {
+		return prevState;
+	}
+
+	public void setPrevState(IBOrderState prevState) {
+		this.prevState = prevState;
+		setChanged();
+		notifyObservers(prevState);
+		//notifyObservers();
 	}
 }

@@ -93,7 +93,6 @@ public class IBImpl implements EWrapper, IB {
 	}
 
 	public void reqOpenOrders() {
-		// m_client.reqAllOpenOrders();
 		m_client.reqOpenOrders();
 		sleep(1100);
 	}
@@ -199,10 +198,21 @@ public class IBImpl implements EWrapper, IB {
 		os.setAvgFillPrice(avgFillPrice);
 
 		synchronized (orderStatus) {
-			orderStatus.put(os.getOrderId(), os);
+			IBOrderStatus prevOrderStatus = orderStatus.get(orderId);
+			if (prevOrderStatus != null
+					&& prevOrderStatus.getState() != os.getState()) {
+				log.info("Status Changed from=" + prevOrderStatus.getState()
+						+ " to=" + os.getState() + " !");
+				prevOrderStatus.copy(os);
+			}
+			if (prevOrderStatus == null) {
+				log.info("New Order!");
+				orderStatus.put(os.getOrderId(), os);
+			}
 		}
+
 		if (log.isDebugEnabled()) {
-			log.debug("IBOrderStatus=" + os);
+			log.debug("Updated Order Status =" + os);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package sf.net.mlmechtrade.iblink.test;
 
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 
 import sf.net.mlmechtrade.iblink.IB;
 import sf.net.mlmechtrade.iblink.IBImpl;
@@ -16,37 +18,46 @@ public class IBTest {
 
 		ib.connect("", 7496, 1);
 
-//		// everything like in TWS
-//		Contract contract = new Contract();
-//		contract.m_symbol = "IBM";
-//		contract.m_secType = "STK";
-//		contract.m_exchange = "SMART";
-//
-//		Order order = new Order();
-//		order.m_tif = "LMT";
-//		order.m_action = "BUY";
-//		order.m_totalQuantity = 1;
-//		order.m_orderType = "LMT";
-//		order.m_lmtPrice = 80.44;
-//		order.m_transmit = true;
-//		order.m_origin = 1;
-//
-//		// place order. Look at tws for order to appear!
-//		Integer permId = ib.placeOrder(contract, order);
-//		System.out.println("PermId " + permId);
-//
-//		printOrderState(ib, permId);
+		// everything like in TWS
+		Contract contract = new Contract();
+		contract.m_symbol = "IBM";
+		contract.m_secType = "STK";
+		contract.m_exchange = "SMART";
 
-//		ib.cancelOrderPermId(permId);
-//
-//		printOrderState(ib, permId);
-//
-		printOrders(ib);
-		
-		ib.cancelOrderPermId(1433956156);
+		Order order = new Order();
+		order.m_tif = "LMT";
+		order.m_action = "BUY";
+		order.m_totalQuantity = 1;
+		order.m_orderType = "LMT";
+		order.m_lmtPrice = 120;
+		order.m_transmit = true;
+		order.m_origin = 1;
+
+		// place order. Look at tws for order to appear!
+		Integer permId = ib.placeOrder(contract, order);
+
+		System.out.println("PermId " + permId);
+
+		// Register Call Back
+		IBOrderStatus orderStatus = ib.getIBOrderStatusPermId(permId);
+
+		// Observer
+		Observer stateChangePriter = new Observer() {
+			public void update(Observable obs, Object arg1) {
+				IBOrderStatus ios = (IBOrderStatus) obs;
+				System.out.println("STATUS UPDATE EVENT Previouse state = " + ios.getPrevState()
+						+ " Current state =" + ios.getState());
+			}
+		};
+
+		orderStatus.addObserver(stateChangePriter);
+
+		ib.cancelOrderPermId(permId);
+
+		printOrderState(ib, permId);
 
 		printOrders(ib);
-		
+
 		ib.disconnect();
 	}
 
