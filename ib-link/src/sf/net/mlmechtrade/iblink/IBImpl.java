@@ -2,6 +2,7 @@ package sf.net.mlmechtrade.iblink;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Observer;
 
 import org.apache.log4j.Logger;
 
@@ -63,23 +64,47 @@ public class IBImpl implements EWrapper, IB {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * Place order without registering callback for order state change
 	 * 
 	 * @see sf.net.mlmechtrade.iblink.IB#placeOrder(com.ib.client.Contract,
 	 *      com.ib.client.Order)
 	 */
 	public Integer placeOrder(Contract contract, Order order) {
+		return placeOrder(contract, order, null);
+	}
+
+	/*
+	 * Place order without registering callback for order state change
+	 * 
+	 * @see sf.net.mlmechtrade.iblink.IB#placeOrder(com.ib.client.Contract,
+	 *      com.ib.client.Order)
+	 */
+
+	public Integer placeOrder(Contract contract, Order order, Observer observer) {
+		// Get orderID
 		int id = waitlId();
+		// Place Order
 		m_client.placeOrder(id, contract, order);
+		// Get permID
 		Integer permId = null;
 		for (int i = 0; i < 4; i++) {
 			reqOpenOrders();
 			permId = getPermId(id);
 			if (permId != null) {
-				return permId;
+				break;
 			}
 		}
-		return null;
+
+		// Register observer
+		if (permId != null && observer != null) {
+			IBOrderStatus status = getOrderStatus(permId);
+			if (status != null) {
+				status.addObserver(observer);
+			}
+		}
+
+		// Return Pemanent ID
+		return permId;
 	}
 
 	/*
@@ -371,4 +396,9 @@ public class IBImpl implements EWrapper, IB {
 	public boolean isConnected() {
 		return m_client.isConnected();
 	}
+
+	public int getLastOrderId() {
+		return id;
+	}
+
 }

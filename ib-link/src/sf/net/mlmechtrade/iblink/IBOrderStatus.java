@@ -156,6 +156,5 @@ public class IBOrderStatus extends Observable {
 		this.prevState = prevState;
 		setChanged();
 		notifyObservers(prevState);
-		//notifyObservers();
 	}
 }
