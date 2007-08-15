@@ -1,6 +1,7 @@
 package sf.net.mlmechtrade.iblink.test;
 
 import java.util.HashMap;
+import java.util.Observer;
 
 import com.ib.client.Contract;
 import com.ib.client.Order;
@@ -68,6 +69,16 @@ public class IBMockImpl implements IB {
 	public boolean isConnected() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public int getLastOrderId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Integer placeOrder(Contract contract, Order order, Observer observer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
