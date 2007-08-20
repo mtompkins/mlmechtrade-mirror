@@ -1,5 +1,8 @@
 package sf.net.mlmechtrade.c2api.response;
 
+import sf.net.mlmechtrade.C2Error;
+import sf.net.mlmechtrade.C2Response;
+
 /**
 After you put PlaceOrderRequest, the Web site will respond either with an error message, or with data similar to the following:
 
@@ -16,7 +19,7 @@ After you put PlaceOrderRequest, the Web site will respond either with an error 
 
  *
  */
-public class PlaceOrderResponse {
+public class PlaceOrderResponse extends C2Response {
 	
 	private String signalid;
 	private String comments;
