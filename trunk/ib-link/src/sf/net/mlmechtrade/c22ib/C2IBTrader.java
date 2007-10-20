@@ -20,7 +20,9 @@ import com.ib.client.Contract;
 import com.ib.client.Order;
 
 import sf.net.mlmechtrade.c2ati.C2ATI;
+import sf.net.mlmechtrade.c2ati.C2ATIAPI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
+import sf.net.mlmechtrade.c2ati.C2ATIMockImpl;
 import sf.net.mlmechtrade.c2ati.domain.ActionEnum;
 import sf.net.mlmechtrade.c2ati.domain.AssetEnum;
 import sf.net.mlmechtrade.c2ati.domain.DurationEnum;
@@ -29,7 +31,6 @@ import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
 import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum;
 import sf.net.mlmechtrade.c2ati.domain.OrderEnum;
 import sf.net.mlmechtrade.c2ati.domain.Signal;
-import sf.net.mlmechtrade.c2ati.test.C2ATIMockImpl;
 import sf.net.mlmechtrade.iblink.IB;
 import sf.net.mlmechtrade.iblink.IBImpl;
 import sf.net.mlmechtrade.iblink.IBOrderState;
@@ -41,7 +42,7 @@ public class C2IBTrader {
 
 	private long[] stratetiesToTrade;
 
-	private C2ATI c2ati;
+	private C2ATIAPI c2ati;
 
 	private IB ib;
 
@@ -238,9 +239,9 @@ public class C2IBTrader {
 	private class IBOrderStateManager implements Observer {
 		private IB ib;
 
-		private C2ATI c2ati;
+		private C2ATIAPI c2ati;
 
-		public IBOrderStateManager(IB ib, C2ATI c2ati) {
+		public IBOrderStateManager(IB ib, C2ATIAPI c2ati) {
 			this.ib = ib;
 			this.c2ati = c2ati;
 		}
