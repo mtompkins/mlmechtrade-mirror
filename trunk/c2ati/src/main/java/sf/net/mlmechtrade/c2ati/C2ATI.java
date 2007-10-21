@@ -38,7 +38,7 @@ import sf.net.mlmechtrade.c2ati.util.DOMHelper;
 
 import com.sun.org.apache.xml.internal.dtm.ref.DTMNodeList;
 
-public class C2ATI {
+public class C2ATI implements C2ATIAPI {
 	Logger log = Logger.getLogger(getClass());
 
 	public static final String PROTO_VERSION = "8.2";
@@ -96,6 +96,11 @@ public class C2ATI {
 				10000);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#login()
+	 */
 	public synchronized void login() throws IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
@@ -139,6 +144,11 @@ public class C2ATI {
 		return url.toExternalForm();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#logOff()
+	 */
 	public synchronized void logOff() throws ParserConfigurationException,
 			SAXException, IOException, XPathExpressionException, C2ATIError {
 		String requestTemplate = "http://%s:%s?cmd=logoff&session=%s&h=%s";
@@ -147,6 +157,11 @@ public class C2ATI {
 		processRequest(request, "logoff");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#latestSignals()
+	 */
 	public synchronized LatestSignals latestSignals() throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
@@ -162,6 +177,7 @@ public class C2ATI {
 		checkError(response);
 
 		LatestSignals result = new LatestSignals();
+		result.setResponse(response);
 
 		// Cancel List
 		DTMNodeList cancelListIds = (DTMNodeList) xPath
@@ -237,18 +253,30 @@ public class C2ATI {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#confirmSig(long, long,
+	 *      java.lang.String)
+	 */
 	public synchronized void confirmSig(long quantity, long sigId, String permId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
-		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s&permid=%s";
+		String requestTemplate = "http://%s:%s?cmd=confirmsig&sigid=%s&session=%s&h=%s&quant=%s";
 		String request = String.format(requestTemplate, this.serverIPAddress,
-				this.serverPort, sigId, this.sessionId, this.host, quantity, permId);
+				this.serverPort, sigId, this.sessionId, this.host, quantity,
+				permId);
 		if (permId != null) {
 			request += "&permid=" + permId;
 		}
 		processRequest(request, "confirmsig");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#cancelConfirmSigId(long)
+	 */
 	public synchronized void cancelConfirmSigId(long sigId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
@@ -258,6 +286,11 @@ public class C2ATI {
 		processRequest(request, "cancelconfirm");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#cancelConfirmPermId(java.lang.String)
+	 */
 	public synchronized void cancelConfirmPermId(String permId)
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
@@ -267,6 +300,12 @@ public class C2ATI {
 		processRequest(request, "cancelconfirm");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#multFillConfirm(java.util.List,
+	 *      sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum)
+	 */
 	public synchronized void multFillConfirm(List<FillConfirm> fillConfirmList,
 			MultFillConfirmEnum type) throws HttpException,
 			XPathExpressionException, IOException,
@@ -275,6 +314,12 @@ public class C2ATI {
 		processRequest(request, type.toString());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#multFillConfirmCommandString(java.util.List,
+	 *      sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum)
+	 */
 	public synchronized String multFillConfirmCommandString(
 			List<FillConfirm> fillConfirmList, MultFillConfirmEnum type) {
 		// Template
@@ -291,18 +336,33 @@ public class C2ATI {
 		return request;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#multFillConfirmSigId(long)
+	 */
 	public synchronized void multFillConfirmSigId(long sigId)
 			throws HttpException, XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(sigId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#multFillConfirmPermId(java.lang.String)
+	 */
 	public synchronized void multFillConfirmPermId(String permId)
 			throws HttpException, XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		multFillConfirm(permId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#ackComplete(long)
+	 */
 	public synchronized void ackComplete(long sigId) throws HttpException,
 			IOException, ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError {
@@ -313,18 +373,33 @@ public class C2ATI {
 		processRequest(request, "ackcomplete");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#ackc2Fill(java.lang.String)
+	 */
 	public synchronized void ackc2Fill(String permId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		ack2Fill(permId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#ackc2Fill(long)
+	 */
 	public synchronized void ackc2Fill(long sigId) throws HttpException,
 			XPathExpressionException, IOException,
 			ParserConfigurationException, SAXException, C2ATIError {
 		ack2Fill(sigId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getAllSignals()
+	 */
 	public synchronized List<TradingSystem> getAllSignals()
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
@@ -368,6 +443,11 @@ public class C2ATI {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#requestSystemList()
+	 */
 	public synchronized List<TradingSystem> requestSystemList()
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
@@ -423,6 +503,11 @@ public class C2ATI {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#requestSystemSync()
+	 */
 	public synchronized List<C2SystemState> requestSystemSync()
 			throws HttpException, IOException, ParserConfigurationException,
 			SAXException, XPathExpressionException, C2ATIError {
@@ -765,50 +850,110 @@ public class C2ATI {
 		this.clientTime = System.currentTimeMillis();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getServerTime()
+	 */
 	public synchronized long getServerTime() {
 		return serverTime;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getEMail()
+	 */
 	public synchronized String getEMail() {
 		return eMail;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#setEMail(java.lang.String)
+	 */
 	public synchronized void setEMail(String mail) {
 		eMail = mail;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#setPassword(java.lang.String)
+	 */
 	public synchronized void setPassword(String password) {
 		this.password = password;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getHost()
+	 */
 	public synchronized String getHost() {
 		return host;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#setHost(java.lang.String)
+	 */
 	public synchronized void setHost(String host) {
 		this.host = host;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getSessionId()
+	 */
 	public synchronized String getSessionId() {
 		return sessionId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getPollInterval()
+	 */
 	public synchronized long getPollInterval() {
 		return pollInterval;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getClientTime()
+	 */
 	public synchronized long getClientTime() {
 		return clientTime;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getServerIPAddress()
+	 */
 	public synchronized String getServerIPAddress() {
 		return serverIPAddress;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getServerlPort()
+	 */
 	public synchronized String getServerlPort() {
 		return serverPort;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sf.net.mlmechtrade.c2ati.C2ATIAPI#getPostedHumanTime()
+	 */
 	public synchronized String getPostedHumanTime() {
 		return postedHumanTime;
 	}

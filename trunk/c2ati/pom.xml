@@ -7,14 +7,7 @@
 	<groupId>sf.net.mlmechtrade</groupId>
 	<artifactId>sf.net.mlmechtrade.c2ati</artifactId>
 	<version>0.0.1</version>
-<!--
-	<parent>
-		<groupId>sf.net.mlmechtrade</groupId>
-		<artifactId>mlmechtrade-parent</artifactId>
-		<version>0.0.1</version>
-		<relativePath>../mlmechtrade-parent-pom/pom.xml</relativePath>
-	</parent>
--->
+
 	<name>mltechtrade C2ATI</name>
 	<url>http://sourceforge.net/projects/mlmechtrade/</url>
 	<description>Collective2 Automated Trading API</description>
@@ -35,12 +28,22 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
-		
-	</dependencies>
-	
-<!--
-	<build><defaultGoal>install</defaultGoal></build>
--->
+		<dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity-dep</artifactId>
+			<version>1.4-rc1</version>
+		</dependency>
+		<dependency>
+			<groupId>velocity-tools</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>1.2</version>
+		</dependency>
 
+	</dependencies>
 </project>
 

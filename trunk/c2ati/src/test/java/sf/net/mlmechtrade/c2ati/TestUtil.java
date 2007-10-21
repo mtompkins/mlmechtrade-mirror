@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati.test;
+package sf.net.mlmechtrade.c2ati;
 
 public class TestUtil {
 	public static String getCmd(String url) {

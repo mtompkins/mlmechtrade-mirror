@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Document;
+
 public class LatestSignals {
+	Document response;
+	
 	List<Long> canselListIds = new ArrayList<Long>();
 
 	List<String> cancelListPermIds = new ArrayList<String>();
@@ -54,5 +58,17 @@ public class LatestSignals {
 
 	public List<Signal> getSignals() {
 		return signals;
+	}
+
+	public Document getResponse() {
+		return response;
+	}
+
+	public void setResponse(Document response) {
+		this.response = response;
+	}
+
+	public void setSignals(List<Signal> signals) {
+		this.signals = signals;
 	}
 }

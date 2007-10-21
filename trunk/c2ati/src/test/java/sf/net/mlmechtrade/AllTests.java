@@ -13,7 +13,7 @@ public class AllTests {
 		suite.addTestSuite(C2AnnotatedCommandTest.class);
 		//$JUnit-END$
 		suite.addTestSuite(C2SignalEntryCommandTest.class);
-		suite.addTest(sf.net.mlmechtrade.c2ati.test.AllTests.suite());
+		suite.addTest(sf.net.mlmechtrade.c2ati.AllTests.suite());
 		return suite;
 	}
 

@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati.test;
+package sf.net.mlmechtrade.c2ati;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
-import sf.net.mlmechtrade.c2ati.C2ATI;
+import sf.net.mlmechtrade.c2ati.C2ATIAPI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
 import sf.net.mlmechtrade.c2ati.domain.FillConfirm;
 import sf.net.mlmechtrade.c2ati.domain.MultFillConfirmEnum;
 import junit.framework.TestCase;
 
 public class C2ATIACKTest extends TestCase {
-	C2ATI fixture;
+	C2ATIAPI fixture;
 
 	public void setUp() throws IOException {
 		fixture = new C2ATIMockImpl();

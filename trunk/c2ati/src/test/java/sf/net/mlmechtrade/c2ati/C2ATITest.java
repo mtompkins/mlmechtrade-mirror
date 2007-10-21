@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati.test;
+package sf.net.mlmechtrade.c2ati;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import org.apache.commons.httpclient.HttpException;
 import org.xml.sax.SAXException;
 
-import sf.net.mlmechtrade.c2ati.C2ATI;
+import sf.net.mlmechtrade.c2ati.C2ATIAPI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
 import sf.net.mlmechtrade.c2ati.domain.ActionEnum;
 import sf.net.mlmechtrade.c2ati.domain.AssetEnum;
@@ -23,7 +23,7 @@ import sf.net.mlmechtrade.c2ati.domain.OrderEnum;
 import sf.net.mlmechtrade.c2ati.domain.Signal;
 
 public class C2ATITest extends TestCase {
-	C2ATI fixture;
+	C2ATIAPI fixture;
 
 	public void setUp() throws IOException {
 		fixture = new C2ATIMockImpl();
