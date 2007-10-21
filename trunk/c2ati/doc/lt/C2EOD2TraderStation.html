@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>New Page 1</title>
+</head>
+
+<body>
+<span lang="lt">
+<p>mltechtrade ATI Signalų pateikims į Trader Station failus <br>
+<br>
+IŠKVIETIMAS:<br>
+
+<font face="Courier New"><font size="2">java 
+sf.net.mlmechtrade.c2ati.tofile.C2SignalsToFile </font></font>
+
+</span>
+<font face="Courier New" SIZE="2"><span lang="en-us">&lt;Katalogas, kuriame i</span>šsaugomi 
+failai<span lang="en-us">&gt; &lt;Sistemos pavadinimas&gt; [&lt;</span>Įrašyti Y jei prekyba 
+vykdoma su realiu brokeriu realiais pinigais<span lang="en-us">&gt;]</span></font></p>
+
+<p>Pavyzdžiui: java sf.net.mlmechtrade.c2ati.tofile.C2SignalsToFile C:\TEMP\ 
+&quot;XXX&quot; Y</p>
+
+<span lang="lt">
+
+<p>REZULTATAI:</p>
+
+</span>
+<ul>
+  <li>&lt;Laikas formatu yyyyMMdd_HHmmss&gt;-RESPONS<span lang="en-us">E.xml - 
+  Suformatuotas XML failas, kuris buvo gautas i</span>š C2ATI. Jame surašyti 
+  visi signalai ir tarnybinė informacija. Pavyzdžiui, kad C2 įvykdė pavedimą<span lang="en-us"> 
+  ir informacija apie klaidas</span>.</li>
+</ul>
+
+<p>Pavyzdžiui: failas&nbsp; <font face="Courier New">
+20071021_130337-RESPONSE.xml</font> su turiniu:</p>
+
+<p><font face="Courier New">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+&lt;collective2&gt;<br>
+&lt;status&gt;OK&lt;/status&gt;<br>
+...<br>
+&lt;/data&gt;<br>
+&lt;/collective2&gt;</font></p>
+
+<ul>
+  <li>&lt;Laikas formatu yyyyMMdd_HHmmss&gt;-BUY.tab - Pirkimų signalai. Galima 
+  atidaryti peržiūria su Excell</li>
+</ul>
+
+<p>Pavyzdžiui: failas&nbsp; <font face="Courier New">20071021_130337-<span lang="en-us">BUY</span>.<span lang="en-us">tab</span></font> 
+su turiniu:</p>
+
+<p><font face="Courier New">MSFT 26 <span lang="en-us">Limit</span> 30.0000<span lang="en-us">
+</span></font><span lang="en-us"><font face="Times New Roman">- MSFT
+<a href="mailto:26@30">26@30</a> (pirkti 26 MSFT 30.00)</font></span></p>
+
+<span lang="lt">
+<ul>
+  <li>&lt;Laikas formatu yyyyMMdd_HHmmss&gt;-SELL.tab - Pardavimų signalai.</li>
+  <li>&lt;Laikas formatu yyyyMMdd_HHmmss&gt;-CANCEL.tab - Signalų, kurie yra 
+  atšaukiami id. Signalų id galima surasti RESPONSE failuse.</li>
+  <li>c2ati.log - Komunikavimo su C2ATI audito žurnalas (logas)</li>
+</ul>
+
+</span>
+
+<p><span lang="en-us">PASTABOS</span><span lang="lt">:<br>
+* 
+
+</span>
+<span lang="en-us">Skirta prekiavimui per Trader Station EOD tipo sistemoms</span><span lang="lt"><br>
+&nbsp;</span></p>
+
+</body>
+
+</html>
