@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati.test;
+package sf.net.mlmechtrade.c2ati;
 
 import java.io.IOException;
 

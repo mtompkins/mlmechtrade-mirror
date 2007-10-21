@@ -3,7 +3,7 @@ package sf.net.mlmechtrade.c2ati.domain;
 import org.w3c.dom.Node;
 
 
-public class Signal {
+public class Signal implements Cloneable {
 	private String systemName;
 
 	private long systemIdNum;

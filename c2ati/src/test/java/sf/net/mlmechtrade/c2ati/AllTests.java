@@ -1,4 +1,4 @@
-package sf.net.mlmechtrade.c2ati.test;
+package sf.net.mlmechtrade.c2ati;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -16,7 +16,6 @@ public class AllTests {
 		suite.addTestSuite(C2ATISyncTest.class);
 		suite.addTestSuite(C2ATITest.class);
 		suite.addTestSuite(TestUtilTest.class);
-		suite.addTestSuite(C2ATICommandTest.class);
 		// $JUnit-END$
 		return suite;
 	}
