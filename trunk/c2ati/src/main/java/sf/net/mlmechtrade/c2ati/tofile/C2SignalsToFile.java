@@ -36,7 +36,10 @@ public class C2SignalsToFile {
 
 	private static final String FILE_SUFFIX = ".tab";
 
-	private static final SimpleDateFormat suffixFormat = new SimpleDateFormat(
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
+			"yyyyMMdd");
+
+	private static final SimpleDateFormat timeFormat = new SimpleDateFormat(
 			"yyyyMMdd_HHmmss");
 
 	/**
@@ -113,6 +116,24 @@ public class C2SignalsToFile {
 			c2ati = new C2ATIMockImpl();
 		}
 
+		// Login
+		c2ati.login();
+
+		// Get latest signals
+		int count = 0;
+		while (getSignals(c2ati)) {
+			if (!isReal && count++ >= 3)
+				break;
+		}
+
+		// Log off
+		c2ati.logOff();
+	}
+
+	private boolean getSignals(C2ATIAPI c2ati) throws IOException,
+			ParserConfigurationException, SAXException,
+			XPathExpressionException, C2ATIError, HttpException,
+			TransformerException {
 		LatestSignals latestSignls = getLatestSignals(c2ati);
 
 		// Store Response to file
@@ -132,8 +153,7 @@ public class C2SignalsToFile {
 		String sellStr = outputSell(signals, c2ati);
 		toFile(sellStr, OutputFileTypeEnum.SELL);
 
-		// Log off
-		c2ati.logOff();
+		return cancelStr.length() + buyStr.length() + sellStr.length() > 0;
 	}
 
 	private void toFile(String str, OutputFileTypeEnum fileType, String suffix)
@@ -141,10 +161,20 @@ public class C2SignalsToFile {
 		// Prepare Files
 		if (str.length() > 0) {
 			Date currDate = new Date();
-			String currDateStr = suffixFormat.format(currDate);
+
+			// Time stamp
+			String currDateStr = dateFormat.format(currDate);
+			if (OutputFileTypeEnum.BUY == fileType
+					|| OutputFileTypeEnum.SELL == fileType) {
+				currDateStr = dateFormat.format(currDate);
+			} else if (OutputFileTypeEnum.CANCEL == fileType
+					|| OutputFileTypeEnum.RESPONSE == fileType) {
+				currDateStr = timeFormat.format(currDate);
+			}
+
 			String fileName = currDateStr + '-' + fileType.toString() + suffix;
 			File outputFile = new File(outputDirectory, fileName);
-			FileWriter fw = new FileWriter(outputFile);
+			FileWriter fw = new FileWriter(outputFile, true);
 			fw.write(str);
 			fw.close();
 		}
@@ -169,8 +199,6 @@ public class C2SignalsToFile {
 	private LatestSignals getLatestSignals(C2ATIAPI c2ati) throws IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, C2ATIError, HttpException {
-		// Login
-		c2ati.login();
 		// Filter Out signals
 		LatestSignals response = c2ati.latestSignals();
 		List<Signal> signals = response.getSignals();
