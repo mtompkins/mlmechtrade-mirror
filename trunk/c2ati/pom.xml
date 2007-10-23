@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>sf.net.mlmechtrade</groupId>
 	<artifactId>sf.net.mlmechtrade.c2ati</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 
 	<name>mltechtrade C2ATI</name>
 	<url>http://sourceforge.net/projects/mlmechtrade/</url>
@@ -45,5 +45,6 @@
 		</dependency>
 
 	</dependencies>
+   	
 </project>
 
