@@ -34,7 +34,7 @@ public class C2SignalsToFile {
 	private static Logger log = Logger
 			.getLogger("sf.net.mlmechtrade.c2ati.tofile.C2SignalsToFile");
 
-	private static final String FILE_SUFFIX = ".tab";
+	private static final String FILE_SUFFIX = ".txt";
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyyMMdd");
