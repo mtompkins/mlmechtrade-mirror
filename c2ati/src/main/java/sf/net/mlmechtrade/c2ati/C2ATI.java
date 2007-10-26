@@ -43,9 +43,9 @@ public class C2ATI implements C2ATIAPI {
 
 	public static final String PROTO_VERSION = "8.2";
 
-	public static final String CLIENT = "TESTCLIENT";
+	public static final String CLIENT = "ALGOTRADE";
 
-	public static final String BUILD = "0.00.00";
+	public static final String BUILD = "0.00.02";
 
 	public static final String INIT_SERVER_HOST = "64.68.145.3";
 
