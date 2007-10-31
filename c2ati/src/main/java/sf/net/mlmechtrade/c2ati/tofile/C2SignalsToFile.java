@@ -23,6 +23,7 @@ import sf.net.mlmechtrade.c2ati.C2ATIAPI;
 import sf.net.mlmechtrade.c2ati.C2ATIError;
 import sf.net.mlmechtrade.c2ati.C2ATIMockImpl;
 import sf.net.mlmechtrade.c2ati.domain.ActionEnum;
+import sf.net.mlmechtrade.c2ati.domain.C2RecentFill;
 import sf.net.mlmechtrade.c2ati.domain.LatestSignals;
 import sf.net.mlmechtrade.c2ati.domain.OrderEnum;
 import sf.net.mlmechtrade.c2ati.domain.Signal;
@@ -140,6 +141,8 @@ public class C2SignalsToFile {
 		String responseAsXML = DOMHelper.dom2XML(latestSignls.getResponse());
 		toFile(responseAsXML, OutputFileTypeEnum.RESPONSE, ".xml");
 
+		confirmRecentc2fill(latestSignls.getResentC2Fills(), c2ati);
+		
 		String cancelStr = outputCancel(latestSignls.getCancelListIds(), c2ati);
 		toFile(cancelStr, OutputFileTypeEnum.CANCEL);
 
@@ -154,6 +157,13 @@ public class C2SignalsToFile {
 		toFile(sellStr, OutputFileTypeEnum.SELL);
 
 		return cancelStr.length() + buyStr.length() + sellStr.length() > 0;
+	}
+
+	private void confirmRecentc2fill(List<C2RecentFill> resentC2Fills, C2ATIAPI c2ati) throws HttpException, XPathExpressionException, IOException, ParserConfigurationException, SAXException, C2ATIError {
+		for (C2RecentFill fill : resentC2Fills) {
+			c2ati.ackc2Fill(fill.getSignalId());
+		}
+		
 	}
 
 	private void toFile(String str, OutputFileTypeEnum fileType, String suffix)
