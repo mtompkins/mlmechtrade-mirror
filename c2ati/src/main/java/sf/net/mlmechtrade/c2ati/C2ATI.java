@@ -43,13 +43,13 @@ public class C2ATI implements C2ATIAPI {
 
 	public static final String PROTO_VERSION = "8.2";
 
-	public static final String CLIENT = "ALGOTRADE";
+	public static final String CLIENT = "ALGO";
 
-	public static final String BUILD = "0.00.02";
+	public static final String BUILD = "0.00.03";
 
 	public static final String INIT_SERVER_HOST = "64.68.145.3";
 
-	public static final Integer INIT_SERVER_PORT = 7878;
+	public static final Integer INIT_SERVER_PORT = 7876;
 
 	public static final String INIT_URL_PROTOCOL = "http";
 
