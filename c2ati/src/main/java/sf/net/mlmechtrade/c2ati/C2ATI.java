@@ -45,7 +45,7 @@ public class C2ATI implements C2ATIAPI {
 
 	public static final String CLIENT = "ALGO";
 
-	public static final String BUILD = "0.00.03";
+	public static final String BUILD = "0.00.04";
 
 	public static final String INIT_SERVER_HOST = "64.68.145.3";
 
