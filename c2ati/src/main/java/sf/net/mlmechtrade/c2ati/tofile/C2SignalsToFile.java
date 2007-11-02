@@ -35,7 +35,7 @@ public class C2SignalsToFile {
 	private static Logger log = Logger
 			.getLogger("sf.net.mlmechtrade.c2ati.tofile.C2SignalsToFile");
 
-	private static final String FILE_SUFFIX = ".txt";
+	public static final String FILE_SUFFIX = ".txt";
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyyMMdd");
@@ -166,7 +166,7 @@ public class C2SignalsToFile {
 		
 	}
 
-	private void toFile(String str, OutputFileTypeEnum fileType, String suffix)
+	public void toFile(String str, OutputFileTypeEnum fileType, String suffix)
 			throws IOException {
 		// Prepare Files
 		if (str.length() > 0) {
