@@ -2,6 +2,7 @@ package sf.net.mlmechtrade.c2ati;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import sf.net.mlmechtrade.c2ati.tofile.C2ITMToFileTest;
 import sf.net.mlmechtrade.c2ati.tofile.C2SignalsToFileTest;
 
 public class AllTests {
@@ -18,6 +19,7 @@ public class AllTests {
 		suite.addTestSuite(C2ATITest.class);
 		suite.addTestSuite(TestUtilTest.class);
 		suite.addTestSuite(C2SignalsToFileTest.class);
+		suite.addTestSuite(C2ITMToFileTest.class);
 		// $JUnit-END$
 		return suite;
 	}
