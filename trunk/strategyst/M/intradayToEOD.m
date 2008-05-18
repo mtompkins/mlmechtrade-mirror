@@ -10,7 +10,7 @@ for i = 1:size(data.marketData,2)
         eodData.marketData(i).data = [];
     else
         eodIndex = 1;
-        dates = ceil(symbol.time);
+        dates = floor(symbol.time);
         date = dates(1);
         intradayLastIndex = 1;
         for j=2:size(dates, 1);
