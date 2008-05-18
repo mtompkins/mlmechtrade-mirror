@@ -1,8 +1,5 @@
 function low = getLow(data, index)
 % Returns low series
-
-rez = getSymbolData(data, index);
-low =  rez(:,4);
-if (data.filter == 1)
-    low(2:end) = low(2:end) + low(1);
-end
+% Note: Lookup for position of "Low" of index may be done. Just use fixed
+% position for simplicity
+low = data.marketData(index).data(:,4);
