@@ -1,45 +1,36 @@
 %% Main cycle reding data from files
-function data = importIntraDay(fileMask,compressEnabled,dateFormat,timeFormat,hasHeaderRow)
+function data = importIntraDay(fileMask,dateFormat,timeFormat,hasHeaderRow)
 %ImportIntraDay
 % Imports data from FileMask in Trader Station or similar ASCII format.
 % <SYMBOL>_<time scale>.csv
 % Default fileMask '*.csv'
-% compressEnabled = true
 % Default dataFormat 'yyyymmdd'
 % Default timeFormat 'HH:MM'
 % hasHeaderRow = true and OHLCV order expected for missing header
+% 
+% example invocation:
+% importIntraDay('*.csv','mm/dd/yyyy','HHMM')
 
 %% Defaults
 % File Mask
 if nargin < 1
     fileMask = '*.csv';
 end
-% Default compression and filter parameters
-if nargin < 2
-    compressEnabled = true;
-    data.filter = 1;
-else
-    data.filter = 0;
-end  % Use compression by default
 % Default data
-if nargin < 3
+if nargin < 2
     dateFormat = 'yyyymmdd';
 end
 % Default time    
-if nargin < 4
+if nargin < 3
     timeFormat = 'HH:MM';
 end
 % Default of hasHeaderRow
-if nargin < 5
+if nargin < 4
     hasHeaderRow = 1;
 end
 
 %% Prepare output structure
-import java.util.HashMap;
-data.compressionMap = java.util.HashMap();
-data.compressedData = {};
 data.marketData = struct();
-createGlobalCashe();
 
 %% List files in current directory
 files = ls(fileMask);
@@ -55,16 +46,17 @@ for j = 1:size(files,1),
     else
         fileData = importdata(fileToRead);
         tFields = removeTxtSeps(fileData.textdata(1,3:end));
-        tTime = asciiToTimeStamp(fileData,dateFormat,timeFormat,hasHeaderRow);
-        tData = fileData.data;        
+        [tTime hasTimeAsNum] = asciiToTimeStamp(fileData,dateFormat,timeFormat,hasHeaderRow);
+        if (hasTimeAsNum),
+            tData = fileData.data(:,2:end);
+        else
+            tData = fileData.data;        
+        end
     end
     data.marketData(j).fields = tFields; 
     data.marketData(j).time = tTime;
     data.marketData(j).seriesLen = length(tTime);
     data.marketData(j).data = tData;
-    if (compressEnabled),
-        data = compress(data, j);
-    end % end if
 end % end for
 
 %% helper functios
@@ -74,9 +66,18 @@ expr = '(?<symbol>^.*)_(?<suffix>.*)';
 names = regexp(fileName, expr, 'names');
 symbol = names.symbol;
 
-function mlDateNum = asciiToTimeStamp(data,dateFormat,timeFormat,hasHeaderRow)
+function [mlDateNum hasTimeAsNum] = asciiToTimeStamp(data,dateFormat,timeFormat,hasHeaderRow)
 % Function to convert date from ASCII to MatLab datenum
-mlDateNum = datenum(strcat(data.textdata(1+hasHeaderRow:end,1),data.textdata(1+hasHeaderRow:end,2)),[dateFormat timeFormat]);
+if isempty(data.textdata{2,2}) && strcmp(timeFormat,'HHMM'),
+    mlDateNum = datenum(data.textdata(1+hasHeaderRow:end,1),dateFormat);
+    % add time component HHMM
+    tmpTime = data.data(:,1);
+    mlDateNum = mlDateNum + (floor(tmpTime/100)*60+rem(tmpTime,100))/1440;
+    hasTimeAsNum = true;
+else
+    mlDateNum = datenum(strcat(data.textdata(1+hasHeaderRow:end,1),data.textdata(1+hasHeaderRow:end,2)),[dateFormat timeFormat]);
+    hasTimeAsNum = false;
+end
 
 function trColumns = removeTxtSeps(columnNames)
 % Remove trailing quotes from passed parameter

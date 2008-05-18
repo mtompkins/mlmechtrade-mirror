@@ -1,5 +1,3 @@
 function volume = getVolume(data, index)
-% Returns Open series
-
-rez = getSymbolData(data, index);
-volume =  rez(:,5);
+% Returns Volume series
+volume =  data.marketData(index).data(:,5);

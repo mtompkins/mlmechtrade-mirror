@@ -1,6 +1,4 @@
 function eodData = intradayToEOD(data)
-eodData.filter = 0;
-eodData.compressionMap = java.util.HashMap();
 for i = 1:size(data.marketData,2)
     symbol = data.marketData(i);
     eodData.marketData(i).symbol = symbol.symbol;
