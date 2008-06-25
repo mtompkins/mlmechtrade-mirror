@@ -45,7 +45,11 @@ for j = 1:size(files,1),
         tData = [];        
     else
         fileData = importdata(fileToRead);
-        tFields = removeTxtSeps(fileData.textdata(1,3:end));
+        if isstruct(fileData)
+            tFields = removeTxtSeps(fileData.textdata(1,3:end));            
+        else
+            tFields = {'Open','High','Low','Close','Volume'};
+        end
         [tTime hasTimeAsNum] = asciiToTimeStamp(fileData,dateFormat,timeFormat,hasHeaderRow);
         if (hasTimeAsNum),
             tData = fileData.data(:,2:end);
@@ -59,7 +63,9 @@ for j = 1:size(files,1),
     data.marketData(j).data = tData;
 end % end for
 
+
 %% helper functios
+
 function symbol = symbolFromFileName(fileName)
 % Retrieve symbol from TS export file name
 expr = '(?<symbol>^.*)_(?<suffix>.*)';

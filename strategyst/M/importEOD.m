@@ -4,12 +4,6 @@ function data = importEOD()
 % Imports data from *.CSV from Quoets Plus Export ASCII format:
 % Symbol, Text(D), Data(YYMMDD),Open,High,Low,Close,Vol 1's
 %
-compressEnabled = false; % Without compression
-
-%% Prepare output structure
-data.compressionMap = java.util.HashMap();
-data.compressedData = {};
-data.filter = 0;
 
 %% List files in current directory
 files = ls('*.csv');
