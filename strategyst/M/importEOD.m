@@ -1,7 +1,7 @@
 %% Main cycle reding data from files
 function data = importEOD()
 %ImportIntraDay
-% Imports data from *.CSV from Quoets Plus Export ASCII format:
+% Imports data from *.CSV from Quotes Plus Export ASCII format:
 % Symbol, Text(D), Data(YYMMDD),Open,High,Low,Close,Vol 1's
 %
 
@@ -10,16 +10,12 @@ files = ls('*.csv');
 for j = 1:size(files,1),
     % Import the file
     fileToRead = files(j,1:end)
-    
     data.marketData(j).symbol = symbolFromFileName(fileToRead);
     fileData = importdata(fileToRead);
     data.marketData(j).fields = {'Open','High', 'Low', 'Close', 'Volume'};
     data.marketData(j).time = getTimeStamp(fileData);
     data.marketData(j).seriesLen = length(data.marketData(j).time);
     data.marketData(j).data = fileData.data(:,2:end);
-    if (compressEnabled),
-        data = compress(data, j);
-    end % end if
 end % end for
 
 %% helper functios
