@@ -1,6 +1,9 @@
-function result = cutDateInterval(data, date1, date2, index)
-d1 = datenum(date1,'yyyymmdd');
-d2 = datenum(date2,'yyyymmdd');
+function result = cutDateInterval(data, d1, d2, index)
+% data - quotes data structure
+% d1 - timestamp from. Keep data only time >= d1
+% d2 - timestamp to. Keep data only time <= d2
+% index - the index of symbol to be processed
+
 if nargin < 4
     index = 1:size(data.marketData,2);
 end
