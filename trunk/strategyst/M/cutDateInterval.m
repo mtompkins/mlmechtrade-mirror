@@ -8,6 +8,10 @@ if nargin < 4
     index = 1:size(data.marketData,2);
 end
 
+% Preserve original copy
+result = data;
+
+% Modify selected
 for i = index
     symbol = data.marketData(i);
     idx = find(symbol.time >= d1 & symbol.time <= d2);
